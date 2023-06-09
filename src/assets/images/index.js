@@ -1,0 +1,9 @@
+export { default as Car } from "./junk.png";
+export { default as CarRed } from "./TrackCaricon.jpg";
+export { default as Logo } from "./TrackCaricon.jpg";
+export { default as HomeIcon } from "./home.png";
+export { default as ChatIcon } from "./chatting.png";
+export { default as User } from "./user.png";
+export { default as AddsIcon } from "./addsimage.png";
+export { default as CarIcon } from "./car.png";
+export { default as Welcome } from "./welcome.jpg";

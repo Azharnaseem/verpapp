@@ -63,12 +63,13 @@ const AdminDrawer = ({ navigation, ...props }) => {
         </View>
       </View>
 
-      <DrawerContentScrollView
+      <View>
+        {/* <DrawerContentScrollView
         style={styles.DrawerItem}
         contentContainerStyle={{ alignItems: "center" }}
         // style={ }
         {...props}
-      >
+      > */}
         <DrawerItem
           style={{
             backgroundColor: "black",
@@ -140,7 +141,8 @@ const AdminDrawer = ({ navigation, ...props }) => {
             logoutMethod();
           }}
         />
-      </DrawerContentScrollView>
+      </View>
+      {/* </DrawerContentScrollView> */}
       <Text style={styles.DrawerBtmText}>
         {
           "V 2.0.0 \n Customer care: 020 3355 3743 \n Email: info@247postaltd.com \n VAT Reg. #: 340 3392 29"
