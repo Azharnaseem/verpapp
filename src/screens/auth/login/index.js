@@ -23,11 +23,9 @@ export default function Login({ navigation, route }) {
   const dataBaseRef = useRef(null);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const schema = Yup.object().shape({
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required"),
+    username: Yup.string().required("User name is required"),
     password: Yup.string().required("Password is required"),
-    database: Yup.string().required("DataBase is required"),
+    database: Yup.string().required("Database is required"),
   });
   const {
     control,
@@ -35,7 +33,7 @@ export default function Login({ navigation, route }) {
     formState: { errors, isValid },
   } = useForm({
     mode: "all",
-    defaultValues: { email: "", password: "" },
+    defaultValues: { username: "", password: "", database: "" },
     // defaultValues: { email: 'tiffany@myhairdays.com', password: 'Davis1986' },
     // defaultValues: { email: 'test@test.com', password: 'test@123' },
     resolver: yupResolver(schema),
@@ -72,16 +70,15 @@ export default function Login({ navigation, route }) {
 
         {/* <View style={styles.whiteBox}> */}
         <TextField
-          prefixIcon={<SvgIcon.Email />}
+          prefixIcon={<SvgIcon.User />}
           innerRow={{ width: width(85) }}
           numberOfLines={1}
-          label={"Email"}
-          placeholder="Enter your email"
+          label={"User Name"}
+          placeholder="Enter your User Name"
           control={control}
           errorMsg={errors?.email}
-          name="email"
+          name="username"
           returnKeyType={"next"}
-          keyboardType="email-address"
           onSubmitEditing={() => passwordRef.current.focus()}
         />
         <TextField

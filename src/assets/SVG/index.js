@@ -6,6 +6,7 @@ import Email from "./email.svg";
 import Password from "./password.svg";
 import Database from "./database.svg";
 import DownArrow from "./down.svg";
+import User from "./user.svg";
 
 const SvgIcon = {
   Bell,
@@ -13,5 +14,6 @@ const SvgIcon = {
   Password,
   Database,
   DownArrow,
+  User,
 };
 export default SvgIcon;
