@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useSelector } from "react-redux";
-import { LoginScreen } from "~screens/auth";
+import { IntroScreen, LoginScreen } from "~screens/auth";
 import { Loader } from "~components";
 import ScreenNames from "./routes";
 import SplashScreen from "react-native-splash-screen";
@@ -26,9 +26,13 @@ export default function Routes() {
       <Loader />
       {!isLogin ? (
         <Stack.Navigator
-          initialRouteName={ScreenNames.LOGIN}
+          initialRouteName={ScreenNames.INTROSCREEN}
           screenOptions={{ header: () => false }}
         >
+          <Stack.Screen
+            name={ScreenNames.INTROSCREEN}
+            component={IntroScreen}
+          />
           <Stack.Screen name={ScreenNames.LOGIN} component={LoginScreen} />
         </Stack.Navigator>
       ) : (

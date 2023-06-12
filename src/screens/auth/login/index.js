@@ -2,10 +2,16 @@ import React, { useRef, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import styles from "./styles";
 import { useDispatch } from "react-redux";
-import { Button, ScreenWrapper, TextField } from "~components";
+import {
+  BottomSheet,
+  Button,
+  CheckList,
+  ScreenWrapper,
+  TextField,
+} from "~components";
 import { setIsLoggedIn, setUserMeta } from "~redux/slices/user";
 import { setAppLoader } from "~redux/slices/config";
 import OpenEyeSVG from "~assets/SVG/openEyeSvg";
@@ -17,15 +23,20 @@ import { Image } from "react-native";
 import { Logo } from "~assets/images";
 import { SmallText } from "~components/texts";
 import SvgIcon from "~assets/SVG";
+import { DatabaseCountries } from "~utills/DummyData";
+import CommonStyles from "~utills/CommonStyles";
+import TextInputSimple from "~components/textInputSimple";
 export default function Login({ navigation, route }) {
   const dispatch = useDispatch();
   const passwordRef = useRef(null);
+  const bottomSheetRef = useRef(null);
   const dataBaseRef = useRef(null);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [country, setCountry] = useState(false);
+  const [seletedItem, setSelectedItem] = useState("");
   const schema = Yup.object().shape({
     username: Yup.string().required("User name is required"),
     password: Yup.string().required("Password is required"),
-    database: Yup.string().required("Database is required"),
   });
   const {
     control,
@@ -33,7 +44,7 @@ export default function Login({ navigation, route }) {
     formState: { errors, isValid },
   } = useForm({
     mode: "all",
-    defaultValues: { username: "", password: "", database: "" },
+    defaultValues: { username: "", password: "" },
     // defaultValues: { email: 'tiffany@myhairdays.com', password: 'Davis1986' },
     // defaultValues: { email: 'test@test.com', password: 'test@123' },
     resolver: yupResolver(schema),
@@ -55,13 +66,31 @@ export default function Login({ navigation, route }) {
       dispatch(setAppLoader(false));
     }, 600);
   };
+  const renderSelectedCountry = ({ item, index }) => {
+    return (
+      <View>
+        <CheckList
+          containerViewStyle={CommonStyles.marginBottom_1}
+          selected={seletedItem === index}
+          onPress={() => {
+            setSelectedItem(index);
+            setCountry(item.name);
+            setTimeout(() => {
+              bottomSheetRef.current.close();
+            }, 1000);
+          }}
+          tittle={item.name}
+        />
+      </View>
+    );
+  };
   return (
     <ScreenWrapper>
       <View style={styles.mainViewContainer}>
         <View style={{ marginBottom: height(5) }}>
           <Image source={Logo} style={styles.imageStyle} resizeMode="contain" />
           <SmallText
-            fontFamily={FontFamily.montserrat_Bold}
+            fontFamily={FontFamily.montserrat_BoldItalic}
             color={AppColors.scndry}
           >
             Login to continue
@@ -76,7 +105,7 @@ export default function Login({ navigation, route }) {
           label={"User Name"}
           placeholder="Enter your User Name"
           control={control}
-          errorMsg={errors?.email}
+          errorMsg={errors?.username}
           name="username"
           returnKeyType={"next"}
           onSubmitEditing={() => passwordRef.current.focus()}
@@ -101,14 +130,19 @@ export default function Login({ navigation, route }) {
           // onPressForgot={() => navigation.navigate(ScreenNames.FORGOTPASSWORD)}
           // showForgotPassword
         />
-        <TextField
+        <TextInputSimple
           prefixIcon={<SvgIcon.Database />}
           innerRow={{ width: width(85) }}
           label={"Database"}
-          placeholder="Enter your Database "
-          control={control}
-          errorMsg={errors?.database}
-          name="database"
+          placeholder={"Enter your Database "}
+          // control={control}
+          // errorMsg={errors?.database}
+          // name="database"
+          editable={false}
+          textValue={country}
+          onPress={() => {
+            bottomSheetRef.current.open();
+          }}
           Icon={
             <SvgIcon.DownArrow />
             // <OpenEyeSVG
@@ -116,7 +150,7 @@ export default function Login({ navigation, route }) {
             // />
           }
           // secureTextEntry={!passwordVisible}
-          onIconPress={() => setPasswordVisible(!passwordVisible)}
+          // onIconPress={() => setPasswordVisible(!passwordVisible)}
           ref={dataBaseRef}
           // onPressForgot={() => navigation.navigate(ScreenNames.FORGOTPASSWORD)}
           // showForgotPassword
@@ -167,6 +201,37 @@ export default function Login({ navigation, route }) {
           }}
         /> */}
       </View>
+      <BottomSheet ref={bottomSheetRef} bottomSheetHeight={height(60)}>
+        <View
+          style={{
+            height: height(80),
+            paddingHorizontal: width(3),
+            // paddingVertical: height(3),
+          }}
+        >
+          <View style={{ paddingVertical: height(2), alignItems: "center" }}>
+            <Text
+              style={{
+                color: AppColors.white,
+                fontSize: width(5),
+                fontFamily: FontFamily.montserrat_Bold,
+              }}
+            >
+              Select Database
+            </Text>
+          </View>
+
+          {/* <CheckList /> */}
+          {/* <CheckList /> */}
+          <FlatList
+            data={DatabaseCountries}
+            contentContainerStyle={{ paddingBottom: height(30) }}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={(i, n) => n}
+            renderItem={renderSelectedCountry}
+          />
+        </View>
+      </BottomSheet>
     </ScreenWrapper>
   );
 }

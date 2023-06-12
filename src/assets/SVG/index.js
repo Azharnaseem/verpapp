@@ -7,6 +7,8 @@ import Password from "./password.svg";
 import Database from "./database.svg";
 import DownArrow from "./down.svg";
 import User from "./user.svg";
+import Checked from "./checked.svg";
+import Unchecked from "./unchecked.svg";
 
 const SvgIcon = {
   Bell,
@@ -15,5 +17,7 @@ const SvgIcon = {
   Database,
   DownArrow,
   User,
+  Checked,
+  Unchecked,
 };
 export default SvgIcon;

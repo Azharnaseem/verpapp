@@ -7,7 +7,7 @@ import { width } from "~utills/Dimension";
 import AppColors from "~utills/AppColors";
 import styles from "./styles";
 import CommonStyles from "~utills/CommonStyles";
-const TextField = (
+const TextInputSimple = (
   {
     errorMsg,
     mainContainerStyle = {},
@@ -86,40 +86,40 @@ const TextField = (
             {prefixIcon}
           </TouchableOpacity>
         )}
-        <Controller
+        {/* <Controller
           control={control}
           name={name}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              textAlignVertical={textAlignVertical}
-              editable={editable}
-              ref={ref}
-              placeholder={placeholder}
-              placeholderTextColor={placeholderColor}
-              style={[
-                styles.inputText,
-                containerStyle,
-                {
-                  width: Icon ? width(68) : width(90),
-                },
-              ]}
-              keyboardType={keyboardType}
-              multiline={multiline}
-              numberOfLines={numberOfLines}
-              maxLength={maxLength}
-              value={textValue ? textValue : value}
-              onChangeText={onChangeText ? onChangeText : onChange}
-              returnKeyType={returnKeyType}
-              onSubmitEditing={onSubmitEditing}
-              secureTextEntry={secureTextEntry}
-              selectionColor={AppColors.primary}
-              onFocus={onFocus}
-              onBlur={onBlurr ? onBlurr : onBlur}
-              blurOnSubmit={blurOnSubmit}
-              autoCapitalize={autoCapitalize}
-            />
-          )}
+          render={({ field: { onChange, onBlur, value } }) => ( */}
+        <TextInput
+          textAlignVertical={textAlignVertical}
+          editable={editable}
+          ref={ref}
+          placeholder={placeholder}
+          placeholderTextColor={placeholderColor}
+          style={[
+            styles.inputText,
+            containerStyle,
+            {
+              width: Icon ? width(68) : width(90),
+            },
+          ]}
+          keyboardType={keyboardType}
+          multiline={multiline}
+          numberOfLines={numberOfLines}
+          maxLength={maxLength}
+          value={textValue}
+          onChangeText={onChangeText}
+          returnKeyType={returnKeyType}
+          onSubmitEditing={onSubmitEditing}
+          secureTextEntry={secureTextEntry}
+          selectionColor={AppColors.primary}
+          onFocus={onFocus}
+          // onBlur={onBlur}
+          blurOnSubmit={blurOnSubmit}
+          autoCapitalize={autoCapitalize}
         />
+        {/* )} */}
+        {/* /> */}
         {Icon && (
           <TouchableOpacity
             activeOpacity={0.8}
@@ -131,9 +131,9 @@ const TextField = (
         )}
       </View>
       <SmallText size={2.4} color={AppColors.red} textStyles={styles.errorText}>
-        {errorMsg?.message ? errorMsg.message : ""}
+        {errorMsg}
       </SmallText>
     </TouchableOpacity>
   );
 };
-export default forwardRef(TextField);
+export default forwardRef(TextInputSimple);
