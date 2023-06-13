@@ -18,6 +18,10 @@ target 'BoilerPlate' do
        :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  pod 'react-native-blob-util', :path => '../node_modules/react-native-blob-util'
+
+  pod 'react-native-pdf', :path => '../node_modules/react-native-pdf'
+
   target 'BoilerPlateTests' do
     inherit! :complete
     # Pods for testing
