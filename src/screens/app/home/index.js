@@ -5,6 +5,8 @@ import { Button, ScreenWrapper } from "~components";
 import { setAppLoader } from "~redux/slices/config";
 import { selectUserMeta, setIsLoggedIn, setUserMeta } from "~redux/slices/user";
 import styles from "./styles";
+import PDFGenerator from "~utills/pdfGenerator";
+// import { PDFGenerator } from "~utills/Methods";
 export default function Home({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
@@ -12,6 +14,7 @@ export default function Home({ navigation, route }) {
     <ScreenWrapper>
       <View style={styles.mainViewContainer}>
         <Text style={styles.title}>HOME SCREEN</Text>
+        <PDFGenerator />
         <Text style={styles.title}>{userInfo?.name}</Text>
         <Text style={styles.title}>{userInfo?.email}</Text>
         {/* <Button title={"Drawer"} onPress={() => navigation.toggleDrawer()} /> */}
