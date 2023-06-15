@@ -53,7 +53,7 @@ export default function IntroScreen({ navigation, route }) {
           fontFamily={FontFamily.montserrat_Bold}
           containerStyle={styles.btnStyle}
           title={"Get Started"}
-          onPress={() => navigation.navigate(ScreenNames.LOGIN)}
+          onPress={() => navigation.navigate(ScreenNames.REGISTERSCREEN)}
         />
       </View>
     </ScreenWrapper>

@@ -6,5 +6,6 @@ const ScreenNames = {
   CONTRACT: "Contract",
   ACCOUNTS: "Accounts",
   AZHAR:"Azhar",
+  REGISTERSCREEN:"ResgisterScreen"
 };
 export default ScreenNames;
