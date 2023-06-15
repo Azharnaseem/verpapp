@@ -63,7 +63,7 @@ export default function Home({ navigation, route }) {
         <Text style={styles.title}>{userInfo?.name}</Text>
         <Text style={styles.title}>{userInfo?.email}</Text>
        {/* {pdfFile&&  */}
-       
+{/*        
        <View style={{flex:1,backgroundColor:AppColors.green,alignItems:"center",justifyContent:"center"}}>
         <Pdf  trustAllCerts={false}
                     source={{uri:'http://samples.leanpub.com/thereactnativebook-sample.pdf',cache: true,}}
@@ -80,11 +80,11 @@ export default function Home({ navigation, route }) {
                         console.log(`Link pressed: ${uri}`);
                     }}
                     style={styles.pdf}/>
-                    </View>
+                    </View> */}
                     {/* } */}
 
 
-        <Button title={"create  pdf "} onPress={() => generatePDF()} />
+        {/* <Button title={"create  pdf "} onPress={() => generatePDF()} /> */}
         <View style={CommonStyles.marginBottom_2}/>
         <Button
           title={"Logout"}

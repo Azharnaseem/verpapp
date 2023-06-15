@@ -5,13 +5,13 @@ import { Button, ScreenWrapper } from "~components";
 import { setAppLoader } from "~redux/slices/config";
 import { selectUserMeta, setIsLoggedIn, setUserMeta } from "~redux/slices/user";
 import styles from "./styles";
-export default function Azhar({ navigation, route }) {
+export default function Accounts({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
   return (
     <ScreenWrapper>
       <View style={styles.mainViewContainer}>
-        <Text style={styles.title}>azhar SCREEN</Text>
+        <Text style={styles.title}>Accounts SCREEN</Text>
         
 
         <Button

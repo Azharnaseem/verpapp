@@ -10,6 +10,8 @@ import { AdminDrawer, HomeScreen } from "~screens/app";
 import { selectIsLoggedIn } from "~redux/slices/user";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import styles from "./styles";
+import Azhar from "~screens/app/azhar";
+import BottomTabBar from "./bottomTabBar";
 // import styles from "./styles";
 // import styles from "./styles";
 const Stack = createNativeStackNavigator();
@@ -49,10 +51,11 @@ export default function Routes() {
         // </Drawer.Navigator>
 
         <Stack.Navigator
-          initialRouteName={ScreenNames.HOME}
+          initialRouteName={ScreenNames.BOTTOMTABBAR}
           screenOptions={{ header: () => false }}
         >
-          <Stack.Screen name={ScreenNames.HOME} component={HomeScreen} />
+          <Stack.Screen name={ScreenNames.BOTTOMTABBAR} component={BottomTabBar} />
+          <Stack.Screen name={ScreenNames.AZHAR} component={Azhar} />
         </Stack.Navigator>
       )}
     </NavigationContainer>
