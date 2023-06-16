@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   mainViewContainer: {
     flex: 1,
     backgroundColor: AppColors.white,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center'
   },
   title: {

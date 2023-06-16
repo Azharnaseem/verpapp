@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View,Keyboard } from "react-native";
 import React, { useState, useEffect } from "react";
 import styles from "./styles";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -25,8 +25,29 @@ import { SmallText } from "~components/texts";
 import AccountSvg from "~assets/SVG/AccountSvg";
 // import { HomeSvg, ProfileSvg } from "~assets/svg";
 
-const BottomTabBar = () => {
+const BottomTabBar = ({navigation}) => {
   const [visible, setVisible] = useState(true);
+  const [keyboardOpen, setKeyboardOpen] = useState(false);
+  // useEffect(() => {
+  //   const keyboardDidShowListener = Keyboard.addListener(
+  //     'keyboardDidShow',
+  //     () => {
+  //       setKeyboardOpen(true);
+  //     }
+  //   );
+
+  //   const keyboardDidHideListener = Keyboard.addListener(
+  //     'keyboardDidHide',
+  //     () => {
+  //       setKeyboardOpen(false);
+  //     }
+  //   );
+
+  //   return () => {
+  //     keyboardDidShowListener.remove();
+  //     keyboardDidHideListener.remove();
+  //   };
+  // }, []);
   // const isFocused = useIsFocused();
   // console.log("LOGEDDD ISSSS=========S", isFocused);
   const Tab = createBottomTabNavigator();
@@ -42,6 +63,8 @@ const BottomTabBar = () => {
         header: () => false,
         tabBarStyle: styles.tab,
         tabBarShowLabel: false,
+        tabBarHideOnKeyboard:true,
+       
       }}
     >
       <Tab.Screen

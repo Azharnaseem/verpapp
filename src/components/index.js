@@ -5,3 +5,4 @@ export { default as ScreenWrapper } from "./screenWrapper";
 export { default as TextField } from "./textFields";
 export { default as CheckList } from "./checkList";
 export { default as BottomSheet } from "./bottomSheet";
+export { default as HomeHeader } from "./homeHeader";

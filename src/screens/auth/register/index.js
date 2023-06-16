@@ -26,6 +26,7 @@ import SvgIcon from "~assets/SVG";
 import { DatabaseCountries } from "~utills/DummyData";
 import CommonStyles from "~utills/CommonStyles";
 import TextInputSimple from "~components/textInputSimple";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function ResgisterScreen({ navigation, route }) {
   const dispatch = useDispatch();
   const titleRef = useRef(null);
@@ -55,24 +56,19 @@ export default function ResgisterScreen({ navigation, route }) {
     resolver: yupResolver(schema),
   });
   const _resgister = async (data) => {
-    console.log("=================,",data);
+   let getData= await AsyncStorage.getItem("userData");
+   console.log("====",getData);
+   if(getData===null){
+    const arrayData = [data]
+    await AsyncStorage.setItem("userData",JSON.stringify(arrayData));
+   }else  {
+    // await AsyncStorage.clear();
+
+    const parseData = JSON.parse(getData);
+    const arrayData = [...parseData,data];
+    await AsyncStorage.setItem("userData",JSON.stringify(arrayData));
     navigation.navigate(ScreenNames.LOGIN)
-    // let details = {
-    //   email: data.email,
-    //   password: data.password,
-      
-    // };
-    // dispatch(setAppLoader(true));
-    // setTimeout(() => {
-    //   dispatch(setIsLoggedIn(true));
-    //   dispatch(
-    //     setUserMeta({
-    //       name: "John",
-    //       email: "John Doe",
-    //     })
-    //   );
-    //   dispatch(setAppLoader(false));
-    // }, 600);
+   }
   };
   const renderSelectedCountry = ({ item, index }) => {
     return (

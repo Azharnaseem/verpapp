@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text,Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, ScreenWrapper } from "~components";
+import { Button, HomeHeader, ScreenWrapper } from "~components";
 import { setAppLoader } from "~redux/slices/config";
 import { selectUserMeta, setIsLoggedIn, setUserMeta } from "~redux/slices/user";
 import styles from "./styles";
@@ -11,6 +11,11 @@ import Pdf from 'react-native-pdf';
 import CommonStyles from "~utills/CommonStyles";
 import { height, width } from "~utills/Dimension";
 import AppColors from "~utills/AppColors";
+import { SmallText } from "~components/texts";
+import { FontFamily } from "~assets/fonts";
+import SearchField from "~components/searchField";
+import { welcomeImage } from "~assets/images";
+
 // import { PDFGenerator } from "~utills/Methods";
 export default function Home({ navigation, route }) {
   const dispatch = useDispatch();
@@ -56,12 +61,26 @@ export default function Home({ navigation, route }) {
     }
   };
   return (
-    <ScreenWrapper>
+    <ScreenWrapper headerUnScrollable={()=>{
+      return(
+        <View>
+          <HomeHeader/>
+        </View>
+      )
+    }}>
       <View style={styles.mainViewContainer}>
+        <View style={{alignSelf:"flex-start",marginHorizontal:width(3.5) ,}}>
+        <SmallText size={5} fontFamily={FontFamily.montserrat_Bold}>Hello ,Azhar Naseem</SmallText>
+        <SmallText color={AppColors.darkGrey}>What do you want ?</SmallText>
+        <SearchField placeholder={"Search..."} containerStyle={{marginVertical:height(1)}} />
+        <Image source={welcomeImage} resizeMode="contain"  style={{width:width(93),height:width(30),}}/>
+        </View>
+        
+      
         <Text style={styles.title}>HOME SCREEN</Text>
         {/* <PDFGenerator /> */}
-        <Text style={styles.title}>{userInfo?.name}</Text>
-        <Text style={styles.title}>{userInfo?.email}</Text>
+        {/* <Text style={styles.title}>{userInfo?.name}</Text>
+        <Text style={styles.title}>{userInfo?.email}</Text> */}
        {/* {pdfFile&&  */}
 {/*        
        <View style={{flex:1,backgroundColor:AppColors.green,alignItems:"center",justifyContent:"center"}}>
@@ -85,7 +104,7 @@ export default function Home({ navigation, route }) {
 
 
         {/* <Button title={"create  pdf "} onPress={() => generatePDF()} /> */}
-        <View style={CommonStyles.marginBottom_2}/>
+        {/* <View style={CommonStyles.marginBottom_2}/>
         <Button
           title={"Logout"}
           onPress={() => {
@@ -96,7 +115,7 @@ export default function Home({ navigation, route }) {
               dispatch(setAppLoader(false));
             }, 600);
           }}
-        />
+        /> */}
       </View>
     </ScreenWrapper>
   );

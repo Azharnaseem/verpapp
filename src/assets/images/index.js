@@ -7,3 +7,5 @@ export { default as User } from "./user.png";
 export { default as AddsIcon } from "./addsimage.png";
 export { default as CarIcon } from "./car.png";
 export { default as Welcome } from "./welcome.jpg";
+export { default as AppIcon } from "./appIcon.png";
+export { default as welcomeImage } from "./appshow.png";

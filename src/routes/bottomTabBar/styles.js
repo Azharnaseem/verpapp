@@ -6,13 +6,14 @@ import { height, width } from "~utills/Dimension";
 
 const styles = StyleSheet.create({
   tab: {
+  
     // width: width(90),
 
     height: Platform.OS == "ios" ? height(11) : height(9),
-   borderTopWidth: 2,
+    borderTopWidth: 2,
     borderTopColor: AppColors.primary,
     paddingBottom: Platform.OS == "ios" ? height(3) : height(0.3),
-    position: "absolute",
+    // position: "absolute",
     // borderWidth: width(0.1),
     // borderRadius: width(2),
     // borderTopLeftRadius: width(5),
