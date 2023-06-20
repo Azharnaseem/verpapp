@@ -135,9 +135,7 @@ export default function Login({ navigation, route }) {
           innerRow={{ width: width(85) }}
           label={"Database"}
           placeholder={"Enter your Database "}
-          // control={control}
-          // errorMsg={errors?.database}
-          // name="database"
+         
           editable={false}
           textValue={country}
           onPress={() => {
@@ -145,15 +143,11 @@ export default function Login({ navigation, route }) {
           }}
           Icon={
             <SvgIcon.DownArrow />
-            // <OpenEyeSVG
-            //   color={passwordVisible ? AppColors.primary : AppColors.darkGrey}
-            // />
+           
           }
-          // secureTextEntry={!passwordVisible}
-          // onIconPress={() => setPasswordVisible(!passwordVisible)}
+         
           ref={dataBaseRef}
-          // onPressForgot={() => navigation.navigate(ScreenNames.FORGOTPASSWORD)}
-          // showForgotPassword
+       
         />
         <Button
           fontFamily={FontFamily.montserrat_Bold}

@@ -62,6 +62,9 @@ const CommonStyles = StyleSheet.create({
     marginBottom_5: {
         marginBottom: height(5)
     },
+    marginBottom_12: {
+        marginBottom: height(12),
+      },
     paddingLeft_1: {
         paddingLeft: width(1)
     },

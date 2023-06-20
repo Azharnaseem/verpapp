@@ -2,6 +2,7 @@ const AppColors = {
   transparent: "transparent",
   primary: "#ED5614",
   scndry: "#182470",
+  graylight:"#3F3F3F",
   primaryLight: "#80E9DC",
   primaryLight1: "#A7FFFF",
   friz: "#62E7A7",

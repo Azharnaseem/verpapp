@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
   inputText: {
     color: AppColors.textColor,
     fontFamily: FontFamily.montserrat_Regular,
-    fontSize: width(3.8),
-    height: Platform.OS === "android" ? height(5.5) : height(5),
+    fontSize: width(3.5),
+    // height: Platform.OS === "android" ? height(5.5) : height(5),
     backgroundColor: AppColors.white,
     flex: 1,
     borderRadius: width(4),

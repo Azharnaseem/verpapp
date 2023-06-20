@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { View, Text,Image } from "react-native";
+import React, { useRef, useState } from "react";
+import { View, Text,Image, FlatList } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, HomeHeader, ScreenWrapper } from "~components";
+import { Button, ConfirmationModal, HomeHeader, LeadsOppComponent, ScreenWrapper } from "~components";
 import { setAppLoader } from "~redux/slices/config";
 import { selectUserMeta, setIsLoggedIn, setUserMeta } from "~redux/slices/user";
 import styles from "./styles";
@@ -15,12 +15,15 @@ import { SmallText } from "~components/texts";
 import { FontFamily } from "~assets/fonts";
 import SearchField from "~components/searchField";
 import { welcomeImage } from "~assets/images";
+import ScreenNames from "~routes/routes";
+
 
 // import { PDFGenerator } from "~utills/Methods";
 export default function Home({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
   const [pdfFile,setPdfFile]=useState(null);
+  const confirmationModal=useRef();
   console.log("pdf file is :",pdfFile);
   const generatePDF = async () => {
     try {
@@ -60,24 +63,107 @@ export default function Home({ navigation, route }) {
       console.log(error);
     }
   };
+  const RenderLeads = ({ item, index }) => {
+    return (
+      <View style={{ marginHorizontal: width(1) }}>
+        <LeadsOppComponent containerViewStyle={{width:width(70)}}/>
+      </View>
+    );
+  };
+  const RenderOppartunities = ({ item, index }) => {
+    return (
+      <View style={{ marginVertical: width(1) }}>
+        <LeadsOppComponent showLead={false}/>
+      </View>
+    );
+  };
+
   return (
-    <ScreenWrapper headerUnScrollable={()=>{
+    <ScreenWrapper scrollEnabled headerUnScrollable={()=>{
       return(
         <View>
-          <HomeHeader/>
+          <HomeHeader onPressLogout={()=>{
+             confirmationModal.current.show();
+          }}/>
         </View>
       )
     }}>
       <View style={styles.mainViewContainer}>
-        <View style={{alignSelf:"flex-start",marginHorizontal:width(3.5) ,}}>
+        <View style={{alignSelf:"flex-start",marginHorizontal:width(3.5) }}>
         <SmallText size={5} fontFamily={FontFamily.montserrat_Bold}>Hello ,Azhar Naseem</SmallText>
         <SmallText color={AppColors.darkGrey}>What do you want ?</SmallText>
         <SearchField placeholder={"Search..."} containerStyle={{marginVertical:height(1)}} />
         <Image source={welcomeImage} resizeMode="contain"  style={{width:width(93),height:width(30),}}/>
+        <View style={{flexDirection:"row",justifyContent:"space-between",paddingHorizontal:width(1)}}>
+          <SmallText size={4} color={AppColors.scndry} fontFamily={FontFamily.montserrat_SemiBold}>Leads</SmallText>
+          <SmallText onPress={()=>{
+            navigation.navigate(ScreenNames.AllLEADS)
+          }}   size={4} color={AppColors.primary} fontFamily={FontFamily.montserrat_SemiBold}>View All</SmallText>
+         
+        </View>
+        </View>
+        <View style={{ height:height(19) ,paddingVertical:height(1)}}>
+        <FlatList
+          data={["1", "2", "3", "5"]}
+          keyExtractor={(i, n) => n}
+          renderItem={
+             RenderLeads 
+          }
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          loop
+          style={styles.flatlistFilterStyle}
+          contentContainerStyle={[
+            // CommonStyles.marginBottom_5,
+            // CommonStyles.paddingLeft_4,
+            CommonStyles.paddingRight_4,
+          ]}
+          showsVerticalScrollIndicator={false} 
+        />
+        </View>
+        <View style={{ width:width(95),flexDirection:"row",justifyContent:"space-between",paddingHorizontal:width(1)}}>
+          <SmallText size={4} color={AppColors.scndry} fontFamily={FontFamily.montserrat_SemiBold}>Opportunity</SmallText>
+          <SmallText onPress={()=>{
+            navigation.navigate(ScreenNames.ALLOPPARTUNATIES)
+          }}  size={4} color={AppColors.primary} fontFamily={FontFamily.montserrat_SemiBold}>View All</SmallText>
+        </View>
+        <View style={{marginVertical:height(1)}} >
+        <FlatList
+          data={["1", "2", "3", "5"]}
+          keyExtractor={(i, n) => n}
+          renderItem={RenderOppartunities}
+          loop
+          // style={styles.flatlistFilterStyle}
+          contentContainerStyle={[
+            CommonStyles.marginBottom_5,
+         
+          ]}
+          showsVerticalScrollIndicator={false}
+          // ListHeaderComponent={() => (
+          //   <Text
+          //     style={{
+          //       textTransform: "uppercase",
+          //       // alignSelf: "center",
+          //       paddingVertical: height(1.5),
+          //       marginLeft: width(2),
+          //       fontSize: width(3.5),
+          //       color: AppColors.black,
+          //       fontFamily: FontFamily.inter_Bold,
+          //       // marginBottom: height(2),
+          //       // textDecorationLine: "underline",
+
+          //       // fontWeight: "bold",
+          //     }}
+          //   >
+          //     {`Conversation`}
+          //   </Text>
+          // )}
+        />
         </View>
         
+        
       
-        <Text style={styles.title}>HOME SCREEN</Text>
+        
         {/* <PDFGenerator /> */}
         {/* <Text style={styles.title}>{userInfo?.name}</Text>
         <Text style={styles.title}>{userInfo?.email}</Text> */}
@@ -117,6 +203,21 @@ export default function Home({ navigation, route }) {
           }}
         /> */}
       </View>
+      <ConfirmationModal
+      yesBtnName="Logout"
+        ref={confirmationModal}
+        text={`Are you sure to logout?`}
+        onNoPress={() => confirmationModal.current.hide()}
+        onYesPress={() => {
+          dispatch(setAppLoader(true));
+          setTimeout(() => {
+            dispatch(setUserMeta(null));
+            dispatch(setIsLoggedIn(false));
+            dispatch(setAppLoader(false));
+          }, 600);
+          confirmationModal.current.hide();
+        }}
+      />
     </ScreenWrapper>
   );
 }

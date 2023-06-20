@@ -5,18 +5,19 @@ import styles from "./styles";
 import SvgIcon, { CheckedSvg, UncheckedSvg } from "../../assets/SVG";
 import { AppIcon } from "~assets/images";
 import { height, width } from "~utills/Dimension";
+import { View } from "react-native";
 
 const HomeHeader = ({
   containerViewStyle = {},
-  onPress,
+  onPressLogout,
 }) => {
   return (
-    <Pressable onPress={onPress} style={[styles.container, containerViewStyle]}>
+    <View style={[styles.container, containerViewStyle]}>
       <Image source={AppIcon} resizeMode="contain"  style={{width:width(13),height:width(13)}}/>
-      <Pressable onPress={onPress}>
+      <Pressable onPress={onPressLogout}>
          <SvgIcon.Logout /> 
       </Pressable>
-    </Pressable>
+    </View>
   );
 };
 

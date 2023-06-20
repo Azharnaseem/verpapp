@@ -177,7 +177,8 @@ export default function ResgisterScreen({ navigation, route }) {
           containerStyle={styles.btnStyle}
           // buttonIcon={<LoginSVG />}
           title={"Create account"}
-          onPress={handleSubmit(_resgister)}
+          // onPress={handleSubmit(_resgister)}
+          onPress={()=>navigation.navigate(ScreenNames.LOGIN)}
         />
         {/* <View style={styles.row}>
             <HorizontalLine customWidth="30%" />
