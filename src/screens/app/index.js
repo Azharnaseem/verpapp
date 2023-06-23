@@ -4,3 +4,5 @@ export { default as Contract } from "./contract";
 export { default as Accounts } from "./accounts";
 export { default as AllOppartunaties } from "./allOppartunaties";
 export { default as AllLeads } from "./allLeads";
+export { default as SearchScreen } from "./searchScreen";
+export { default as LeadDetailInfo } from "./leadDetailInfo";

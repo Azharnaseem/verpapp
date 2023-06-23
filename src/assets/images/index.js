@@ -9,4 +9,7 @@ export { default as CarIcon } from "./car.png";
 export { default as Welcome } from "./welcome.jpg";
 export { default as AppIcon } from "./appIcon.png";
 export { default as welcomeImage } from "./appshow.png";
+export { default as Flower } from "./flwr.png";
+export { default as Flower2 } from "./flwr2.png";
+export { default as Malta } from "./malta.png";
 

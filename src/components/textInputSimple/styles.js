@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: AppColors.primary,
     paddingHorizontal: width(2.2),
-    height: height(6),
+    height: height(6.5),
   },
   prefixIcon: {
     width: width(10),
@@ -35,12 +35,13 @@ const styles = StyleSheet.create({
   },
   inputText: {
     color: AppColors.textColor,
+    
     fontFamily: FontFamily.montserrat_Regular,
     fontSize: width(3.5),
-    // height: Platform.OS === "android" ? height(5.5) : height(5),
-    backgroundColor: AppColors.white,
+    height: Platform.OS === "android" ? height(5.5) : height(5),
+    // backgroundColor: AppColors.red,
     flex: 1,
-    borderRadius: width(4),
+    // borderRadius: width(4),
     paddingHorizontal: width(4),
     // borderTopWidth: 1,
     // borderBottomWidth: 1,

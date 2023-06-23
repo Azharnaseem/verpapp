@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
   },
   flatlistFilterStyle: {
     paddingLeft: width(4),
+    paddingRight:width(4),
 
     // height: height(20),
     // backgroundColor: "red",

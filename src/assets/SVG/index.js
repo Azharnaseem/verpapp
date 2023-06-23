@@ -11,6 +11,8 @@ import Checked from "./checked.svg";
 import Unchecked from "./unchecked.svg";
 import Logout from "./Logout.svg";
 import BackIcon from "./backicon.svg";
+import Person from "./person.svg";
+import Phone from "./phone.svg";
 
 const SvgIcon = {
   Bell,
@@ -23,5 +25,8 @@ const SvgIcon = {
   Unchecked,
   Logout,
   BackIcon,
+  Person,
+  Phone,
+
 };
 export default SvgIcon;

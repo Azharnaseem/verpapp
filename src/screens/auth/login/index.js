@@ -77,7 +77,7 @@ export default function Login({ navigation, route }) {
             setCountry(item.name);
             setTimeout(() => {
               bottomSheetRef.current.close();
-            }, 1000);
+            }, 10);
           }}
           tittle={item.name}
         />
@@ -156,6 +156,7 @@ export default function Login({ navigation, route }) {
           title={"Login"}
           onPress={handleSubmit(_login)}
         />
+        <SmallText onPress={()=>navigation.navigate(ScreenNames.REGISTERSCREEN)} >Don’t have an account?<Text style={{color:AppColors.primary,  fontFamily:FontFamily.montserrat_SemiBoldItalic}}>Register</Text></SmallText>
         {/* <View style={styles.row}>
             <HorizontalLine customWidth="30%" />
             <SmallText color={AppColors.darkGrey}>Or login use</SmallText>

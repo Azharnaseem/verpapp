@@ -9,3 +9,5 @@ export { default as HomeHeader } from "./homeHeader";
 export { default as LeadsOppComponent } from "./leadOppComponent";
 export { default as PageHeader } from "./pageHeader";
 export { default as ConfirmationModal } from "./confirmationModal";
+export { default as LeadOpprtunityInfoDetail } from "./leadOpprtunityInfoComponent";
+export { default as SliderItem } from "./sliderItem";

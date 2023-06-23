@@ -66,14 +66,28 @@ export default function Home({ navigation, route }) {
   const RenderLeads = ({ item, index }) => {
     return (
       <View style={{ marginHorizontal: width(1) }}>
-        <LeadsOppComponent containerViewStyle={{width:width(70)}}/>
+        <LeadsOppComponent containerViewStyle={{width:width(70)}}
+        onPress={() => {
+          navigation.navigate(ScreenNames.LEADDETAILINFO, {
+            id: item?.companyName,
+            name: "Lead Detail Info",
+          });
+        }}
+        />
       </View>
     );
   };
   const RenderOppartunities = ({ item, index }) => {
     return (
       <View style={{ marginVertical: width(1) }}>
-        <LeadsOppComponent showLead={false}/>
+        <LeadsOppComponent showLead={false} 
+        onPress={() => {
+          navigation.navigate(ScreenNames.LEADDETAILINFO, {
+            id: item?.companyName,
+            name: "Opportunity Detail Info",
+          });
+        }}
+        />
       </View>
     );
   };
@@ -86,14 +100,17 @@ export default function Home({ navigation, route }) {
              confirmationModal.current.show();
           }}/>
         </View>
+
+
+
       )
     }}>
       <View style={styles.mainViewContainer}>
         <View style={{alignSelf:"flex-start",marginHorizontal:width(3.5) }}>
         <SmallText size={5} fontFamily={FontFamily.montserrat_Bold}>Hello ,Azhar Naseem</SmallText>
-        <SmallText color={AppColors.darkGrey}>What do you want ?</SmallText>
-        <SearchField placeholder={"Search..."} containerStyle={{marginVertical:height(1)}} />
-        <Image source={welcomeImage} resizeMode="contain"  style={{width:width(93),height:width(30),}}/>
+        {/* <SmallText color={AppColors.darkGrey}>What do you want ?</SmallText> */}
+        {/* <SearchField placeholderColor={AppColors.black} placeholder={"Search..."} containerStyle={{marginVertical:height(1)}} /> */}
+        <Image source={welcomeImage} resizeMode="stretch" resizeMethod="resize"   style={{width:width(93),height:width(40),marginVertical:height(1)}}/>
         <View style={{flexDirection:"row",justifyContent:"space-between",paddingHorizontal:width(1)}}>
           <SmallText size={4} color={AppColors.scndry} fontFamily={FontFamily.montserrat_SemiBold}>Leads</SmallText>
           <SmallText onPress={()=>{
@@ -102,7 +119,7 @@ export default function Home({ navigation, route }) {
          
         </View>
         </View>
-        <View style={{ height:height(19) ,paddingVertical:height(1)}}>
+        <View style={{flex:1,alignItems:"center",justifyContent:"center" }}>
         <FlatList
           data={["1", "2", "3", "5"]}
           keyExtractor={(i, n) => n}
@@ -114,9 +131,10 @@ export default function Home({ navigation, route }) {
           loop
           style={styles.flatlistFilterStyle}
           contentContainerStyle={[
+          { paddingVertical:height(1)},
             // CommonStyles.marginBottom_5,
             // CommonStyles.paddingLeft_4,
-            CommonStyles.paddingRight_4,
+            CommonStyles.paddingRight_6
           ]}
           showsVerticalScrollIndicator={false} 
         />

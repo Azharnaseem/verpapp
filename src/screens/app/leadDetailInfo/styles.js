@@ -6,13 +6,8 @@ const styles = StyleSheet.create({
   mainViewContainer: {
     flex: 1,
     backgroundColor: AppColors.white,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center'
-  },
-  btnStyle:{
-
-    marginVertical:height(3)
-
   },
   title: {
     color: AppColors.black,
@@ -20,11 +15,11 @@ const styles = StyleSheet.create({
     fontSize: width(4),
     marginBottom: height(2)
   },
-  pdf:{
+  flatlistFilterStyle: {
+    paddingLeft: width(4),
 
-    // backgroundColor:"red",
-    height:height(60),
-    width:width(100)
-  }
+    // height: height(20),
+    // backgroundColor: "red",
+  },
 });
 export default styles;

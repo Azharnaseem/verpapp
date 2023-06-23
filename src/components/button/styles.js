@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppColors.primary,
     width: width(85),
     alignSelf: "center",
-    paddingVertical: height(1.8),
+    paddingVertical: height(1.5),
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.5,

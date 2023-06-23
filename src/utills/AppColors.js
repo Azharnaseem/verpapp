@@ -10,6 +10,7 @@ const AppColors = {
   dryScalp: "#DAE188",
   textColor: "#040814",
   grey: "#E3E9F2",
+  greyText2:"#656478",
   grey1: "#171B26",
   grey2: "#CAD0DF",
   grey3: "#F6FAFF",

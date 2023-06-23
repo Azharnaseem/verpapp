@@ -95,6 +95,9 @@ const CommonStyles = StyleSheet.create({
     paddingRight_5: {
         paddingRight: width(5)
     },
+    paddingRight_6: {
+        paddingRight: width(6.5)
+    },
     paddingTop_1: {
         paddingTop: height(1)
     },

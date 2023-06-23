@@ -8,8 +8,7 @@ import { FontFamily } from "~assets/fonts";
 // import LinearGradient from "react-native-linear-gradient";
 const LeadsOppComponent = ({
 
-  containerViewStyle = {},
-
+containerViewStyle = {},
 companyName="Agrius It",
 leadNo="123",
 type="It Support",
@@ -18,11 +17,12 @@ showLead=true,
 opportunityName="Rammes It Solutions",
 documentNo="32",
 stage="New stage",
+onPress,
 
   chatTextStyle,
 }) => {
   return (
-    <View style={[styles.container, containerViewStyle]}>
+    <Pressable onPress={onPress} style={[styles.container, containerViewStyle]}>
       {/* <LinearGradient
       style={[styles.container, containerViewStyle]}
       useAngle
@@ -69,7 +69,7 @@ stage="New stage",
 }
 
 
-    </View>
+    </Pressable>
   );
 };
 
