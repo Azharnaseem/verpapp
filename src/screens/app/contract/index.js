@@ -75,27 +75,111 @@ export default function Contract({ navigation, route }) {
 
     .header img {
       align-items: center;
-       max-width: 100%;
+    max-width: 100%;
      height: auto;
     
     }
-    .decumentInfo{
-      max-width:20%;
-      display:flex;
-      background-color:red;
-      align-items:flex-end;
-      flex-direction:row;
+    .document-container {
+      margin-top:10px;
+      background-color:"red";
+      display: flex;
+      justify-content: flex-end;
+    }
+    
+    .document-info {
+      margin-right: 20px;
+      align-items:center;
+      justify-content:center;
+    
+      margin-top:15px
+    }
+    
+    .company-info-text {
+      padding:3px;
+      margin-bottom: 5px;
     }
     .box {
-      max-width:10%
-      border: 1px solid black;
-      background-color: gray;
+    
       padding: 10px;
+      max-width: 200px; /* Adjust the value to your desired fixed width */
+      border: 2px solid #40464D;
+      background-color:  #BFBFBF;
+      word-break: break-word;
+
     }
 
     .box-row {
+      // background-color: green;
+      // inline-size: 150px;
+      // overflow-wrap: ;
       margin-bottom: 2px;
     }
+    .header-container {
+      margin-top:10px;
+      // display: flex;
+      // justify-content: space-between;
+      background-color: darkblue;
+      width: 100%;
+    }
+    
+    .heading {
+      font-size:15px;
+      color: white;
+      padding: 5px;
+    }
+    .heading-wrapper {
+      display: flex;
+      justify-content: space-between;
+      width: 68%;
+    }
+    .main-container {
+      margin-top:10px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+    
+    .inner-container {
+      padding: 1px;
+      width: 48%;
+      // background-color:green
+    }
+    
+    table {
+      margin-top:10px;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #40464D;
+    }
+    
+    th {
+      background-color: #BFBFBF;
+      color: black;
+      font-weight:bold;
+    }
+    .custom-table {
+      margin-top:20px;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .column-header, .column-data {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #40464D;
+    }
+    
+    .column-header {
+      background-color: #BFBFBF;
+      color: black;
+    }
+    
+    
   </style>
 </head>
 <body>
@@ -109,22 +193,128 @@ export default function Contract({ navigation, route }) {
       <div class="company-info-text">Website: www.agriusit.com</div>
     </div>
     <div class="header">
-      <img src="https://lh3.googleusercontent.com/p/AF1QipPSI5wGdZMdCQ4XMo7hr-blFoaczv6TOXK2T5bP=s1360-w1360-h1020" alt="Company Logo" width="100" height="100">
+      <img src="https://lh3.googleusercontent.com/p/AF1QipPSI5wGdZMdCQ4XMo7hr-blFoaczv6TOXK2T5bP=s1360-w1360-h1020" alt="Company Logo" width="150" height="150">
     </div>
     <div class="quotation-heading">QUOTATION</div>
   </div>
-  <div class="decumentInfo">
-    <div>
-      <div class="company-info-text">Decument No</div>
-      <div class="company-info-text">Decument Date</div>
-      <div class="company-info-text">Quote Subject</div>
-    </div>
-    <div class="box">
-      <div class="box-row">Azhar</div>
-      <div class="box-row">Waqr</div>
-      <div class="box-row">Murtaza</div>
-    </div>
+
+<div class="document-container">
+  <div class="document-info">
+    <div class="company-info-text">Document No</div>
+    <div class="company-info-text">Document Date</div>
+    <div class="company-info-text">Quote Subject</div>
   </div>
+  <div class="box">
+    <div class="box-row">OP-PK-01-0109</div>
+    <div class="box-row">10/02/2021</div>
+    <div class="box-row">Re:Required Prices:Hard Devic</div>
+  </div>
+</div>
+
+<div class="header-container">
+  <div class="heading-wrapper">
+     <h1 class="heading">Customer</h1>
+    <h1 class="heading">Delivery Address</h1>
+  </div>
+</div>
+
+
+<div class="main-container">
+  <div class="inner-container">
+     <div class="company-info-texts"><b>Customer:</b>Premier Star Technology (Private) Limited </div>
+     <div class="company-info-texts"><b>Atn:</b>Muhammad Zaheed Khan</div>
+     <div class="company-info-texts"><b>Address:</b>Suite No. 305, 3rd Floor, Shah Tower, Main Double Road, E-11/2, Islamabad, Pakistan</div>
+  </div>
+  <div class="inner-container">
+        <div class="company-info-texts"><b>Country:</b>Pakistan</div>
+        <div class="company-info-texts"><b>City:</b>Islamabad</div>
+       
+  </div>
+</div>
+
+<div class="main-container">
+  <div class="inner-container">
+     <div class="company-info-texts"><b>Contact No:</b>+92-51-230 4998 </div>
+     <div class="company-info-texts"><b>Email:</b>zaheed@pstechnology.ae</div>
+     
+  </div>
+  <div class="inner-container">
+        <div class="company-info-texts"><b>* LT = Lead Time (Working Days)</b></div>
+        <div class="company-info-texts"><b>Quote Validity = 7 Days or while stock last</b></div>
+       
+  </div>
+</div>
+
+<table>
+  <tr>
+    <th>Sales Person</th>
+    <th>Email</th>
+    <th>Payment Terms</th>
+    <th>INCOTERMS</th>
+    <th>CURRENCY</th>
+  </tr>
+  <tr>
+    <td>MUHAMMAD FAKHAR ALI</td>
+    <td>m.fakhar@agriusit.com</td>
+    <td>Pre-Payment</td>
+    <td>DDP</td>
+    <td>US$</td>
+  </tr>
+</table>
+   
+
+
+
+<table class="custom-table">
+<tr>
+  <th class="column-header">QTY</th>
+  <th class="column-header">ITEM/PART NO</th>
+  <th class="column-header">DESCRIPTION</th>
+  <th class="column-header">LT *</th>
+  <th class="column-header">WARRANTY<br>(MONTH)</th>
+  <th class="column-header">STATE</th>
+  <th class="column-header">UNIT PRICE</th>
+  <th class="column-header">TOTAL</th>
+</tr>
+<tr>
+  <td class="column-data">1.00</td>
+  <td class="column-data">0M40TH</td>
+  <td class="column-data">DELL 8TB, SAS, 12GBPS, 7.2K RPM</td>
+  <td class="column-data">16-18</td>
+  <td class="column-data">3</td>
+  <td class="column-data">Refurb</td>
+  <td class="column-data">514.80</td>
+  <td class="column-data">514.80</td>
+</tr>
+<tr>
+  <td class="column-data">1.00</td>
+  <td class="column-data">0GWFRY</td>
+  <td class="column-data">DELL 300GB, SAS, 12GBPS, 10K</td>
+  <td class="column-data">16-18</td>
+  <td class="column-data">3</td>
+  <td class="column-data">Refurb</td>
+  <td class="column-data">387.08</td>
+  <td class="column-data">387.08</td>
+</tr>
+</table>
+
+
+
+
+<div class="document-container">
+  <div class="document-info">
+    <div class="company-info-text">Sub Total</div>
+    <div class="company-info-text">GST/SST</div>
+    <div class="company-info-text">Total</div>
+  </div>
+  <div class="box">
+    <div class="box-row">1,933,33</div>
+    <div class="box-row">123.00</div>
+    <div class="box-row">3,333,3.00</div>
+  </div>
+</div>
+
+
   </div>
 </body>
 </html>
@@ -156,7 +346,7 @@ export default function Contract({ navigation, route }) {
             height:height(70),
             width:width(100),
             // flex: 1,
-            backgroundColor: AppColors.pink,
+            backgroundColor: AppColors.red,
             alignItems: "center",
             justifyContent: "center",
           }}

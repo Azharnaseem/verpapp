@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
   },
   pdf:{
 
-    // backgroundColor:"red",
-    height:height(60),
+    backgroundColor:AppColors.white,
+    height:height(70),
     width:width(100)
   }
 });

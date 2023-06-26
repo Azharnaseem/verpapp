@@ -18,10 +18,10 @@ const styles = StyleSheet.create({
     width: width(90),
     backgroundColor: AppColors.white,
     borderRadius: width(2),
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: AppColors.primary,
     paddingHorizontal: width(2.2),
-    height: height(6.5),
+    height: height(7),
   },
   prefixIcon: {
     width: width(10),
@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
     
     fontFamily: FontFamily.montserrat_Regular,
     fontSize: width(3.5),
-    height: Platform.OS === "android" ? height(5.5) : height(5),
-    // backgroundColor: AppColors.red,
+    height: Platform.OS === "android" ? height(6) : height(5),
+    //  backgroundColor: AppColors.red,
     flex: 1,
     // borderRadius: width(4),
     paddingHorizontal: width(4),
