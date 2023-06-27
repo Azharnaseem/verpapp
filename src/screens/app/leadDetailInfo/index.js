@@ -30,7 +30,10 @@ export default function LeadDetailInfo({ navigation, route }) {
   const RenderLeadsInfo = ({ item, index }) => {
     return (
       <View style={{ marginVertical: width(1) }}>
-         <LeadOpprtunityInfoDetail phoneNumber="+923407685573" onPressPhoneNo={makePhoneCall} onPressEmail={() => Linking.openURL('mailto:support@example.com') } />
+         <LeadOpprtunityInfoDetail phoneNumber="+923407685573"
+          onPressPhoneNo={makePhoneCall} 
+          onPressEmail={() => Linking.openURL('mailto:support@example.com') } 
+          onPressPdf={()=>navigation.navigate(ScreenNames.PDFREPORTSCREEN)}/>
       </View>
     );
   };

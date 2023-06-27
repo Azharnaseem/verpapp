@@ -6,12 +6,13 @@ import { IntroScreen, LoginScreen, ResgisterScreen } from "~screens/auth";
 import { Loader } from "~components";
 import ScreenNames from "./routes";
 import SplashScreen from "react-native-splash-screen";
-import { AdminDrawer, AllLeads, AllOppartunaties, HomeScreen, LeadDetailInfo, SearchScreen } from "~screens/app";
+import { Accounts, AdminDrawer, AllLeads, AllOppartunaties, Contract, HomeScreen, LeadDetailInfo, PdfReportScreen, SearchScreen } from "~screens/app";
 import { selectIsLoggedIn } from "~redux/slices/user";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import styles from "./styles";
 import Azhar from "~screens/app/azhar";
 import BottomTabBar from "./bottomTabBar";
+import Home from "~screens/app/home";
 // import styles from "./styles";
 // import styles from "./styles";
 const Stack = createNativeStackNavigator();
@@ -57,6 +58,9 @@ export default function Routes() {
         >
           <Stack.Screen name={ScreenNames.BOTTOMTABBAR} component={BottomTabBar} />
           <Stack.Screen name={ScreenNames.AZHAR} component={Azhar} />
+          <Stack.Screen name={ScreenNames.ACCOUNTS} component={Accounts} />
+          <Stack.Screen name={ScreenNames.CONTRACT} component={Contract} />
+          <Stack.Screen name={ScreenNames.HOME} component={Home} />
           <Stack.Screen name={ScreenNames.AllLEADS} component={AllLeads}
            options={{
             headerShown: false,
@@ -68,6 +72,7 @@ export default function Routes() {
           <Stack.Screen name={ScreenNames.ALLOPPARTUNATIES} component={AllOppartunaties} />
           <Stack.Screen name={ScreenNames.LEADDETAILINFO} component={LeadDetailInfo} />
           <Stack.Screen name={ScreenNames.SEARCHSCREEN} component={SearchScreen} />
+          <Stack.Screen name={ScreenNames.PDFREPORTSCREEN} component={PdfReportScreen} />
         </Stack.Navigator>
       )}
     </NavigationContainer>

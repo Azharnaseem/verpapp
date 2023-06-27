@@ -35,8 +35,8 @@ export default function Accounts({ navigation, route }) {
   return (
     <ScreenWrapper>
       <View style={styles.mainViewContainer}>
-        {/* <Text style={styles.title}>Accounts SCREEN</Text> */}
-        <FlatList
+        <Text style={styles.title}>Accounts SCREEN</Text>
+        {/* <FlatList
         pagingEnabled
         horizontal
          onScroll={(e)=>{
@@ -70,7 +70,7 @@ export default function Accounts({ navigation, route }) {
           // style={styles.flatlistFilterStyle}
           // contentContainerStyle={[CommonStyles.marginBottom_5]}
           // showsVerticalScrollIndicator={false}
-        />
+        /> */}
 
         {/* <Button
           title={"Logout"}

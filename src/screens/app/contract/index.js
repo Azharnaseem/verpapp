@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import RNHTMLtoPDF from "react-native-html-to-pdf";
 import Pdf from "react-native-pdf";
@@ -346,12 +346,13 @@ export default function Contract({ navigation, route }) {
             height:height(70),
             width:width(100),
             // flex: 1,
-            backgroundColor: AppColors.red,
+            // backgroundColor: AppColors.red,
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          <Pdf
+         {pdfFile ===null?
+           <ActivityIndicator size="large" color={AppColors.primary} />: <Pdf
             trustAllCerts={false}
             source={{
               uri:pdfFile,
@@ -370,7 +371,7 @@ export default function Contract({ navigation, route }) {
               console.log(`Link pressed: ${uri}`);
             }}
             style={styles.pdf}
-          />
+          />}
         </View>
 
          <Button containerStyle={styles.btnStyle} title={"create  pdf "} onPress={() => generatePDF()} />

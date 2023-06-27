@@ -22,6 +22,8 @@ target 'BoilerPlate' do
 
   pod 'react-native-pdf', :path => '../node_modules/react-native-pdf'
 
+  pod 'rn-fetch-blob', :path => '../node_modules/rn-fetch-blob'
+
   target 'BoilerPlateTests' do
     inherit! :complete
     # Pods for testing

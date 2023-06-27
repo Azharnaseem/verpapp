@@ -19,9 +19,9 @@ phoneNumber="+923407685574",
 department="App Developer",
 email="azha@123gmail.com",
 country="Pakistan",
-onPressPdf,
 onPressPhoneNo,
 onPressEmail,
+onPressPdf,
 chatTextStyle,
 }) => {
   return (
@@ -37,7 +37,7 @@ chatTextStyle,
       </Pressable>
       </View>
       </View>
-      <Button textStyle={styles.btnText}title={"View Pdf"} containerStyle={styles.pdfbtnStyle}/>
+      <Button onPress={onPressPdf} textStyle={styles.btnText}title={"View Pdf"} containerStyle={styles.pdfbtnStyle}/>
       </View>
       <View style={{marginTop:height(1), flexDirection:"row",justifyContent:"space-between", backgroundColor:AppColors.lightGrey ,borderRadius:width(4),padding:width(2)}} >
           <SmallText fontFamily={FontFamily.montserrat_SemiBold} color={AppColors.greyText2}>Department</SmallText>

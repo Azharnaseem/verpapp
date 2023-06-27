@@ -10,7 +10,8 @@ const ScreenNames = {
   ALLOPPARTUNATIES:"AllOppartunaties",
   AllLEADS:"AllLeads",
   SEARCHSCREEN:"SearchScreen",
-  LEADDETAILINFO:"LeadDetailInfo"
+  LEADDETAILINFO:"LeadDetailInfo",
+  PDFREPORTSCREEN:"PdfReportScreen",
 
 };
 export default ScreenNames;
