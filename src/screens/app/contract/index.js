@@ -351,8 +351,7 @@ export default function Contract({ navigation, route }) {
             justifyContent: "center",
           }}
         >
-         {pdfFile ===null?
-           <ActivityIndicator size="large" color={AppColors.primary} />: <Pdf
+         {pdfFile !==null&&<Pdf
             trustAllCerts={false}
             source={{
               uri:pdfFile,

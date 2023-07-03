@@ -11,7 +11,7 @@ import AppColors from "~utills/AppColors";
 import { height, width } from "~utills/Dimension";
 import { Logo } from "~assets/images";
 import { ActivityIndicator } from "react-native";
-import Share from 'react-native-share';
+// import Share from 'react-native-share';
 import RNFetchBlob from "rn-fetch-blob";
 import { set } from "react-native-reanimated";
 export default function PdfReportScreen({ navigation, route }) {
@@ -867,7 +867,7 @@ ${tableData
           <Button
             containerStyle={styles.btnStyle}
             title={"Share"}
-             onPress={() => sharePDf()}
+            //  onPress={() => sharePDf()}
           />
         </View>
 
