@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: "row",
     alignItems: "center",
-    borderColor: AppColors.black+70,
+    borderColor: AppColors.primary,
     borderWidth: 1.5,
     width: width(94),
     height: height(7),

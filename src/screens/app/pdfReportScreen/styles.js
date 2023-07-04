@@ -5,13 +5,13 @@ import AppColors from '../../../utills/AppColors';
 const styles = StyleSheet.create({
   mainViewContainer: {
     flex: 1,
-    // backgroundColor: "green",
+    //  backgroundColor: "green",
     justifyContent: 'center',
     alignItems: 'center'
   },
   btnStyle:{
-    width:"45%",
-    marginVertical:height(2),
+    width:"70%",
+    marginVertical:height(1),
 
   },
   title: {
@@ -21,10 +21,11 @@ const styles = StyleSheet.create({
     marginBottom: height(2)
   },
   pdf:{
-
-    backgroundColor:AppColors.white,
-    height:height(70),
-    width:width(100)
+    paddingVertical:height(2),
+    backgroundColor:AppColors.grey,
+    height:height(80),
+    width:width(100),
+     
   }
 });
 export default styles;

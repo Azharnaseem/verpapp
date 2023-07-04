@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { View, Text, FlatList, Image, Dimensions } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, ScreenWrapper, SliderItem } from "~components";
@@ -6,32 +6,39 @@ import { setAppLoader } from "~redux/slices/config";
 import { selectUserMeta, setIsLoggedIn, setUserMeta } from "~redux/slices/user";
 import styles from "./styles";
 import { imagesData } from "~utills/DummyData";
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from "react-native-reanimated";
+import DrawerModal from "~components/drawerModal";
+
+
 export default function Accounts({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
-  const [currentIndex,setCurrentIndex]=useState(0)
-//   const animation=useSharedValue(0);
-//   useEffect(()=>{
-//     animation.value=currentIndex;
-//  },[currentIndex]);
- 
-// const  renderItem=(({item,index})=>{
-//   const animatedStyle=useAnimatedStyle(()=>{
-//     return{
-//       transform:[{scale:animation.value==index?withSpring(1):withSpring(0.5)}]
-//     }
-//    })
-//   return (
-//     <Animated.View style={[
-//       {width:Dimensions.get('window').width-40,height:Dimensions.get('window').height,alignItems:"center",justifyContent:"center"},animatedStyle]}>
-//      <Image source={item?.image} style={{width:200,height:200}} resizeMode="contain"  />
-//     </Animated.View>
-//   );
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const drawerRef = useRef();
+  //   const animation=useSharedValue(0);
+  //   useEffect(()=>{
+  //     animation.value=currentIndex;
+  //  },[currentIndex]);
 
-// })
+  // const  renderItem=(({item,index})=>{
+  //   const animatedStyle=useAnimatedStyle(()=>{
+  //     return{
+  //       transform:[{scale:animation.value==index?withSpring(1):withSpring(0.5)}]
+  //     }
+  //    })
+  //   return (
+  //     <Animated.View style={[
+  //       {width:Dimensions.get('window').width-40,height:Dimensions.get('window').height,alignItems:"center",justifyContent:"center"},animatedStyle]}>
+  //      <Image source={item?.image} style={{width:200,height:200}} resizeMode="contain"  />
+  //     </Animated.View>
+  //   );
 
-  
+  // })
+
   return (
     <ScreenWrapper>
       <View style={styles.mainViewContainer}>
@@ -72,18 +79,22 @@ export default function Accounts({ navigation, route }) {
           // showsVerticalScrollIndicator={false}
         /> */}
 
-        {/* <Button
-          title={"Logout"}
+        <Button
+          title={"openDrawer"}
           onPress={() => {
-            dispatch(setAppLoader(true));
-            setTimeout(() => {
-              dispatch(setUserMeta(null));
-              dispatch(setIsLoggedIn(false));
-              dispatch(setAppLoader(false));
-            }, 600);
+            drawerRef?.current?.show();
           }}
-        /> */}
+          // onPress={() => {
+          //   dispatch(setAppLoader(true));
+          //   setTimeout(() => {
+          //     dispatch(setUserMeta(null));
+          //     dispatch(setIsLoggedIn(false));
+          //     dispatch(setAppLoader(false));
+          //   }, 600);
+          // }}
+        />
       </View>
+     <DrawerModal ref={drawerRef}  />
     </ScreenWrapper>
   );
 }

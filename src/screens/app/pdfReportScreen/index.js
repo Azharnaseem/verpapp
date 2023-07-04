@@ -11,7 +11,7 @@ import AppColors from "~utills/AppColors";
 import { height, width } from "~utills/Dimension";
 import { Logo } from "~assets/images";
 import { ActivityIndicator } from "react-native";
-// import Share from 'react-native-share';
+import Share from 'react-native-share';
 import RNFetchBlob from "rn-fetch-blob";
 import { set } from "react-native-reanimated";
 export default function PdfReportScreen({ navigation, route }) {
@@ -20,7 +20,7 @@ export default function PdfReportScreen({ navigation, route }) {
   const [pdfFile, setPdfFile] = useState(null);
   const a1 = "https://nodejs.org/static/images/logo.svg";
 
-  console.log("pdf file is :", pdfFile);
+  // console.log("pdf file is :", pdfFile);
   let name = "Azhar";
   // Sample data in an array of objects
 
@@ -351,7 +351,7 @@ export default function PdfReportScreen({ navigation, route }) {
   //       console.log("PDF file generated:", pdf.filePath);
   //     } catch (error) {
   //       console.log(error);
-  //     }
+  //     }`
   //   };
 
   useEffect(() => {
@@ -376,6 +376,36 @@ export default function PdfReportScreen({ navigation, route }) {
         column6: "Refurb",
         column7: "208.21",
         column8: "1212.99",
+      },
+      {
+        column1: "1.00",
+        column2: "O393NFJ",
+        column3: "HP 1TB, 7200RPM,",
+        column4: "16-18",
+        column5: "3",
+        column6: "Refurb",
+        column7: "289.00",
+        column8: "6279,21",
+      },
+      {
+        column1: "1.00",
+        column2: "O393NFJ",
+        column3: "HP 1TB, 7200RPM,",
+        column4: "16-18",
+        column5: "3",
+        column6: "Refurb",
+        column7: "289.00",
+        column8: "6279,21",
+      },
+      {
+        column1: "1.00",
+        column2: "O393NFJ",
+        column3: "HP 1TB, 7200RPM,",
+        column4: "16-18",
+        column5: "3",
+        column6: "Refurb",
+        column7: "289.00",
+        column8: "6279,21",
       },
       {
         column1: "1.00",
@@ -463,8 +493,10 @@ export default function PdfReportScreen({ navigation, route }) {
     }
     
     .company-info-text {
-      padding:3px;
-      margin-bottom: 5px;
+      padding:1px;
+      margin-bottom: 3px;
+      font-size: 14px;
+      font-weight: bold;
     }
     .box {
     
@@ -799,11 +831,12 @@ ${tableData
 
   return (
     <ScreenWrapper
-      scrollEnabled
+      // scrollEnabled
       headerUnScrollable={() => {
         return (
           <View>
             <PageHeader
+            containerViewStyle={{ marginbottom:height(4)}}
               pageTitle="PDF Report"
               onPressBack={() => navigation.goBack()}
             />
@@ -827,6 +860,7 @@ ${tableData
             <ActivityIndicator size="large" color={AppColors.primary} />
           ) : (
             <Pdf
+
               trustAllCerts={false}
               source={{
                 uri: pdfFile,
@@ -845,6 +879,7 @@ ${tableData
                 console.log(`Link pressed: ${uri}`);
               }}
               style={styles.pdf}
+              spacing={10}
             />
           )
           }
@@ -853,21 +888,28 @@ ${tableData
         <View
           style={{
             width: width(80),
-            flexDirection: "row",
-            justifyContent: "space-between",
+            // flexDirection: "row",
+            // justifyContent: "space-between",
           }}
         >
-          <Button
+          {/* <Button
             containerStyle={styles.btnStyle}
             title={"Download"}
             onPress={() => {
               pdfFile !== null && requestStoragePermission();
             }}
-          />
+          /> */}
           <Button
             containerStyle={styles.btnStyle}
-            title={"Share"}
-            //  onPress={() => sharePDf()}
+            title={"Share Report"}
+              onPress={() =>{
+                const options={
+                  url:`file://${pdfFile}`,
+                  message:"PDF Report"
+                  
+                }
+                Share.open(options)
+              }}
           />
         </View>
 
