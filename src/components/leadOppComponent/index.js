@@ -1,23 +1,24 @@
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 import styles from "./styles";
 import { SmallText } from "~components/texts";
 import { FontFamily } from "~assets/fonts";
-
+import { height, width } from "~utills/Dimension";
+import { LeadIcon, Oppartunity } from "~assets/images";
+import AppColors from "~utills/AppColors";
 
 // import LinearGradient from "react-native-linear-gradient";
 const LeadsOppComponent = ({
-
-containerViewStyle = {},
-companyName="Agrius It",
-leadNo="123",
-type="It Support",
-leadOwner="Azhar Naseem",
-showLead=true,
-opportunityName="Rammes It Solutions",
-documentNo="32",
-stage="New stage",
-onPress,
+  containerViewStyle = {},
+  companyName = "Agrius It",
+  leadNo = "123",
+  type = "It Support",
+  leadOwner = "Azhar Naseem",
+  showLead = true,
+  opportunityName = "Rammes It Solutions",
+  documentNo = "32",
+  stage = "New stage",
+  onPress,
 
   chatTextStyle,
 }) => {
@@ -29,46 +30,77 @@ onPress,
       angle={180}
       colors={AppColors.red}
     > */}
-    { showLead ?
-   ( <>
-   
-      <Text style={styles.nameText} >Company Name:
-       <Text style={styles.valueName} >{companyName}
-       </Text></Text>
-       <Text style={styles.nameText} >Lead No:
-       <Text style={styles.valueName} > {leadNo}
-       </Text></Text>
-       <Text style={styles.nameText} >Type:
-       <Text style={styles.valueName} >{type}
-       </Text></Text>
-       <Text style={styles.nameText} >Leader Owner:
-       <Text style={styles.valueName} >{leadOwner}
-       </Text></Text>
-      
-       </>):(
+      {showLead ? (
         <>
-   
-        <Text style={styles.nameText} >Opportunity Name:
-         <Text style={styles.valueName} >{opportunityName}
-         </Text></Text>
-         <Text style={styles.nameText} >Document No:
-         <Text style={styles.valueName} > {documentNo}
-         </Text></Text>
-         <Text style={styles.nameText} >Company Name:
-         <Text style={styles.valueName} >{companyName}
-         </Text></Text>
-         <Text style={styles.nameText} >Stage:
-         <Text style={styles.valueName} >{stage}
-         </Text></Text>
-         <Text style={styles.nameText} >Opportunity Owner:
-         <Text style={styles.valueName} >{leadOwner}
-         </Text></Text>
-        
-         </>
-       )
-}
+          <View style={{ flexDirection: "row" }}>
+            <Image
+              source={showLead ? LeadIcon : Oppartunity}
+              style={{
+                tintColor: AppColors.primary,
+                width: width(10),
+                height: width(10),
+                alignSelf: "center",
+              }}
+            />
+            <View style={{ paddingLeft: width(1.5) }}>
+              <Text numberOfLines={2} style={styles.nameText}>
+                Leader Owner:
+                <Text style={styles.valueName}>{` ${leadOwner}`}</Text>
+              </Text>
+              <Text numberOfLines={2} style={styles.nameText}>
+                Company Name:
+                <Text style={styles.valueName}>{` ${companyName}`}</Text>
+              </Text>
+              <Text numberOfLines={2} style={styles.nameText}>
+                Type:
+                <Text style={styles.valueName}>{` ${type}`}</Text>
+              </Text>
+            </View>
+          </View>
 
-
+          {/* <Text style={styles.nameText}>
+            Lead No:
+            <Text style={styles.valueName}> {leadNo}</Text>
+          </Text> */}
+        </>
+      ) : (
+        <View style={{ flexDirection: "row" }}>
+          <Image
+            source={showLead ? LeadIcon : Oppartunity}
+            style={{
+              // borderWidth: 2,
+              // borderColor: AppColors.scndry,
+              tintColor: AppColors.primary,
+              width: width(10),
+              height: width(10),
+              // backgroundColor: AppColors.darkGrey + "90",
+              alignSelf: "center",
+            }}
+          />
+          <View style={{ paddingLeft: width(1.5) }}>
+            <Text numberOfLines={2} style={styles.nameText}>
+              Opportunity Name:
+              <Text style={styles.valueName}>{` ${opportunityName}`}</Text>
+            </Text>
+            {/* <Text numberOfLines={2}  style={styles.nameText}>
+            Document No:
+            <Text style={styles.valueName}> {documentNo}</Text>
+          </Text> */}
+            <Text numberOfLines={2} style={styles.nameText}>
+              Company Name:
+              <Text style={styles.valueName}>{` ${companyName}`}</Text>
+            </Text>
+            <Text numberOfLines={2} style={styles.nameText}>
+              Stage:
+              <Text style={styles.valueName}>{` ${stage}`}</Text>
+            </Text>
+            <Text numberOfLines={2} style={styles.nameText}>
+              Opportunity Owner:
+              <Text style={styles.valueName}>{` ${leadOwner}`}</Text>
+            </Text>
+          </View>
+        </View>
+      )}
     </Pressable>
   );
 };

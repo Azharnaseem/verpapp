@@ -26,6 +26,7 @@ import SvgIcon from "~assets/SVG";
 import { DatabaseCountries } from "~utills/DummyData";
 import CommonStyles from "~utills/CommonStyles";
 import TextInputSimple from "~components/textInputSimple";
+import { erroMessage, successMessage } from "~utills/Methods";
 export default function Login({ navigation, route }) {
   const dispatch = useDispatch();
   const passwordRef = useRef(null);
@@ -50,21 +51,31 @@ export default function Login({ navigation, route }) {
     resolver: yupResolver(schema),
   });
   const _login = async (data) => {
+    try {
+      dispatch(setAppLoader(true));
+      setTimeout(() => {
+        dispatch(setIsLoggedIn(true));
+        dispatch(
+          setUserMeta({
+            name: "John",
+            email: "John Doe",
+          })
+        );
+        dispatch(setAppLoader(false));
+        successMessage("Login Successfully")
+      }, 600);
+      
+    } catch (error) {
+
+      dispatch(setAppLoader(false));
+      erroMessage("Something went wrong")
+      
+    }
     // let details = {
     //   email: data.email,
     //   password: data.password,
     // };
-    dispatch(setAppLoader(true));
-    setTimeout(() => {
-      dispatch(setIsLoggedIn(true));
-      dispatch(
-        setUserMeta({
-          name: "John",
-          email: "John Doe",
-        })
-      );
-      dispatch(setAppLoader(false));
-    }, 600);
+   
   };
   const renderSelectedCountry = ({ item, index }) => {
     return (

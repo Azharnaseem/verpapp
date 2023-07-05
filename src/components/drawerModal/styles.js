@@ -20,9 +20,9 @@ const styles = StyleSheet.create({
   //   elevation: 10,
   // },
   modalInnerContainer: {
-    backgroundColor: AppColors.green,
+    // backgroundColor: AppColors.green,
     height:height(95),
-    width:width(65),
+    width:width(70),
     // borderTopRightRadius: width(5.5),
     // borderTopLeftRadius: width(5.5),
     // borderRadius:width(2),
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   modalInnerrContainer: {
-    backgroundColor: AppColors.pink,
+    backgroundColor: AppColors.white,
     height:"100%",
     width:"85%",
     // borderTopRightRadius: width(5.5),

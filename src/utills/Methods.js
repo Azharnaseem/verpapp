@@ -1,5 +1,6 @@
 import { Button } from "~components";
 import RNHTMLtoPDF from "react-native-html-to-pdf";
+import { showMessage } from "react-native-flash-message";
 export function debounce(func, wait, immediate) {
   var timeout;
   return function () {
@@ -41,3 +42,29 @@ export function PDFGenerator() {
 }
 
 // export default PDFGenerator;
+export function successMessage(
+  description = "",
+  message = "Success",
+  duration = 1000
+) {
+  showMessage({
+    position: "top",
+    message: message,
+    description: description,
+    type: "success",
+    duration: duration,
+  });
+}
+export function erroMessage(
+  description = "",
+  message = "Error",
+  duration = 2000
+) {
+  showMessage({
+    position: "top",
+    message: message,
+    description: description,
+    type: "danger",
+    duration: duration,
+  });
+}

@@ -11,20 +11,27 @@ const styles = StyleSheet.create({
     // height: height(10),
     paddingHorizontal: width(3),
     paddingVertical: height(2),
-    backgroundColor: AppColors.scndry+"90",
+    backgroundColor: AppColors.scndry+"10",
     borderRadius: width(2),
-
+    borderWidth:1.5,
+    borderColor:AppColors.primary,
+  
     // marginVertical: width(1),
     
   },
   nameText:{
-    fontSize:width(4),
+    fontSize:width(3.5),
     fontFamily:FontFamily.montserrat_SemiBold,
-    color:AppColors.black,
+    color:AppColors.scndry,
+    // backgroundColor:"green",
+   
+    marginVertical:1
+    
   },
   valueName:{
-    width:width(3),
-    color:AppColors.graylight
+    // backgroundColor:'red',
+    fontSize:width(3.2),
+    color:AppColors.greyText2
 
 
   }

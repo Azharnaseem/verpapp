@@ -14,6 +14,7 @@ import Animated, {
 import DrawerModal from "~components/drawerModal";
 
 
+
 export default function Accounts({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);

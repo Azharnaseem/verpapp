@@ -107,7 +107,7 @@ export default function Home({ navigation, route }) {
     }}>
       <View style={styles.mainViewContainer}>
         <View style={{alignSelf:"flex-start",marginHorizontal:width(3.5) }}>
-        <SmallText size={5} fontFamily={FontFamily.montserrat_Bold}>Hello ,Azhar Naseem</SmallText>
+        <SmallText size={5} color={AppColors.scndry} fontFamily={FontFamily.montserrat_Bold}>Hello ,Azhar Naseem</SmallText>
         {/* <SmallText color={AppColors.darkGrey}>What do you want ?</SmallText> */}
         {/* <SearchField placeholderColor={AppColors.black} placeholder={"Search..."} containerStyle={{marginVertical:height(1)}} /> */}
         <Image source={welcomeImage} resizeMode="stretch" resizeMethod="resize"   style={{width:width(93),height:width(40),marginVertical:height(1)}}/>
