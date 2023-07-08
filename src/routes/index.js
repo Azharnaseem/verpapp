@@ -6,7 +6,7 @@ import { IntroScreen, LoginScreen, ResgisterScreen } from "~screens/auth";
 import { Loader } from "~components";
 import ScreenNames from "./routes";
 import SplashScreen from "react-native-splash-screen";
-import { Accounts, AdminDrawer, AllLeads, AllOppartunaties, Contract, HomeScreen, LeadDetailInfo, PdfReportScreen, SearchScreen } from "~screens/app";
+import { Accounts, AdminDrawer, AllLeads, AllOppartunaties, Contract, ContractScreen, HomeScreen, LeadDetailInfo, PdfReportScreen, SearchScreen } from "~screens/app";
 import { selectIsLoggedIn } from "~redux/slices/user";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import styles from "./styles";
@@ -73,6 +73,7 @@ export default function Routes() {
           <Stack.Screen name={ScreenNames.LEADDETAILINFO} component={LeadDetailInfo} />
           <Stack.Screen name={ScreenNames.SEARCHSCREEN} component={SearchScreen} />
           <Stack.Screen name={ScreenNames.PDFREPORTSCREEN} component={PdfReportScreen} />
+          <Stack.Screen name={ScreenNames.CONTRACTSCREEN} component={ContractScreen} />
         </Stack.Navigator>
       )}
     </NavigationContainer>

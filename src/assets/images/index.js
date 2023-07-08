@@ -18,4 +18,7 @@ export { default as AccountantIcon } from "./accountant.png";
 export { default as NotificationIcon } from "./notification.png";
 export { default as Oppartunity } from "./oppartunity.png";
 export { default as LeadIcon } from "./promotion_1319795.png";
+export { default as ContractImage } from "./contract.png";
+export { default as Tickets } from "./tickets.png";
+export { default as PersonImage } from "./personIcon.png";
 

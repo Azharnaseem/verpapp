@@ -7,3 +7,4 @@ export { default as AllLeads } from "./allLeads";
 export { default as SearchScreen } from "./searchScreen";
 export { default as LeadDetailInfo } from "./leadDetailInfo";
 export { default as PdfReportScreen } from "./pdfReportScreen";
+export { default as ContractScreen } from "./contractsScreen";

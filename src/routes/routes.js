@@ -12,6 +12,7 @@ const ScreenNames = {
   SEARCHSCREEN:"SearchScreen",
   LEADDETAILINFO:"LeadDetailInfo",
   PDFREPORTSCREEN:"PdfReportScreen",
+  CONTRACTSCREEN:"ContractScreen",
 
 };
 export default ScreenNames;
