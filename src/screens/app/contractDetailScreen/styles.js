@@ -45,6 +45,7 @@ elevation: 18,
     borderRadius:width(2),
     justifyContent: 'center',
     alignItems:'center',
+    backgroundColor:AppColors.lightGrey
   },
   priceTextStyle:{
     fontFamily:FontFamily.montserrat_Bold,

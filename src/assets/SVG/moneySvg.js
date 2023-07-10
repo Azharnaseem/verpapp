@@ -3,8 +3,8 @@ import Svg, { ClipPath, Defs, G, Path, Rect } from "react-native-svg";
 import AppColors from "~utills/AppColors";
 const MoneySvg = ({
   color = AppColors.primary,
-  width = 28,
-  height = 28,
+  width = 30,
+  height = 30,
 }) => {
   return (
     <Svg

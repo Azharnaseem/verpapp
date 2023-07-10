@@ -10,6 +10,7 @@ import CommonStyles from "~utills/CommonStyles";
 import { height, width } from "~utills/Dimension";
 import SearchField from "~components/searchField";
 import ScreenNames from "~routes/routes";
+import { Tickets } from "~assets/images";
 
 
 
@@ -31,6 +32,7 @@ export default function TicketsScreen({ navigation, route }) {
     return (
       <View style={{ marginVertical: width(1) }}>
          <ContractTicketBox 
+         image={Tickets}
          showTickets
           // onPressPhoneNo={makePhoneCall} 
           // onPressEmail={() => Linking.openURL('mailto:support@example.com') } 

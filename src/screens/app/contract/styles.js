@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     height: width(50),
     borderRadius: width(3),
     marginBottom: 33,
-    shadowColor: AppColors.scndry,
+    shadowColor: AppColors.primary,
     shadowOffset: {
       width: 0,
       height: 6,

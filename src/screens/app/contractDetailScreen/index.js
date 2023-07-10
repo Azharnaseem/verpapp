@@ -84,7 +84,7 @@ export default function ContractDetailScreen({ navigation, route }) {
               marginTop: height(0.5),
               flexDirection: "row",
               justifyContent: "space-between",
-              backgroundColor: AppColors.lightGrey,
+              backgroundColor: AppColors.grey2,
               borderRadius: width(4),
               padding: width(2),
             }}
@@ -92,12 +92,12 @@ export default function ContractDetailScreen({ navigation, route }) {
             <SmallText
               size={3.5}
               fontFamily={FontFamily.montserrat_SemiBold}
-              color={AppColors.greyText2}
+              color={AppColors.scndry}
             >
               Invoice Frequency
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              sss
+              Monthly
             </SmallText>
           </View>
           <View
@@ -106,7 +106,7 @@ export default function ContractDetailScreen({ navigation, route }) {
               marginTop: height(0.5),
               flexDirection: "row",
               justifyContent: "space-between",
-              backgroundColor: AppColors.lightGrey,
+              backgroundColor: AppColors.grey2,
               borderRadius: width(4),
               padding: width(2),
             }}
@@ -114,7 +114,7 @@ export default function ContractDetailScreen({ navigation, route }) {
             <SmallText
               size={3.5}
               fontFamily={FontFamily.montserrat_SemiBold}
-              color={AppColors.greyText2}
+              color={AppColors.scndry}
             >
               Invoice Pattren
             </SmallText>
@@ -128,7 +128,7 @@ export default function ContractDetailScreen({ navigation, route }) {
               marginTop: height(0.5),
               flexDirection: "row",
               justifyContent: "space-between",
-              backgroundColor: AppColors.lightGrey,
+              backgroundColor: AppColors.grey2,
               borderRadius: width(4),
               padding: width(2),
             }}
@@ -136,7 +136,7 @@ export default function ContractDetailScreen({ navigation, route }) {
             <SmallText
               size={3.5}
               fontFamily={FontFamily.montserrat_SemiBold}
-              color={AppColors.greyText2}
+              color={AppColors.scndry}
             >
               Payment Term
             </SmallText>
@@ -145,7 +145,53 @@ export default function ContractDetailScreen({ navigation, route }) {
             </SmallText>
           </View>
         </View>
-        <View>
+        <View style={{marginBottom:height(4),marginTop:height(1)}}>
+          <View style={{flexDirection:"row",justifyContent:"space-between"}}>
+          <View
+            style={{
+              width: width(42),
+              marginTop: height(0.5),
+              flexDirection: "row",
+              justifyContent: "space-between",
+              backgroundColor: AppColors.lightGrey,
+              borderRadius: width(4),
+              padding: width(2),
+            }}
+          >
+            <SmallText
+              size={3}
+              fontFamily={FontFamily.montserrat_SemiBold}
+              color={AppColors.greyText2}
+            >
+            Start Date
+            </SmallText>
+            <SmallText size={3} color={AppColors.greyText2}>
+             08/july/2022
+            </SmallText>
+          </View>
+          <View
+            style={{
+              width: width(42),
+              marginTop: height(0.5),
+              flexDirection: "row",
+              justifyContent: "space-between",
+              backgroundColor: AppColors.lightGrey,
+              borderRadius: width(4),
+              padding: width(2),
+            }}
+          >
+            <SmallText
+              size={3}
+              fontFamily={FontFamily.montserrat_SemiBold}
+              color={AppColors.greyText2}
+            >
+             End Date
+            </SmallText>
+            <SmallText size={3} color={AppColors.greyText2}>
+             09/july/2029
+            </SmallText>
+          </View>
+          </View>
         <View
             style={{
               width: width(90),
@@ -162,10 +208,10 @@ export default function ContractDetailScreen({ navigation, route }) {
               fontFamily={FontFamily.montserrat_SemiBold}
               color={AppColors.greyText2}
             >
-              Invoice Frequency
+             Customer
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              sss
+             Farukh Khan
             </SmallText>
           </View>
           <View
@@ -184,10 +230,10 @@ export default function ContractDetailScreen({ navigation, route }) {
               fontFamily={FontFamily.montserrat_SemiBold}
               color={AppColors.greyText2}
             >
-              Invoice Frequency
+              Oppartunity No
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              sss
+              323
             </SmallText>
           </View>
           <View
@@ -206,10 +252,10 @@ export default function ContractDetailScreen({ navigation, route }) {
               fontFamily={FontFamily.montserrat_SemiBold}
               color={AppColors.greyText2}
             >
-              Invoice Frequency
+              End Customer
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              sss
+              Adnan
             </SmallText>
           </View>
           <View
@@ -228,10 +274,10 @@ export default function ContractDetailScreen({ navigation, route }) {
               fontFamily={FontFamily.montserrat_SemiBold}
               color={AppColors.greyText2}
             >
-              Invoice Frequency
+              Statu
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              sss
+              Pending
             </SmallText>
           </View>
           <View
@@ -250,10 +296,10 @@ export default function ContractDetailScreen({ navigation, route }) {
               fontFamily={FontFamily.montserrat_SemiBold}
               color={AppColors.greyText2}
             >
-              Invoice Frequency
+              PO Number 
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              sss
+              Farukh K23
             </SmallText>
           </View>
           <View
@@ -272,10 +318,10 @@ export default function ContractDetailScreen({ navigation, route }) {
               fontFamily={FontFamily.montserrat_SemiBold}
               color={AppColors.greyText2}
             >
-              Invoice Frequency
+              Prevention Mentinance
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              sss
+             yes
             </SmallText>
           </View>
           <View
@@ -294,10 +340,10 @@ export default function ContractDetailScreen({ navigation, route }) {
               fontFamily={FontFamily.montserrat_SemiBold}
               color={AppColors.greyText2}
             >
-              Invoice Frequency
+             Employee
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              sss
+              Wahid khan 
             </SmallText>
           </View>
           <View
@@ -316,10 +362,10 @@ export default function ContractDetailScreen({ navigation, route }) {
               fontFamily={FontFamily.montserrat_SemiBold}
               color={AppColors.greyText2}
             >
-              Invoice Frequency
+              Contact of Notification
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              sss
+             found032939
             </SmallText>
           </View>
           <View
@@ -338,10 +384,10 @@ export default function ContractDetailScreen({ navigation, route }) {
               fontFamily={FontFamily.montserrat_SemiBold}
               color={AppColors.greyText2}
             >
-              Invoice Frequency
+              Duration of months
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              sss
+              3
             </SmallText>
           </View>
           <View
@@ -360,10 +406,76 @@ export default function ContractDetailScreen({ navigation, route }) {
               fontFamily={FontFamily.montserrat_SemiBold}
               color={AppColors.greyText2}
             >
-              Invoice Frequency
+              SLA Type
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              sss
+              Full Hardware Support
+            </SmallText>
+          </View>
+          <View
+            style={{
+              width: width(90),
+              marginTop: height(0.5),
+              flexDirection: "row",
+              justifyContent: "space-between",
+              backgroundColor: AppColors.lightGrey,
+              borderRadius: width(4),
+              padding: width(2),
+            }}
+          >
+            <SmallText
+              size={3.5}
+              fontFamily={FontFamily.montserrat_SemiBold}
+              color={AppColors.greyText2}
+            >
+             Site
+            </SmallText>
+            <SmallText size={3} color={AppColors.greyText2}>
+              Mono-Site
+            </SmallText>
+          </View>
+          <View
+            style={{
+              width: width(90),
+              marginTop: height(0.5),
+              flexDirection: "row",
+              justifyContent: "space-between",
+              backgroundColor: AppColors.lightGrey,
+              borderRadius: width(4),
+              padding: width(2),
+            }}
+          >
+            <SmallText
+              size={3.5}
+              fontFamily={FontFamily.montserrat_SemiBold}
+              color={AppColors.greyText2}
+            >
+             Tax Percentage
+            </SmallText>
+            <SmallText size={3} color={AppColors.greyText2}>
+              1%
+            </SmallText>
+          </View>
+          <View
+            style={{
+              width: width(90),
+              marginTop: height(0.5),
+              flexDirection: "row",
+              justifyContent: "space-between",
+              backgroundColor: AppColors.lightGrey,
+              borderRadius: width(4),
+              padding: width(2),
+            }}
+          >
+            <SmallText
+              size={3.5}
+              fontFamily={FontFamily.montserrat_SemiBold}
+              color={AppColors.greyText2}
+            >
+             Item
+            </SmallText>
+            <SmallText size={3} color={AppColors.greyText2}>
+             Any Value
             </SmallText>
           </View>
         </View>
