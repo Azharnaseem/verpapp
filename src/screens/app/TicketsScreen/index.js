@@ -14,7 +14,7 @@ import ScreenNames from "~routes/routes";
 
 
 // import { PDFGenerator } from "~utills/Methods";
-export default function ContractScreen({ navigation, route }) {
+export default function TicketsScreen({ navigation, route }) {
   const routsData=route.params;
   console.log("==2222222==",routsData);
   const dispatch = useDispatch();
@@ -30,7 +30,8 @@ export default function ContractScreen({ navigation, route }) {
   const RenderContractInfo = ({ item, index }) => {
     return (
       <View style={{ marginVertical: width(1) }}>
-         <ContractTicketBox onPressViewDetail={()=>navigation.navigate(ScreenNames.CONTRACTDETAILSCREEN)}
+         <ContractTicketBox 
+         showTickets
           // onPressPhoneNo={makePhoneCall} 
           // onPressEmail={() => Linking.openURL('mailto:support@example.com') } 
           // onPressPdf={()=>navigation.navigate(ScreenNames.PDFREPORTSCREEN)}
@@ -43,7 +44,7 @@ export default function ContractScreen({ navigation, route }) {
     <ScreenWrapper  headerUnScrollable={()=>{
       return(
         <View>
-          <PageHeader pageTitle={"Contracts"} onPressBack={()=>navigation.goBack()}/>
+          <PageHeader pageTitle={"Tickets"} onPressBack={()=>navigation.goBack()}/>
           {/* <SearchField onPressBar={()=>navigation.navigate(ScreenNames.SEARCHSCREEN)} editable={false} placeholder={"Search Leads"} containerStyle={{marginVertical:height(1)}} /> */}
         </View>
       )

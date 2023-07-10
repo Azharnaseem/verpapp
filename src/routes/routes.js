@@ -13,6 +13,8 @@ const ScreenNames = {
   LEADDETAILINFO:"LeadDetailInfo",
   PDFREPORTSCREEN:"PdfReportScreen",
   CONTRACTSCREEN:"ContractScreen",
+  TICKETSSCREEN:"TicketsScreen",
+  CONTRACTDETAILSCREEN:"ContractDetailScreen"
 
 };
 export default ScreenNames;

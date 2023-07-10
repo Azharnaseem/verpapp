@@ -8,3 +8,5 @@ export { default as SearchScreen } from "./searchScreen";
 export { default as LeadDetailInfo } from "./leadDetailInfo";
 export { default as PdfReportScreen } from "./pdfReportScreen";
 export { default as ContractScreen } from "./contractsScreen";
+export { default as TicketsScreen } from "./TicketsScreen";
+export { default as ContractDetailScreen } from "./contractDetailScreen";

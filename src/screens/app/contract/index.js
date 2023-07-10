@@ -368,7 +368,10 @@ export default function Contract({ navigation, route }) {
             Contract
           </SmallText>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.contractBoxStyle}>
+        <TouchableOpacity
+          style={styles.contractBoxStyle}
+          onPress={() => navigation.navigate(ScreenNames.TICKETSSCREEN)}
+        >
           <Image
             source={Tickets}
             style={styles.imageStyle}

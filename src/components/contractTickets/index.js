@@ -13,16 +13,20 @@ import { ContractImage, PersonImage } from "~assets/images";
 // import LinearGradient from "react-native-linear-gradient";
 const ContractTicketBox = ({
   containerViewStyle = {},
-
   contractNo = "1122",
+  TicketNo="2312",
   customeraName = "Azhar Naseem",
   opportunityNo = "RE-122",
   employeeName = "Farukkh Khan",
   endDate = "6/july/2029",
   startDate = "6/july/2024",
   onPressPhoneNo,
+  image=ContractImage,
   onPressEmail,
-  onPressPdf,
+  onPressViewDetail,
+  SerialNo="RE-3243",
+  companyName="Agrius It",
+  showTickets=false,
   chatTextStyle,
 }) => {
   return (
@@ -36,12 +40,12 @@ const ContractTicketBox = ({
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Image
-            source={ContractImage}
+            source={image}
             resizeMode="contain"
             style={{ width: width(14), height: width(14) }}
           />
           <View style={{ marginHorizontal: width(2), width: width(40) }}>
-            <Text style={styles.nameText}>{`Contract # ${contractNo}`}</Text>
+            <Text style={styles.nameText}>{showTickets?`Ticket # ${TicketNo}`:`Contract # ${contractNo}`}</Text>
             <Pressable
               onPress={onPressPhoneNo}
               style={{
@@ -63,12 +67,78 @@ const ContractTicketBox = ({
           </View>
         </View>
         <Button
-          onPress={onPressPdf}
+          onPress={onPressViewDetail}
           textStyle={styles.btnText}
           title={"View Detail"}
           containerStyle={styles.pdfbtnStyle}
         />
       </View>
+    {showTickets?(
+      <>
+       <View
+        style={{
+          marginTop: height(0.5),
+          flexDirection: "row",
+          justifyContent: "space-between",
+          backgroundColor: AppColors.lightGrey,
+          borderRadius: width(4),
+          padding: width(2),
+        }}
+      >
+        <SmallText
+        size={3.5}
+          fontFamily={FontFamily.montserrat_SemiBold}
+          color={AppColors.greyText2}
+        >
+          Company Name
+        </SmallText>
+        <SmallText size={3} color={AppColors.greyText2}>{companyName}</SmallText>
+      </View>
+      <View
+        style={{
+          marginTop: height(0.5),
+          flexDirection: "row",
+          justifyContent: "space-between",
+          backgroundColor: AppColors.lightGrey,
+          borderRadius: width(4),
+          padding: width(2),
+        }}
+      >
+        <SmallText
+        size={3.5}
+          fontFamily={FontFamily.montserrat_SemiBold}
+          color={AppColors.greyText2}
+        >
+          Serial No
+        </SmallText>
+        <SmallText size={3} color={AppColors.greyText2}>{SerialNo}</SmallText>
+      </View>
+      <View
+        style={{
+          marginTop: height(0.5),
+          flexDirection: "row",
+          justifyContent: "space-between",
+          backgroundColor: AppColors.lightGrey,
+          borderRadius: width(4),
+          padding: width(2),
+        }}
+      >
+        <SmallText
+        size={3.5}
+          fontFamily={FontFamily.montserrat_SemiBold}
+          color={AppColors.greyText2}
+        >
+          Contract No
+        </SmallText>
+        <SmallText size={3} color={AppColors.greyText2}>{SerialNo}</SmallText>
+      </View>
+      </>
+   
+      
+      
+      
+      ):  (
+      <>
       <View
         style={{
           marginTop: height(0.5),
@@ -154,6 +224,7 @@ const ContractTicketBox = ({
         <SmallText size={3} color={AppColors.greyText2}>{endDate}</SmallText>
       </View>
       </View>
+      </>)}
     </View>
   );
 };
