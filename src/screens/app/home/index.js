@@ -277,7 +277,7 @@ export default function Home({ navigation, route }) {
             View All
           </SmallText>
         </View>
-        <View style={{ marginVertical: height(1) }}>
+        <View style={{ marginVertical: height(1),marginBottom:height(10) }}>
           <FlatList
             data={["1", "2", "3", "5"]}
             keyExtractor={(i, n) => n}

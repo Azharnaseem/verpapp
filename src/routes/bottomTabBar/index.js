@@ -57,6 +57,7 @@ const BottomTabBar = ({navigation}) => {
   //   }
   // }, [isFocused]);
   return (
+  
     <Tab.Navigator
       initialRouteName="home"
       screenOptions={{
@@ -208,6 +209,7 @@ const BottomTabBar = ({navigation}) => {
         }}
       /> */}
     </Tab.Navigator>
+ 
   );
 };
 
