@@ -12,3 +12,4 @@ export { default as ConfirmationModal } from "./confirmationModal";
 export { default as LeadOpprtunityInfoDetail } from "./leadOpprtunityInfoComponent";
 export { default as SliderItem } from "./sliderItem";
 export { default as ContractTicketBox } from "./contractTickets";
+export { default as TicketDetailBox } from "./TicketDetailBox";
