@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { View, Text, Image, FlatList } from "react-native";
+import { View, Text, Image, FlatList, ScrollView } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
@@ -28,9 +28,20 @@ export default function Home({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
   const [pdfFile, setPdfFile] = useState(null);
+  const [currentItemIndex, setCurrentItemIndex] = useState(null);
+  console.log("==================",currentItemIndex);
   const confirmationModal = useRef();
   const flatlistRef = useRef(null);
-  console.log("pdf file is :", pdfFile);
+  const screenScroll = useRef(null);
+  const handleScrolllllll = (event) => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    const itemHeight = height(8) /* specify the height of each item */;
+    const index = Math.floor(offsetY / itemHeight);
+    setCurrentItemIndex(index);
+  };
+  const scrollToIndex = (index) => {
+    scrollViewRef.current?.scrollToPosition(0, index * itemHeight, true);
+  };
   const data = [
     { name: "Azhar naseem", cname: "Agriust It", type: "it sprt" },
     { name: "Azhar mughal", cname: "Agriust It", type: "it sprt" },
@@ -110,7 +121,7 @@ export default function Home({ navigation, route }) {
     const index = Math.floor(scrollOffset / itemWidth);
     // const index = Math.floor(scrollOffset / itemWidth);
     // const index = Math.floor(contentOffset.x / layoutMeasurement);
-    console.log(index,"===",data.length);
+    // console.log(index,"===",data.length);
       if (index === data.length) {
       console.log("callled if ");
       // Reached the last item, scroll back to the first item
@@ -137,6 +148,7 @@ export default function Home({ navigation, route }) {
   //   }
   // };
   const RenderOppartunities = ({ item, index }) => {
+
     return (
       <View style={{ marginVertical: width(1) }}>
         <LeadsOppComponent
@@ -151,10 +163,20 @@ export default function Home({ navigation, route }) {
       </View>
     );
   };
+  const hhandleScroll = (event) => {
+    const { contentOffset } = event.nativeEvent;
+    const scrollX = contentOffset.x; // Horizontal scroll position
+    const scrollY = contentOffset.y; // Vertical scroll position
+    
+    console.log('Scroll position:', { scrollX, scrollY });
+  };
 
   return (
+    
     <ScreenWrapper
-      scrollEnabled
+    
+      // scrollEnabled
+      ref={screenScroll}
       headerUnScrollable={() => {
         return (
           <View>
@@ -167,8 +189,14 @@ export default function Home({ navigation, route }) {
         );
       }}
     >
+      <ScrollView 
+      accessibilityRole=""
+      onScroll={hhandleScroll}
+      showsVerticalScrollIndicator={false}>
       <View style={styles.mainViewContainer}>
-        <View style={{ alignSelf: "flex-start", marginHorizontal: width(3.5) }}>
+       {currentItemIndex<=4?(
+        <>
+       <View style={{ alignSelf: "flex-start", marginHorizontal: width(3.5) }}>
           <SmallText
             size={5}
             color={AppColors.scndry}
@@ -184,7 +212,7 @@ export default function Home({ navigation, route }) {
             resizeMethod="resize"
             style={{
               width: width(93),
-              height: width(40),
+              height: width(30),
               marginVertical: height(1),
             }}
           />
@@ -225,6 +253,7 @@ export default function Home({ navigation, route }) {
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             onScroll={handleScroll}
+          
             getItemLayout={getItemLayout}
             initialScrollIndex={currentIndex}
             snapToInterval={itemWidth}
@@ -277,14 +306,16 @@ export default function Home({ navigation, route }) {
             View All
           </SmallText>
         </View>
-        <View style={{ marginVertical: height(1),marginBottom:height(10) }}>
+        </>):(<View><SmallText>this happen</SmallText></View>)}
+        <View style={{backgroundColor:"red", marginVertical: height(1), }}>
           <FlatList
-            data={["1", "2", "3", "5"]}
+            data={["1", "2", "3", "5","6","7","8","9","10","11","12","13","14","15"]}
             keyExtractor={(i, n) => n}
             renderItem={RenderOppartunities}
+            // onScroll={handleScrolllllll}
             loop
             // style={styles.flatlistFilterStyle}
-            contentContainerStyle={[CommonStyles.marginBottom_5]}
+            contentContainerStyle={[CommonStyles.paddingBottom_5]}
             showsVerticalScrollIndicator={false}
             // ListHeaderComponent={() => (
             //   <Text
@@ -346,6 +377,7 @@ export default function Home({ navigation, route }) {
           }}
         /> */}
       </View>
+      </ScrollView>
       <ConfirmationModal
         yesBtnName="Logout"
         ref={confirmationModal}

@@ -63,7 +63,7 @@ const CommonStyles = StyleSheet.create({
         marginBottom: height(5)
     },
     marginBottom_12: {
-        marginBottom: height(12),
+        marginBottom: height(32),
       },
     paddingLeft_1: {
         paddingLeft: width(1)
@@ -127,6 +127,9 @@ const CommonStyles = StyleSheet.create({
     },
     paddingBottom_5: {
         paddingBottom: height(5)
+    },
+    paddingBottom_15: {
+        paddingBottom: height(33)
     },
     row: {
         flexDirection: 'row'

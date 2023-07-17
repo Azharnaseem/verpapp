@@ -6,6 +6,7 @@ import {useIsFocused} from '@react-navigation/native';
 import AppColors from '~utills/AppColors';
 const ScreenWrapper = ({
   children,
+  ref,
   statusBarColor = AppColors.white,
   transclucent = false,
   scrollEnabled = false,
@@ -35,6 +36,7 @@ const ScreenWrapper = ({
         {headerUnScrollable()}
         {scrollEnabled ? (
           <KeyboardAwareScrollView
+          ref={ref}
             style={[styles.container, {backgroundColor: backgroundColor}]}
             contentContainerStyle={styles.contentContainer}
             keyboardShouldPersistTaps="handled"
