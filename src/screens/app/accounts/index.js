@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
-import { View, Text, FlatList, Image, Dimensions } from "react-native";
+import { View, Text, FlatList, Image, Dimensions, TouchableOpacity } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, ScreenWrapper, SliderItem } from "~components";
+import { Button, PageHeader, ScreenWrapper, SliderItem } from "~components";
 import { setAppLoader } from "~redux/slices/config";
 import { selectUserMeta, setIsLoggedIn, setUserMeta } from "~redux/slices/user";
 import styles from "./styles";
@@ -12,6 +12,11 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import DrawerModal from "~components/drawerModal";
+import { FontFamily } from "~assets/fonts";
+import { InvoiceIcon, Tickets } from "~assets/images";
+import AppColors from "~utills/AppColors";
+import { SmallText } from "~components/texts";
+import ScreenNames from "~routes/routes";
 
 
 
@@ -41,9 +46,37 @@ export default function Accounts({ navigation, route }) {
   // })
 
   return (
-    <ScreenWrapper>
+    <ScreenWrapper
+    headerUnScrollable={() => {
+      return (
+        <View>
+          <PageHeader
+            pageTitle="Accounts"
+            onPressBack={() => navigation.goBack()}
+          />
+        </View>
+      );
+    }}
+    >
       <View style={styles.mainViewContainer}>
-        <Text style={styles.title}>Accounts SCREEN</Text>
+      <TouchableOpacity
+          style={styles.contractBoxStyle}
+          onPress={() => navigation.navigate(ScreenNames.INVOICESSCREEN)}
+        >
+          <Image
+            source={InvoiceIcon}
+            style={styles.imageStyle}
+            resizeMode="contain"
+          />
+          <SmallText
+            size={5}
+            fontFamily={FontFamily.montserrat_Bold}
+            color={AppColors.scndry}
+          >
+         Invoice Due/Not Due
+          </SmallText>
+        </TouchableOpacity>
+        {/* <Text style={styles.title}>Accounts SCREEN</Text> */}
         {/* <FlatList
         pagingEnabled
         horizontal
@@ -80,7 +113,7 @@ export default function Accounts({ navigation, route }) {
           // showsVerticalScrollIndicator={false}
         /> */}
 
-        <Button
+        {/* <Button
           title={"openDrawer"}
           onPress={() => {
             drawerRef?.current?.show();
@@ -93,7 +126,7 @@ export default function Accounts({ navigation, route }) {
           //     dispatch(setAppLoader(false));
           //   }, 600);
           // }}
-        />
+        /> */}
       </View>
      <DrawerModal ref={drawerRef}  />
     </ScreenWrapper>

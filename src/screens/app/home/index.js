@@ -175,7 +175,7 @@ export default function Home({ navigation, route }) {
     
     <ScreenWrapper
     
-      // scrollEnabled
+      scrollEnabled
       ref={screenScroll}
       headerUnScrollable={() => {
         return (
@@ -189,10 +189,10 @@ export default function Home({ navigation, route }) {
         );
       }}
     >
-      <ScrollView 
+      {/* <ScrollView 
       accessibilityRole=""
       onScroll={hhandleScroll}
-      showsVerticalScrollIndicator={false}>
+      showsVerticalScrollIndicator={false}> */}
       <View style={styles.mainViewContainer}>
        {currentItemIndex<=4?(
         <>
@@ -307,7 +307,7 @@ export default function Home({ navigation, route }) {
           </SmallText>
         </View>
         </>):(<View><SmallText>this happen</SmallText></View>)}
-        <View style={{backgroundColor:"red", marginVertical: height(1), }}>
+        <View style={{marginVertical: height(1), }}>
           <FlatList
             data={["1", "2", "3", "5","6","7","8","9","10","11","12","13","14","15"]}
             keyExtractor={(i, n) => n}
@@ -315,7 +315,7 @@ export default function Home({ navigation, route }) {
             // onScroll={handleScrolllllll}
             loop
             // style={styles.flatlistFilterStyle}
-            contentContainerStyle={[CommonStyles.paddingBottom_5]}
+            contentContainerStyle={[CommonStyles.paddingBottom_15]}
             showsVerticalScrollIndicator={false}
             // ListHeaderComponent={() => (
             //   <Text
@@ -377,7 +377,7 @@ export default function Home({ navigation, route }) {
           }}
         /> */}
       </View>
-      </ScrollView>
+      {/* </ScrollView> */}
       <ConfirmationModal
         yesBtnName="Logout"
         ref={confirmationModal}

@@ -21,4 +21,6 @@ export { default as LeadIcon } from "./promotion_1319795.png";
 export { default as ContractImage } from "./contract.png";
 export { default as Tickets } from "./tickets.png";
 export { default as PersonImage } from "./personIcon.png";
+export { default as InvoiceIcon } from "./invoice.png";
+export { default as CompanyIcon } from "./company.png";
 
