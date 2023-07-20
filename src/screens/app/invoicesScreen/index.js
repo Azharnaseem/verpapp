@@ -34,6 +34,8 @@ export default function ContractScreen({ navigation, route }) {
     return (
       <View style={{ marginVertical: width(1) }}>
          <InboxDueTicketBox 
+         item={item}
+
         //  onPressViewDetail={()=>navigation.navigate(ScreenNames.INVOICESSCREEN)}
           // onPressPhoneNo={makePhoneCall} 
           // onPressEmail={() => Linking.openURL('mailto:support@example.com') } 
@@ -56,7 +58,7 @@ export default function ContractScreen({ navigation, route }) {
         creditDay: "12",
         due: "0.00$",
         recieptAmount: "0.00$",
-        image: InvoiceIcon,
+        // image: InvoiceIcon,
         invoiceDate: "06/09/2022",
       }, {
         invoiceNumber: "Pur-11 00022",
@@ -69,7 +71,7 @@ export default function ContractScreen({ navigation, route }) {
         creditDay: "12",
         due: "0.00$",
         recieptAmount: "0.00$",
-        image: InvoiceIcon,
+        // image: InvoiceIcon,
         invoiceDate: "06/09/2022",
       },],
     },
@@ -86,7 +88,7 @@ export default function ContractScreen({ navigation, route }) {
         creditDay: "12",
         due: "0.00$",
         recieptAmount: "0.00$",
-        image: InvoiceIcon,
+        // image: InvoiceIcon,
         invoiceDate: "06/09/2022",
       }, {
         invoiceNumber: "Pur-11 00022",
@@ -113,7 +115,7 @@ export default function ContractScreen({ navigation, route }) {
         creditDay: "12",
         due: "0.00$",
         recieptAmount: "0.00$",
-        image: InvoiceIcon,
+        // image: InvoiceIcon,
         invoiceDate: "06/09/2022",
       },
       {
@@ -127,7 +129,7 @@ export default function ContractScreen({ navigation, route }) {
         creditDay: "12",
         due: "0.00$",
         recieptAmount: "0.00$",
-        image: InvoiceIcon,
+        // image: InvoiceIcon,
         invoiceDate: "06/09/2022",
       }
     ],

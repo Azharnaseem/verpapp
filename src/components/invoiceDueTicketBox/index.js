@@ -13,20 +13,21 @@ import { CompanyIcon, ContractImage, InvoiceIcon, PersonImage } from "~assets/im
 // import LinearGradient from "react-native-linear-gradient";
 const InboxDueTicketBox = ({
   containerViewStyle = {},
-  invoiceNumber = "Pur-11 00022",
-  invoiceAmount="60,000.00 $",
-  dueDate="16/09/2023",
-  remarks="Nill",
-  customeraName = "Agrius IT",
-  detailCode = "RE-122-323-33",
-  creditTerm = "Credit",
-  creditDay = "12",
-  due = "0.00$",
-  recieptAmount="0.00$",
+  // invoiceNumber = "Pur-11 00022",
+  // invoiceAmount="60,000.00 $",
+  // dueDate="16/09/2023",
+  // remarks="Nill",
+  // customeraName = "Agrius IT",
+  // detailCode = "RE-122-323-33",
+  // creditTerm = "Credit",
+  // creditDay = "12",
+  // due = "0.00$",
+  // recieptAmount="0.00$",
   image=InvoiceIcon,
   invoiceDate='06/09/2022',
   onPressViewDetail,
   onPressPhoneNo,
+  item,
 }) => {
   return (
     <View style={[styles.container, containerViewStyle]}>
@@ -45,7 +46,7 @@ const InboxDueTicketBox = ({
             style={{tintColor:AppColors.primary, width: width(12), height: width(12) }}
           />
           <View >
-            <Text style={styles.nameText}>{`${invoiceNumber}`}</Text>
+            <Text style={styles.nameText}>{`${item?.invoiceNumber}`}</Text>
             <Pressable
               onPress={onPressPhoneNo}
               style={{
@@ -61,7 +62,7 @@ const InboxDueTicketBox = ({
             style={{ width: width(6), height: width(6) ,tintColor:AppColors.primary}}
           />
               <SmallText textStyles={{ FontFamily:FontFamily.montserrat_SemiBold, marginTop: 1}} size={3} color={AppColors.primary}>
-                {`${customeraName}`}
+                {`${item?.customeraName}`}
               </SmallText>
             </Pressable>
           </View>
@@ -73,12 +74,12 @@ const InboxDueTicketBox = ({
           title={"View Pdf"}
           containerStyle={styles.pdfbtnStyle}
         />
-        <SmallText fontFamily={FontFamily.montserrat_SemiBold} size={3}color={AppColors.scndry}>Invoice Date<Text style={{color:AppColors.primary,fontSize:width(3)}}>{` ${invoiceDate}`}</Text></SmallText>
+        <SmallText fontFamily={FontFamily.montserrat_SemiBold} size={3}color={AppColors.scndry}>Invoice Date<Text style={{color:AppColors.primary,fontSize:width(3)}}>{` ${item?.invoiceDate}`}</Text></SmallText>
         </View>
       </View>
       <View style={{marginTop:height(0.5), flexDirection:"row",justifyContent:"space-between"}}>
-      <SmallText fontFamily={FontFamily.montserrat_SemiBold} size={3}color={AppColors.scndry}>Invoice Amount<Text style={{color:AppColors.primary,fontSize:width(3)}}>{` ${invoiceAmount}`}</Text></SmallText>
-      <SmallText fontFamily={FontFamily.montserrat_SemiBold} size={3}color={AppColors.scndry}>Due Date<Text style={{color:AppColors.primary,fontSize:width(3)}}>{` ${dueDate}`}</Text></SmallText>
+      <SmallText fontFamily={FontFamily.montserrat_SemiBold} size={3}color={AppColors.scndry}>Invoice Amount<Text style={{color:AppColors.primary,fontSize:width(3)}}>{` ${item?.invoiceAmount}`}</Text></SmallText>
+      <SmallText fontFamily={FontFamily.montserrat_SemiBold} size={3}color={AppColors.scndry}>Due Date<Text style={{color:AppColors.primary,fontSize:width(3)}}>{` ${item?.dueDate}`}</Text></SmallText>
 
       </View>
    
@@ -100,7 +101,7 @@ const InboxDueTicketBox = ({
         >
           Detail code
         </SmallText>
-        <SmallText size={3} color={AppColors.greyText2}>{detailCode}</SmallText>
+        <SmallText size={3} color={AppColors.greyText2}>{item?.detailCode}</SmallText>
       </View>
       <View
         style={{
@@ -119,7 +120,7 @@ const InboxDueTicketBox = ({
         >
           Credit Term
         </SmallText>
-        <SmallText size={3} color={AppColors.greyText2}>{creditTerm}</SmallText>
+        <SmallText size={3} color={AppColors.greyText2}>{item?.creditTerm}</SmallText>
       </View>
       <View
         style={{
@@ -138,7 +139,7 @@ const InboxDueTicketBox = ({
         >
         Credit Day
         </SmallText>
-        <SmallText size={3} color={AppColors.greyText2}>{creditDay}</SmallText>
+        <SmallText size={3} color={AppColors.greyText2}>{item?.creditDay}</SmallText>
       </View>
       <View
         style={{
@@ -157,7 +158,7 @@ const InboxDueTicketBox = ({
         >
           Due
         </SmallText>
-        <SmallText size={3} color={AppColors.greyText2}>{due}</SmallText>
+        <SmallText size={3} color={AppColors.greyText2}>{item?.due}</SmallText>
       </View>
       <View
         style={{
@@ -176,7 +177,7 @@ const InboxDueTicketBox = ({
         >
           Remarks
         </SmallText>
-        <SmallText size={3} color={AppColors.greyText2}>{remarks}</SmallText>
+        <SmallText size={3} color={AppColors.greyText2}>{item?.remarks}</SmallText>
       </View>
       <View
         style={{
@@ -196,7 +197,7 @@ const InboxDueTicketBox = ({
         >
           Reciept Amount
         </SmallText>
-        <SmallText size={3} color={AppColors.greyText2}>{recieptAmount}</SmallText>
+        <SmallText size={3} color={AppColors.greyText2}>{item?.recieptAmount}</SmallText>
       </View>
 
     </View>
