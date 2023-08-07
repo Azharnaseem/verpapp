@@ -7,7 +7,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: AppColors.white,
     // justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    height:height(100)
   },
   title: {
     color: AppColors.black,

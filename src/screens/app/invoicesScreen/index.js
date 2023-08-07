@@ -16,9 +16,9 @@ import { InvoiceIcon } from "~assets/images";
 
 
 // import { PDFGenerator } from "~utills/Methods";
-export default function ContractScreen({ navigation, route }) {
+export default function InvoiceScreen({ navigation, route }) {
   const routsData=route.params;
-  console.log("==2222222==",routsData);
+  // console.log("==2222222==",routsData);
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
   const makePhoneCall = () => {
@@ -30,7 +30,7 @@ export default function ContractScreen({ navigation, route }) {
  
   
   const RenderContractInfo = ({ item, index }) => {
-    console.log("=============section data================:",item);
+    // console.log("=============section data================:",item);
     return (
       <View style={{ marginVertical: width(1) }}>
          <InboxDueTicketBox 

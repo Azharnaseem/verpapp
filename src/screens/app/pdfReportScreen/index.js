@@ -757,7 +757,7 @@ ${tableData
         };
 
         const pdf = await RNHTMLtoPDF.convert(options);
-        console.log("PDF generated", pdf.filePath);
+        // console.log("PDF generated", pdf.filePath);
         setPdfFile(pdf?.filePath);
       } catch (error) {
         console.error("Error generating PDF", error);
@@ -782,7 +782,7 @@ ${tableData
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         downloadPdf();
-        console.log("You can Download the Pdf");
+        // console.log("You can Download the Pdf");
       } else {
         console.log("File permission denied");
       }
@@ -816,13 +816,13 @@ ${tableData
         dispatch(setAppLoader(false));
         // the temp file path
         alert("File DownlLoaded Successfully")
-        console.log("The file saved to ", res.path());
+        // console.log("The file saved to ", res.path());
       });
   };
   const sharePDf=()=>{
     Share.open(options)
   .then((res) => {
-    console.log("===================",res);
+    // console.log("===================",res);
   })
   .catch((err) => {
     err && console.log(err);
@@ -867,16 +867,16 @@ ${tableData
                 cache: true,
               }}
               onLoadComplete={(numberOfPages, filePath) => {
-                console.log(`Number of pages: ${numberOfPages}`);
+                // console.log(`Number of pages: ${numberOfPages}`);
               }}
               onPageChanged={(page, numberOfPages) => {
-                console.log(`Current page: ${page}`);
+                // console.log(`Current page: ${page}`);
               }}
               onError={(error) => {
-                console.log("ddddddd", error);
+                console.log("ddddddd pdf rrr", error);
               }}
               onPressLink={(uri) => {
-                console.log(`Link pressed: ${uri}`);
+                // console.log(`Link pressed: ${uri}`); 
               }}
               style={styles.pdf}
               spacing={10}

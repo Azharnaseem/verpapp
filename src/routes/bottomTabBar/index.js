@@ -8,14 +8,22 @@ import { IconPlus, exploreIcon, journeyIcon, plusIcon } from "~assets/images";
 import {
   Accounts,
   AllConversationData,
+  AllLeads,
   AllLongTextData,
+  AllOppartunaties,
   Contract,
+  ContractDetailScreen,
+  ContractScreen,
   ConversationScreen,
   EditProfile,
   HomeScreen,
+  InvoiceScreen,
+  LeadDetailInfo,
   LongTextScreen,
   Profile,
   TextsScreen,
+  TicketDetailScreen,
+  TicketsScreen,
 } from "~screens/app";
 import { FontFamily } from "~assets/fonts";
 import HomeSvg from "~assets/SVG/homeSvg";
@@ -23,11 +31,49 @@ import LongTextSvg from "~assets/SVG/longTextSvg";
 import ConversationSVg from "~assets/SVG/conversationSvg";
 import { SmallText } from "~components/texts";
 import AccountSvg from "~assets/SVG/AccountSvg";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ScreenNames from "~routes/routes";
 // import { HomeSvg, ProfileSvg } from "~assets/svg";
 
 const BottomTabBar = ({navigation}) => {
   const [visible, setVisible] = useState(true);
   const [keyboardOpen, setKeyboardOpen] = useState(false);
+  const CrmStack = createNativeStackNavigator();
+  const ContractStack = createNativeStackNavigator();
+  const AcntStack = createNativeStackNavigator();
+
+const CrmStackScreen = ()=>{
+  return (
+    <CrmStack.Navigator initialRouteName="home">
+      <CrmStack.Screen name={ScreenNames.HOME} component={HomeScreen} />
+      <CrmStack.Screen name={ScreenNames.AllLEADS} component={AllLeads} />
+      <CrmStack.Screen name={ScreenNames.ALLOPPARTUNATIES} component={AllOppartunaties} />
+    </CrmStack.Navigator>
+  );
+} 
+
+
+const ContractStackScreen=()=> {
+  return (
+    <ContractStack.Navigator initialRouteName={ScreenNames.CONTRACT}>
+      <ContractStack.Screen name={ScreenNames.CONTRACTSCREEN} component={Contract} />
+      <ContractStack.Screen name={ScreenNames.CONTRACTSCREEN} component={ContractScreen} />
+      <ContractStack.Screen name={ScreenNames.CONTRACTSCREEN} component={TicketsScreen} />
+      <ContractStack.Screen name={ScreenNames.TICKETDETAILSCREEN} component={TicketDetailScreen} />
+      <ContractStack.Screen name={ScreenNames.CONTRACTDETAILSCREEN} component={ContractDetailScreen} />
+    </ContractStack.Navigator>
+  );
+}
+
+
+const AcntStackScreen=() =>{
+  return (
+    <AcntStack.Navigator initialRouteName={ScreenNames.ACCOUNTS}>
+      <AcntStack.Screen name={ScreenNames.ACCOUNTS} component={Accounts} />
+      <AcntStack.Screen name={ScreenNames.INVOICESSCREEN} component={InvoiceScreen} />
+    </AcntStack.Navigator>
+  );
+}
   // useEffect(() => {
   //   const keyboardDidShowListener = Keyboard.addListener(
   //     'keyboardDidShow',
@@ -69,7 +115,7 @@ const BottomTabBar = ({navigation}) => {
       }}
     >
       <Tab.Screen
-        name="home"
+        name='home'
         component={HomeScreen}
         options={{
           tabBarIcon: ({ focused }) => {

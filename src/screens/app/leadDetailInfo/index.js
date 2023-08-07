@@ -16,7 +16,7 @@ import ScreenNames from "~routes/routes";
 // import { PDFGenerator } from "~utills/Methods";
 export default function LeadDetailInfo({ navigation, route }) {
   const routsData=route.params;
-  console.log("==2222222==",routsData);
+  // console.log("==2222222==",routsData);
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
   const makePhoneCall = () => {

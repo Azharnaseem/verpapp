@@ -20,6 +20,7 @@ import { AllLeadsData } from "~utills/DummyData";
 import { log } from "react-native-reanimated";
 import AppColors from "~utills/AppColors";
 import { SmallText } from "~components/texts";
+import BottomTabBar from "~routes/bottomTabBar";
 
 // import { PDFGenerator } from "~utills/Methods";
 export default function AllLeads({ navigation, route }) {
@@ -29,9 +30,9 @@ export default function AllLeads({ navigation, route }) {
   const [searchQuery, setSearchQuery] = useState(null);
   // console.log("====",searchQuery);
   const [loader, setLoader] = useState(false);
-  console.log("----", loader);
+  // console.log("----", loader);
   const getData = async (text) => {
-    console.log("text-----", text);
+    // console.log("text-----", text);
     setLoader(true);
     setTimeout(() => {
       try {
@@ -98,22 +99,24 @@ export default function AllLeads({ navigation, route }) {
   return (
     <ScreenWrapper
       scrollEnabled
-      headerUnScrollable={() => {
-        return (
-          <View>
-            <PageHeader onPressBack={() => navigation.goBack()} />
-            <SearchField
-              onChangeText={searchMethod}
-              //  onPressBar={()=>navigation.navigate(ScreenNames.SEARCHSCREEN)} editable={false}
-              placeholder={"Search Leads"}
-              containerStyle={{ marginVertical: height(1) }}
-            />
-          </View>
-        );
-      }}
+      // headerUnScrollable={() => {
+      //   return (
+      //     <View>
+      //       <PageHeader onPressBack={() => navigation.goBack()} />
+      //       <SearchField
+      //         onChangeText={searchMethod}
+      //         //  onPressBar={()=>navigation.navigate(ScreenNames.SEARCHSCREEN)} editable={false}
+      //         placeholder={"Search Leads"}
+      //         containerStyle={{ marginVertical: height(1) }}
+      //       />
+      //     </View>
+      //   );
+      // }}
+    
     >
       <View style={styles.mainViewContainer}>
-        <View style={{ marginVertical: height(1) }}>
+        <Text>ddd</Text>
+        {/* <View style={{ marginVertical: height(1) }}>
           {searchQuery === null ? (
             <FlatList
               //  ListHeaderComponent={()=>{
@@ -170,7 +173,7 @@ export default function AllLeads({ navigation, route }) {
               )}
             </>
           )}
-        </View>
+        </View> */}
       </View>
     </ScreenWrapper>
   );

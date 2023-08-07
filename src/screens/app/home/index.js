@@ -22,14 +22,16 @@ import { FontFamily } from "~assets/fonts";
 import SearchField from "~components/searchField";
 import { welcomeImage } from "~assets/images";
 import ScreenNames from "~routes/routes";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // import { PDFGenerator } from "~utills/Methods";
 export default function Home({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
+  console.log("login infooo ===",userInfo);
   const [pdfFile, setPdfFile] = useState(null);
   const [currentItemIndex, setCurrentItemIndex] = useState(null);
-  console.log("==================",currentItemIndex);
+  // console.log("==================",currentItemIndex);
   const confirmationModal = useRef();
   const flatlistRef = useRef(null);
   const screenScroll = useRef(null);
@@ -82,7 +84,7 @@ export default function Home({ navigation, route }) {
       // Generate the PDF using react-native-html-to-pdf
       const pdf = await RNHTMLtoPDF.convert(options);
       setPdfFile(pdf?.filePath);
-      console.log("PDF file generated:", pdf.filePath);
+      // console.log("PDF file generated:", pdf.filePath);
     } catch (error) {
       console.log(error);
     }
@@ -106,7 +108,7 @@ export default function Home({ navigation, route }) {
     );
   };
   const handleEndReached = () => {
-    console.log("end reached");
+    // console.log("end reached");
     let tepmDta = data;
     tepmDta.push();
     // flatlistRef.current.scrollToIndex({ animated: true, index: 0 });
@@ -115,7 +117,7 @@ export default function Home({ navigation, route }) {
   const itemWidth = width(51); // Replace with the actual item width
  const [currentIndex, setCurrentIndex] = useState(0);
   const handleScroll = (event) => {
-    console.log("sssssssssssss");
+    // console.log("sssssssssssss");
     const scrollOffset = event.nativeEvent.contentOffset.x;
     // const { contentOffset, layoutMeasurement } = event.nativeEvent;
     const index = Math.floor(scrollOffset / itemWidth);
@@ -123,7 +125,7 @@ export default function Home({ navigation, route }) {
     // const index = Math.floor(contentOffset.x / layoutMeasurement);
     // console.log(index,"===",data.length);
       if (index === data.length) {
-      console.log("callled if ");
+      // console.log("callled if ");
       // Reached the last item, scroll back to the first item
       flatlistRef.current.scrollToIndex({ animated: false, index: 0 });
     }
@@ -168,7 +170,7 @@ export default function Home({ navigation, route }) {
     const scrollX = contentOffset.x; // Horizontal scroll position
     const scrollY = contentOffset.y; // Vertical scroll position
     
-    console.log('Scroll position:', { scrollX, scrollY });
+    // console.log('Scroll position:', { scrollX, scrollY });
   };
 
   return (
@@ -198,11 +200,11 @@ export default function Home({ navigation, route }) {
         <>
        <View style={{ alignSelf: "flex-start", marginHorizontal: width(3.5) }}>
           <SmallText
-            size={5}
+            size={4}
             color={AppColors.scndry}
             fontFamily={FontFamily.montserrat_Bold}
           >
-            Hello ,Azhar Naseem
+          {`Welcome ,${userInfo?.email}`}
           </SmallText>
           {/* <SmallText color={AppColors.darkGrey}>What do you want ?</SmallText> */}
           {/* <SearchField placeholderColor={AppColors.black} placeholder={"Search..."} containerStyle={{marginVertical:height(1)}} /> */}
@@ -252,11 +254,11 @@ export default function Home({ navigation, route }) {
             renderItem={RenderLeads}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            onScroll={handleScroll}
+            // onScroll={handleScroll}
           
-            getItemLayout={getItemLayout}
-            initialScrollIndex={currentIndex}
-            snapToInterval={itemWidth}
+            // getItemLayout={getItemLayout}
+            // initialScrollIndex={currentIndex}
+            // snapToInterval={itemWidth}
             // decelerationRate={'fast'}
             // initialScrollIndex={data.length}
             // getItemLayout={(data, index) => ({
@@ -387,6 +389,7 @@ export default function Home({ navigation, route }) {
           dispatch(setAppLoader(true));
           setTimeout(() => {
             dispatch(setUserMeta(null));
+            AsyncStorage.clear();
             dispatch(setIsLoggedIn(false));
             dispatch(setAppLoader(false));
           }, 600);

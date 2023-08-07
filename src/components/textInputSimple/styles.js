@@ -35,11 +35,12 @@ const styles = StyleSheet.create({
   },
   inputText: {
     color: AppColors.textColor,
-    
+    alignItems:"center",
+    justifyContent:"center",
     fontFamily: FontFamily.montserrat_Regular,
     fontSize: width(3.5),
     height: Platform.OS === "android" ? height(6) : height(5),
-    //  backgroundColor: AppColors.red,
+      // backgroundColor: AppColors.red,
     flex: 1,
     // borderRadius: width(4),
     paddingHorizontal: width(4),

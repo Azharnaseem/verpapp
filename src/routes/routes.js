@@ -16,7 +16,9 @@ const ScreenNames = {
   TICKETSSCREEN:"TicketsScreen",
   CONTRACTDETAILSCREEN:"ContractDetailScreen",
   TICKETDETAILSCREEN:"TicketDetailScreen",
-  INVOICESSCREEN:"InvoicesScreen"
+  INVOICESSCREEN:"InvoiceScreen",
+  CRMSTACKSCREEN:"CrmStackScreen",
+  
 
 };
 export default ScreenNames;

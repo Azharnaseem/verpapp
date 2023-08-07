@@ -26,7 +26,7 @@ export default function Contract({ navigation, route }) {
   const [pdfFile, setPdfFile] = useState(null);
   const a1 = "https://nodejs.org/static/images/logo.svg";
 
-  console.log("pdf file is :", pdfFile);
+  // console.log("pdf file is :", pdfFile);
   let name = "Azhar";
   //   const generatePDF = async () => {
   //     try {

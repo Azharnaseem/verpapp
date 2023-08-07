@@ -27,6 +27,9 @@ import { DatabaseCountries } from "~utills/DummyData";
 import CommonStyles from "~utills/CommonStyles";
 import TextInputSimple from "~components/textInputSimple";
 import { erroMessage, successMessage } from "~utills/Methods";
+import { ApiManager } from "~backend/ApiManager";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { log } from "react-native-reanimated";
 export default function Login({ navigation, route }) {
   const dispatch = useDispatch();
   const passwordRef = useRef(null);
@@ -34,6 +37,8 @@ export default function Login({ navigation, route }) {
   const dataBaseRef = useRef(null);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [country, setCountry] = useState(false);
+  const [dbName, setDbName] = useState("");
+  console.log("item---------", dbName);
   const [seletedItem, setSelectedItem] = useState("");
   const schema = Yup.object().shape({
     username: Yup.string().required("User name is required"),
@@ -51,31 +56,84 @@ export default function Login({ navigation, route }) {
     resolver: yupResolver(schema),
   });
   const _login = async (data) => {
-    try {
-      dispatch(setAppLoader(true));
-      setTimeout(() => {
-        dispatch(setIsLoggedIn(true));
-        dispatch(
-          setUserMeta({
-            name: "John",
-            email: "John Doe",
-          })
-        );
-        dispatch(setAppLoader(false));
-        successMessage("Login Successfully")
-      }, 600);
-      
-    } catch (error) {
+    // console.log("======",data);s
+    // try {
+      // let userName=data?.username
+    dispatch(setAppLoader(true));
 
-      dispatch(setAppLoader(false));
-      erroMessage("Something went wrong")
-      
-    }
-    // let details = {
-    //   email: data.email,
-    //   password: data.password,
-    // };
-   
+    const res = await ApiManager.get(
+      `${data?.username.toUpperCase()}/${data?.password}/${dbName}`
+    )
+      .then(async (res) => {
+        // console.log("resssssssssssssssssss===", res);
+        if (res?.data === null ) {
+          erroMessage("Error", res?.messages
+          );
+          dispatch(setAppLoader(false));
+        } else {
+          // console.log("elsssssssssssssssseeeeee callll");
+          let { email, password, user_Code, user_ID, user_Name } = res?.data;
+         
+          await AsyncStorage.setItem(
+            "userToken",
+            JSON.stringify(res?.data?.user_ID)
+          );
+          await AsyncStorage.setItem("userData", JSON.stringify(res?.data));
+          dispatch(
+            setUserMeta({
+              name: user_Name,
+              email: email,
+              password: password,
+              userCode: user_Code,
+              userId: user_ID,
+            })
+          );
+          dispatch(setIsLoggedIn(true));
+          dispatch(setAppLoader(false));
+          successMessage("Login Successfully");
+          dispatch(setAppLoader(false));
+        }
+      })
+      .catch((err) => {
+        dispatch(setAppLoader(false));
+        // console.log("errrrr==333============", err);
+        erroMessage("Please Check your Internet/VPN connection")
+      });
+    // console.log("res on login===sssssssssssssssssssss",res);
+
+    let { email, password, user_Code, user_ID, user_Name } = res?.data;
+    // if(res?.error=="Something went wrong") {
+    //   console.log("if callllll");
+    //   console.log("ccccccccccccc");
+    //   erroMessage("Please Check your Internet/VPN Connection");
+    // }
+    //  else
+    //  if  (res?.messages === "Success") {
+    //   console.log("elsa if callllll");
+    //   await AsyncStorage.setItem("userToken",JSON.stringify( res?.data?.user_ID));
+    //   await AsyncStorage.setItem("userData",  JSON.stringify(res?.data));
+    //   dispatch(
+    //     setUserMeta({
+    //       name: user_Name,
+    //       email: email,
+    //       password: password,
+    //       userCode: user_Code,
+    //       userId: user_ID,
+    //     })
+    //   );
+    //   dispatch(setIsLoggedIn(true));
+    //   dispatch(setAppLoader(false));
+    //   successMessage("Login Successfully");
+    // }
+    //  else {
+    //   console.log("else callllll");
+    //   dispatch(setAppLoader(false));
+    //   erroMessage("Error", res?.messages);
+    // }
+    // } catch (error) {
+    //   dispatch(setAppLoader(false));
+    //   erroMessage("Credential not Matched");
+    // }
   };
   const renderSelectedCountry = ({ item, index }) => {
     return (
@@ -86,6 +144,7 @@ export default function Login({ navigation, route }) {
           onPress={() => {
             setSelectedItem(index);
             setCountry(item.name);
+            setDbName(item?.dbName);
             setTimeout(() => {
               bottomSheetRef.current.close();
             }, 10);
@@ -146,19 +205,13 @@ export default function Login({ navigation, route }) {
           innerRow={{ width: width(85) }}
           label={"Database"}
           placeholder={"Enter your Database "}
-         
           editable={false}
           textValue={country}
           onPress={() => {
             bottomSheetRef.current.open();
           }}
-          Icon={
-            <SvgIcon.DownArrow />
-           
-          }
-         
+          Icon={<SvgIcon.DownArrow />}
           ref={dataBaseRef}
-       
         />
         <Button
           fontFamily={FontFamily.montserrat_Bold}
@@ -167,7 +220,19 @@ export default function Login({ navigation, route }) {
           title={"Login"}
           onPress={handleSubmit(_login)}
         />
-        <SmallText onPress={()=>navigation.navigate(ScreenNames.REGISTERSCREEN)} >Don’t have an account?<Text style={{color:AppColors.primary,  fontFamily:FontFamily.montserrat_SemiBoldItalic}}>Register</Text></SmallText>
+        <SmallText
+          onPress={() => navigation.navigate(ScreenNames.REGISTERSCREEN)}
+        >
+          Don’t have an account?
+          <Text
+            style={{
+              color: AppColors.primary,
+              fontFamily: FontFamily.montserrat_SemiBoldItalic,
+            }}
+          >
+            Register
+          </Text>
+        </SmallText>
         {/* <View style={styles.row}>
             <HorizontalLine customWidth="30%" />
             <SmallText color={AppColors.darkGrey}>Or login use</SmallText>

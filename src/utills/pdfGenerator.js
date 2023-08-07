@@ -72,7 +72,7 @@ const PDFGenerator = () => {
       // Generate the PDF using react-native-html-to-pdf
       const pdf = await RNHTMLtoPDF.convert(options);
 
-      console.log("PDF file generated:", pdf.filePath);
+      // console.log("PDF file generated:", pdf.filePath);
     } catch (error) {
       console.log(error);
     }

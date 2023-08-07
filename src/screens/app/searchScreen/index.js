@@ -22,7 +22,7 @@ export default function SearchScreen({ navigation, route }) {
   const [loader, setLoader] = useState(false);
   const getData = async text => {
     setLoader(true);
-    console.log('----------------------------', text);
+    // console.log('----------------------------', text);
     try {
       setSearchQuery(AllLeadsData?.filter((i)=>i.companyName.toLowerCase().includes(text.toLowerCase())))
       // setSearchQuery(AllLeadsData);

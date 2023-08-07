@@ -78,7 +78,7 @@ const DrawerModal = (
                 },
               ]}
               renderItem={({ item, index }) => {
-                console.log("==============", item);
+                // console.log("==============", item);
                 return (
                   <TouchableOpacity
                     style={{

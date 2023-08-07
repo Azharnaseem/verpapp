@@ -2,32 +2,30 @@ import { Flower, Flower2, Malta } from "~assets/images";
 
 export const DatabaseCountries = [
   {
-    name: "Pakistan",
+    name: "AIT Pak",
+    dbName:"SIRIUS1_DB"
   },
   {
     name: "UAE Dubai",
+    dbName:"SIRIUS_UAE_DB"
   },
   {
     name: "Maliaysia",
+    dbName:"TEMPLATE_DB"
   },
   {
     name: "Honk Kong",
+    dbName:"TEMPLATE_DB"
   },
   {
     name: "Lahore",
-  },
-  {
-    name: "Germany",
-  },
-  {
-    name: "United States",
+    dbName:"TEMPLATE_DB"
   },
   {
     name: "Australia",
+    dbName:"TEMPLATE_DB"
   },
-  {
-    name: "Austria",
-  },
+ 
 ];
 export const imagesData = [
   {

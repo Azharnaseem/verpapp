@@ -14,7 +14,7 @@ const animation=useSharedValue(0);
     transform:[{scale:animation.value==index?withSpring(1):withSpring(0.5)}]
   }
  });
- console.log("======",image);
+//  console.log("======",image);
   return (
     <Animated.View style={[
       { alignSelf:"center", width:Dimensions.get('window').width-40,height:Dimensions.get('window').height,alignItems:"center",justifyContent:"center"},animatedStyle]}>
