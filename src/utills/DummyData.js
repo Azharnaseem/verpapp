@@ -10,20 +10,20 @@ export const DatabaseCountries = [
     dbName:"SIRIUS_UAE_DB"
   },
   {
-    name: "Maliaysia",
-    dbName:"TEMPLATE_DB"
+    name: "Remms PAK",
+    dbName:"RemmsPAK_DB"
+  },
+  { 
+    name: "Remms UAE",
+    dbName:"RemmsTech_UAE_DB"
   },
   {
-    name: "Honk Kong",
-    dbName:"TEMPLATE_DB"
+    name: "Agrius Saudia",
+    dbName:"SIRIUS_KSA_DB"
   },
   {
-    name: "Lahore",
-    dbName:"TEMPLATE_DB"
-  },
-  {
-    name: "Australia",
-    dbName:"TEMPLATE_DB"
+    name: "Agrius Malesia",
+    dbName:"SIRIUS_MY_DB"
   },
  
 ];

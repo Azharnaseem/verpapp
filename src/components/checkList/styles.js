@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     borderRadius: width(2),
     alignItems: "center",
     borderWidth: width(0.3),
+    backgroundColor:AppColors.scndry,
     borderColor: AppColors.primary,
 
     // backgroundColor: AppColors.btnprimary + '20',

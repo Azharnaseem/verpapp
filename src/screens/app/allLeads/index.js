@@ -99,24 +99,24 @@ export default function AllLeads({ navigation, route }) {
   return (
     <ScreenWrapper
       scrollEnabled
-      // headerUnScrollable={() => {
-      //   return (
-      //     <View>
-      //       <PageHeader onPressBack={() => navigation.goBack()} />
-      //       <SearchField
-      //         onChangeText={searchMethod}
-      //         //  onPressBar={()=>navigation.navigate(ScreenNames.SEARCHSCREEN)} editable={false}
-      //         placeholder={"Search Leads"}
-      //         containerStyle={{ marginVertical: height(1) }}
-      //       />
-      //     </View>
-      //   );
-      // }}
+      headerUnScrollable={() => {
+        return (
+          <View>
+            <PageHeader onPressBack={() => navigation.goBack()} />
+            <SearchField
+              onChangeText={searchMethod}
+              //  onPressBar={()=>navigation.navigate(ScreenNames.SEARCHSCREEN)} editable={false}
+              placeholder={"Search Leads"}
+              containerStyle={{ marginVertical: height(1) }}
+            />
+          </View>
+        );
+      }}
     
     >
       <View style={styles.mainViewContainer}>
-        <Text>ddd</Text>
-        {/* <View style={{ marginVertical: height(1) }}>
+        {/* <Text>ddd</Text> */}
+        <View style={{ marginVertical: height(1) }}>
           {searchQuery === null ? (
             <FlatList
               //  ListHeaderComponent={()=>{
@@ -173,7 +173,7 @@ export default function AllLeads({ navigation, route }) {
               )}
             </>
           )}
-        </View> */}
+        </View>
       </View>
     </ScreenWrapper>
   );

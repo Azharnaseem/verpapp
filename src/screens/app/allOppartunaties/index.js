@@ -272,23 +272,23 @@ export default function AllOppartunaties({ navigation, route }) {
   return (
     <ScreenWrapper
       scrollEnabled
-      // headerUnScrollable={() => {
-      //   return (
-      //     <View>
-      //       <PageHeader  pageTitle={"All Opportunaties"} onPressBack={() => navigation.goBack()} />
-      //       <SearchField
-      //         onChangeText={searchMethod}
-      //         //  onPressBar={()=>navigation.navigate(ScreenNames.SEARCHSCREEN)} editable={false}
-      //         placeholder={"Search Leads"}
-      //         containerStyle={{ marginVertical: height(1) }}
-      //       />
-      //     </View>
-      //   );
-      // }}
+      headerUnScrollable={() => {
+        return (
+          <View>
+            <PageHeader  pageTitle={"All Opportunaties"} onPressBack={() => navigation.goBack()} />
+            <SearchField
+              onChangeText={searchMethod}
+              //  onPressBar={()=>navigation.navigate(ScreenNames.SEARCHSCREEN)} editable={false}
+              placeholder={"Search Leads"}
+              containerStyle={{ marginVertical: height(1) }}
+            />
+          </View>
+        );
+      }}
     >
       <View style={styles.mainViewContainer}>
-        <Text>dsssssssssssssssd</Text>
-        {/* <View style={{ marginVertical: height(1) }}>
+        {/* <Text>dsssssssssssssssd</Text> */}
+        <View style={{ marginVertical: height(1) }}>
           {searchQuery === null ? (
             <FlatList
               //  ListHeaderComponent={()=>{
@@ -345,7 +345,7 @@ export default function AllOppartunaties({ navigation, route }) {
               )}
             </>
           )}
-        </View> */}
+        </View>
       </View>
     </ScreenWrapper>
   );

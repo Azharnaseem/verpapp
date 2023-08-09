@@ -277,6 +277,7 @@ export default function Login({ navigation, route }) {
           style={{
             height: height(80),
             paddingHorizontal: width(3),
+            // backgroundColor:"g"
             // paddingVertical: height(3),
           }}
         >
