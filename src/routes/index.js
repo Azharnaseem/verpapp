@@ -16,17 +16,38 @@ import Home from "~screens/app/home";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BackgroundTimer from 'react-native-background-timer';
 import { AppState } from "react-native";
+import NetInfo from "@react-native-community/netinfo";
+import { erroMessage, successMessage } from "~utills/Methods";
 // import styles from "./styles";
 // import styles from "./styles";
 let timerReference = null;
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 export default function Routes() {
-  
-  useEffect(() => {
+  const [isConnected, setIsconected]=useState(false)
+    useEffect(() => {
     setTimeout(() => {
       SplashScreen.hide();
     }, 1000);
+  }, []);
+  
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      console.log("Connection type", state.type);
+      console.log("Is connected?", state.isConnected);
+      if(state.isConnected==true) {
+        console.log("ccccccccccccccccc");
+        successMessage("Your are Online")
+      }else{
+        console.log("eeeeeeeeeeeeeeeeeeeeeeeee");
+        erroMessage("Your are Offline")
+      }
+    });
+    
+    // Unsubscribe
+    return ()=>{
+      unsubscribe();
+    };
   }, []);
   const dispatch = useDispatch();
   // const checkToken = async () => {
