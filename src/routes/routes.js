@@ -9,6 +9,7 @@ const ScreenNames = {
   REGISTERSCREEN:"ResgisterScreen",
   ALLOPPARTUNATIES:"AllOppartunaties",
   AllLEADS:"AllLeads",
+  ATTENDENCESCREEN:"AttendenceScreen",
   SEARCHSCREEN:"SearchScreen",
   LEADDETAILINFO:"LeadDetailInfo",
   PDFREPORTSCREEN:"PdfReportScreen",

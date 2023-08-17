@@ -1484,6 +1484,11 @@
   resolved "https://registry.npmjs.org/@react-native-community/eslint-plugin/-/eslint-plugin-1.2.0.tgz"
   integrity sha512-o6aam+0Ug1xGK3ABYmBm0B1YuEKfM/5kaoZO0eHbZwSpw9UzDX4G5y4Nx/K20FHqUmJHkZmLvOUFYwN4N+HqKA==
 
+"@react-native-community/geolocation@^3.0.6":
+  version "3.0.6"
+  resolved "https://registry.npmjs.org/@react-native-community/geolocation/-/geolocation-3.0.6.tgz"
+  integrity sha512-+iidKFgw1HxCJSHVnlywAKu6uerdpDAKTXLRnlsUdhgqtgTiIixb496Z267iPVFmIO1bp4lOU6UiwzmvcyXdbg==
+
 "@react-native-community/netinfo@^9.4.1":
   version "9.4.1"
   resolved "https://registry.npmjs.org/@react-native-community/netinfo/-/netinfo-9.4.1.tgz"
@@ -2947,10 +2952,10 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-dayjs@^1.8.15:
-  version "1.11.2"
-  resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.2.tgz"
-  integrity sha512-F4LXf1OeU9hrSYRPTTj/6FbO4HTjPKXvEIC1P2kcnFurViINCVk3ZV0xAS3XVx9MkMsXbbqlK6hjseaYbgKEHw==
+dayjs@^1.11.9, dayjs@^1.8.15:
+  version "1.11.9"
+  resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.9.tgz"
+  integrity sha512-QvzAURSbQ0pKdIye2txOzNaHmxtUBXerpY0FJsFXUMKbIZeFm5ht1LS/jFsrncjnmtv8HsG0W2g6c0zUjZWmpA==
 
 debug@^2.2.0:
   version "2.6.9"

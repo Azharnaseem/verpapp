@@ -11,6 +11,7 @@ import {
   AllLeads,
   AllLongTextData,
   AllOppartunaties,
+  AttendenceScreen,
   Contract,
   ContractDetailScreen,
   ContractScreen,
@@ -33,6 +34,7 @@ import { SmallText } from "~components/texts";
 import AccountSvg from "~assets/SVG/AccountSvg";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ScreenNames from "~routes/routes";
+import AttendenceSvg from "~assets/SVG/Attendence";
 // import { HomeSvg, ProfileSvg } from "~assets/svg";
 
 const BottomTabBar = ({navigation}) => {
@@ -160,51 +162,7 @@ const AcntStackScreen=() =>{
           },
         }}
       />
-      {/* <Tab.Screen
-        name="newadd"
-        component={ConversationScreen}
-        options={{
-          tabBarIcon: ({ focused }) => {
-            return (
-              <View style={styles.plusIcon}>
-                <View
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    backgroundColor: AppColors.secndry,
-                    width: width(14),
-                    height: width(14),
-                    borderRadius: width(100),
-                    marginBottom: height(1),
-                    shadowColor: "#000",
-                    shadowOffset: {
-                      width: 0,
-                      height: 12,
-                    },
-                    shadowOpacity: 0.58,
-                    shadowRadius: 16.0,
-
-                    elevation: 24,
-                  }}
-                >
-                  <PlusSvg
-                    color={focused ? AppColors.white : AppColors.lightWhite}
-                  />
-                </View>
-
-                <SmallText
-                  fontFamily={FontFamily.montserrat_Medium}
-                  color={focused ? AppColors.white : AppColors.lightWhite}
-                  size={2.8}
-                >
-                  New Chat
-                </SmallText>
-              </View>
-            );
-          },
-          tabBarStyle: { display: "none" },
-        }}
-      /> */}
+      
       <Tab.Screen
         name="Accounts"
         component={Accounts}
@@ -254,6 +212,31 @@ const AcntStackScreen=() =>{
           },
         }}
       /> */}
+      <Tab.Screen
+        name="AttendenceScreen"
+        component={AttendenceScreen}
+        options={{
+          // tabBarStyle: { display: "none" },
+          tabBarIcon: ({ focused }) => {
+            return (
+              <View style={styles.tabContainer}>
+                <AttendenceSvg
+                  color={focused ? AppColors.primary : AppColors.black+"90"}
+                />
+          
+                <SmallText
+                  numberOfLines={1}
+                  fontFamily={FontFamily.montserrat_SemiBold}
+                  color={focused ? AppColors.primary : AppColors.black+"90"}
+                  size={3}
+                >
+                  Profile
+                </SmallText>
+              </View>
+            );
+          },
+        }}
+      />
     </Tab.Navigator>
  
   );

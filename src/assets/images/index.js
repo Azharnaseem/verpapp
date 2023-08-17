@@ -23,4 +23,5 @@ export { default as Tickets } from "./tickets.png";
 export { default as PersonImage } from "./personIcon.png";
 export { default as InvoiceIcon } from "./invoice.png";
 export { default as CompanyIcon } from "./company.png";
+export { default as TapIcon } from "./tap.png";
 

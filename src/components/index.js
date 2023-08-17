@@ -14,3 +14,4 @@ export { default as SliderItem } from "./sliderItem";
 export { default as ContractTicketBox } from "./contractTickets";
 export { default as TicketDetailBox } from "./TicketDetailBox";
 export { default as InboxDueTicketBox } from "./invoiceDueTicketBox";
+export { default as ProfileDetail } from "./profileDetail";

@@ -14,6 +14,7 @@ import BackIcon from "./backicon.svg";
 import Person from "./person.svg";
 import Phone from "./phone.svg";
 
+
 const SvgIcon = {
   Bell,
   Email,
@@ -27,6 +28,7 @@ const SvgIcon = {
   BackIcon,
   Person,
   Phone,
+  
 
 };
 export default SvgIcon;

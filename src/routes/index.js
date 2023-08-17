@@ -6,7 +6,7 @@ import { IntroScreen, LoginScreen, ResgisterScreen } from "~screens/auth";
 import { Loader } from "~components";
 import ScreenNames from "./routes";
 import SplashScreen from "react-native-splash-screen";
-import { Accounts, AdminDrawer, AllLeads, AllOppartunaties, Contract, ContractDetailScreen, ContractScreen, HomeScreen, InvoiceScreen, InvoicesScreen, LeadDetailInfo, PdfReportScreen, SearchScreen, TicketDetailScreen, TicketsScreen } from "~screens/app";
+import { Accounts, AdminDrawer, AllLeads, AllOppartunaties, AttendenceScreen, Contract, ContractDetailScreen, ContractScreen, HomeScreen, InvoiceScreen, InvoicesScreen, LeadDetailInfo, PdfReportScreen, SearchScreen, TicketDetailScreen, TicketsScreen } from "~screens/app";
 import { selectIsLoggedIn, setIsLoggedIn, setToken, setUserMeta } from "~redux/slices/user";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import styles from "./styles";
@@ -161,6 +161,7 @@ export default function Routes() {
           // }}
            />
           <Stack.Screen name={ScreenNames.ALLOPPARTUNATIES} component={AllOppartunaties} />
+          <Stack.Screen name={ScreenNames.ATTENDENCESCREEN} component={AttendenceScreen} />
           <Stack.Screen name={ScreenNames.LEADDETAILINFO} component={LeadDetailInfo} />
         <Stack.Screen name={ScreenNames.SEARCHSCREEN} component={SearchScreen} />
           <Stack.Screen name={ScreenNames.PDFREPORTSCREEN} component={PdfReportScreen} />
