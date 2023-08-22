@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "445572200170",
+    "project_id": "verpapp-2b394",
+    "storage_bucket": "verpapp-2b394.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445572200170:android:fcf72d05136c150037c993",
+        "android_client_info": {
+          "package_name": "com.boilerplate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445572200170-gljnr6e339glf4rtb1d3gtcpq65lrqdi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChCFHmV-Ao_3hyZaNvCIFUQQYyWwyFMxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445572200170-gljnr6e339glf4rtb1d3gtcpq65lrqdi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

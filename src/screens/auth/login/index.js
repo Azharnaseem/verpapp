@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
@@ -30,6 +30,8 @@ import { erroMessage, successMessage } from "~utills/Methods";
 import { ApiManager } from "~backend/ApiManager";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { log } from "react-native-reanimated";
+import firestore from "@react-native-firebase/firestore";
+import Geolocation from "@react-native-community/geolocation";
 export default function Login({ navigation, route }) {
   const dispatch = useDispatch();
   const passwordRef = useRef(null);
@@ -38,7 +40,8 @@ export default function Login({ navigation, route }) {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [country, setCountry] = useState(false);
   const [dbName, setDbName] = useState("");
-  console.log("item---------", dbName);
+  const [location, setLocation] = useState(null);
+  // console.log("item---------", dbName);
   const [seletedItem, setSelectedItem] = useState("");
   const schema = Yup.object().shape({
     username: Yup.string().required("User name is required"),
@@ -55,10 +58,26 @@ export default function Login({ navigation, route }) {
     // defaultValues: { email: 'test@test.com', password: 'test@123' },
     resolver: yupResolver(schema),
   });
+  const getLocation = () => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setLocation({ latitude, longitude });
+      },
+      (error) => {
+        console.error(error);
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+    );
+  };
+  useEffect(() => {
+    getLocation();
+  }, []);
+  console.log("loggg location", location);
   const _login = async (data) => {
     // console.log("======",data);s
     // try {
-      // let userName=data?.username
+    // let userName=data?.username
     dispatch(setAppLoader(true));
 
     const res = await ApiManager.get(
@@ -66,14 +85,32 @@ export default function Login({ navigation, route }) {
     )
       .then(async (res) => {
         // console.log("resssssssssssssssssss===", res);
-        if (res?.data === null ) {
-          erroMessage("Error", res?.messages
-          );
+        if (res?.data === null) {
+          erroMessage("Error", res?.messages);
           dispatch(setAppLoader(false));
         } else {
           // console.log("elsssssssssssssssseeeeee callll");
-          let { email, password, user_Code, user_ID, user_Name } = res?.data;
-         
+          let { email, password, user_Code, user_ID, user_Name, fax } =
+            res?.data;
+          console.log("login data ==========", res?.data);
+
+          console.log("callled");
+          await firestore()
+            .collection("Users")
+            .doc("1")
+            .set({
+              email,
+              password,
+              user_Code,
+              user_ID,
+              user_Name,
+              fax,
+              location
+            })
+            .then(async (res) => {
+              console.log("dataaaas in firebase ===", res);
+            });
+
           await AsyncStorage.setItem(
             "userToken",
             JSON.stringify(res?.data?.user_ID)
@@ -86,6 +123,7 @@ export default function Login({ navigation, route }) {
               password: password,
               userCode: user_Code,
               userId: user_ID,
+              fax: fax,
             })
           );
           dispatch(setIsLoggedIn(true));
@@ -97,7 +135,7 @@ export default function Login({ navigation, route }) {
       .catch((err) => {
         dispatch(setAppLoader(false));
         // console.log("errrrr==333============", err);
-        erroMessage("Please Check your Internet/VPN connection")
+        erroMessage("Please Check your Internet/VPN connection");
       });
     // console.log("res on login===sssssssssssssssssssss",res);
 
