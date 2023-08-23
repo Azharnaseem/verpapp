@@ -90,8 +90,7 @@ export default function Login({ navigation, route }) {
           dispatch(setAppLoader(false));
         } else {
           // console.log("elsssssssssssssssseeeeee callll");
-          let { email, password, user_Code, user_ID, user_Name, fax } =
-            res?.data;
+          let { email, password, user_Code, user_ID, user_Name } = res?.data;
           console.log("login data ==========", res?.data);
 
           console.log("callled");
@@ -103,9 +102,7 @@ export default function Login({ navigation, route }) {
               password,
               user_Code,
               user_ID,
-              user_Name,
-              fax,
-              location
+              location,
             })
             .then(async (res) => {
               console.log("dataaaas in firebase ===", res);
@@ -123,7 +120,7 @@ export default function Login({ navigation, route }) {
               password: password,
               userCode: user_Code,
               userId: user_ID,
-              fax: fax,
+              
             })
           );
           dispatch(setIsLoggedIn(true));

@@ -61,8 +61,20 @@ export default function AttendenceScreen({ navigation, route }) {
     );
   };
   useEffect(() => {
-    getLocation();
-  }, []);
+    let secTimerr = setInterval( () => {
+      console.log("callllllll after 5 seconds");
+      // setDt(new Date().toLocaleString())
+    },5000)
+
+    return () => clearInterval(secTimerr);
+}, []);
+  useEffect(() => {
+   
+      getLocation()
+    
+   
+  },[]);
+  
   const calculateCircularBoundaries = (
     centerLat,
     centerLng,
@@ -120,8 +132,9 @@ export default function AttendenceScreen({ navigation, route }) {
   }, [location != null]);
   useEffect(() => {
     let secTimer = setInterval( () => {
+    
       setDt(new Date().toLocaleString())
-    },1000)
+    },5000)
 
     return () => clearInterval(secTimer);
 }, []);
@@ -133,7 +146,7 @@ export default function AttendenceScreen({ navigation, route }) {
   //   console.log("The other user is outside your radius.");
   // }
 
-  console.log(distancee, "---------=====", location);
+  // console.log(distancee, "---------=====", location);
 
   return (
     <ScreenWrapper
