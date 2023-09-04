@@ -99,21 +99,21 @@ export default function Routes() {
             // dispatch(setAppLoader(false));
         
   };
-  useEffect(() => {
-    console.log("cllllllllllllllllllllllllllllllllllllllllll22222222");
-    // Start the initial timer on app load
-    handleUserActivity();
-    AppState.addEventListener('change', handleAppStateChange);
+  // useEffect(() => {
+  //   console.log("cllllllllllllllllllllllllllllllllllllllllll22222222");
+  //   // Start the initial timer on app load
+  //   handleUserActivity();
+  //   AppState.addEventListener('change', handleAppStateChange);
 
-    // Clean up the timer on unmount
-    return () => {
+  //   // Clean up the timer on unmount
+  //   return () => {
       
-      if (timerReference) {
-        BackgroundTimer.clearTimeout(timerReference);
-      }
-      AppState.removeEventListener('change', handleAppStateChange);
-    };
-  }, []);
+  //     if (timerReference) {
+  //       BackgroundTimer.clearTimeout(timerReference);
+  //     }
+  //     AppState.removeEventListener('change', handleAppStateChange);
+  //   };
+  // }, []);
 
   return (
     <NavigationContainer>
@@ -170,6 +170,7 @@ export default function Routes() {
           <Stack.Screen name={ScreenNames.CONTRACTDETAILSCREEN} component={ContractDetailScreen} />
           <Stack.Screen name={ScreenNames.TICKETDETAILSCREEN} component={TicketDetailScreen} />
           <Stack.Screen name={ScreenNames.INVOICESSCREEN} component={InvoiceScreen} />
+          <Stack.Screen name={ScreenNames.HOME} component={HomeScreen} />
         </Stack.Navigator>
       )}
     </NavigationContainer>

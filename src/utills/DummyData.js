@@ -27,6 +27,34 @@ export const DatabaseCountries = [
   },
  
 ];
+export const OfficesLocationData = [
+  {
+    name: "Islamabad",
+    location:{latitude:"33.600525810292226",longitude:"73.15271654233932"},
+  },
+  {
+    name: "Srilanka",
+    location:{latitude:"37.421998333333335",longitude:"-122.084"},
+  },
+  {
+   
+    name: "Lohore",
+    location:{latitude:"31.519470051248483",longitude:"74.32292788849351"},
+  },
+  { 
+    name: "Krachi",
+    location:{latitude:"37.421998333333335",longitude:"-122.084"},
+  },
+  {
+    name: "Dubai",
+    location:{latitude:"24.464111624884534",longitude:"54.32769457308308"},
+  },
+  {
+    name: "Malshiya",
+    location:{latitude:"37.421998333333335",longitude:"-122.084"},
+  },
+ 
+];
 export const imagesData = [
   {
     image: Flower,

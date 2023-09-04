@@ -58,21 +58,21 @@ export default function Login({ navigation, route }) {
     // defaultValues: { email: 'test@test.com', password: 'test@123' },
     resolver: yupResolver(schema),
   });
-  const getLocation = () => {
-    Geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        setLocation({ latitude, longitude });
-      },
-      (error) => {
-        console.error(error);
-      },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-    );
-  };
-  useEffect(() => {
-    getLocation();
-  }, []);
+  // const getLocation = () => {
+  //   Geolocation.getCurrentPosition(
+  //     (position) => {
+  //       const { latitude, longitude } = position.coords;
+  //       setLocation({ latitude, longitude });
+  //     },
+  //     (error) => {
+  //       console.error(error);
+  //     },
+  //     { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+  //   );
+  // };
+  // useEffect(() => {
+  //   getLocation();
+  // }, []);
   console.log("loggg location", location);
   const _login = async (data) => {
     // console.log("======",data);s
@@ -91,22 +91,22 @@ export default function Login({ navigation, route }) {
         } else {
           // console.log("elsssssssssssssssseeeeee callll");
           let { email, password, user_Code, user_ID, user_Name } = res?.data;
-          console.log("login data ==========", res?.data);
+          // console.log("login data ==========", res?.data);
 
-          console.log("callled");
-          await firestore()
-            .collection("Users")
-            .doc("1")
-            .set({
-              email,
-              password,
-              user_Code,
-              user_ID,
-              location,
-            })
-            .then(async (res) => {
-              console.log("dataaaas in firebase ===", res);
-            });
+          // console.log("callled");
+          // await firestore()
+          //   .collection("Users")
+          //   .doc("1")
+          //   .set({
+          //     email,
+          //     password,
+          //     user_Code,
+          //     user_ID,
+          //     location,
+          //   })
+          //   .then(async (res) => {
+          //     console.log("dataaaas in firebase ===", res);
+          //   });
 
           await AsyncStorage.setItem(
             "userToken",
