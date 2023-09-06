@@ -84,14 +84,14 @@ export default function Login({ navigation, route }) {
       `${data?.username.toUpperCase()}/${data?.password}/${dbName}`
     )
       .then(async (res) => {
-        // console.log("resssssssssssssssssss===", res);
+        // console.log("resssssssssssssssssss===>>>", res);
         if (res?.data === null) {
           erroMessage("Error", res?.messages);
           dispatch(setAppLoader(false));
         } else {
           // console.log("elsssssssssssssssseeeeee callll");
-          let { email, password, user_Code, user_ID, user_Name } = res?.data;
-          // console.log("login data ==========", res?.data);
+          let { email, password,fullname,groupType, user_Code, user_ID, user_Name } = res?.data[0];
+          console.log("login data ==========", email);
 
           // console.log("callled");
           // await firestore()
@@ -107,19 +107,24 @@ export default function Login({ navigation, route }) {
           //   .then(async (res) => {
           //     console.log("dataaaas in firebase ===", res);
           //   });
-
+          // console.log("callllll1111111111111111",res?.data[0]?.user_ID);
           await AsyncStorage.setItem(
             "userToken",
-            JSON.stringify(res?.data?.user_ID)
+            JSON.stringify(res?.data[0]?.user_ID)
           );
+          console.log("callllll222222222222222222");
           await AsyncStorage.setItem("userData", JSON.stringify(res?.data));
+          console.log("callllll222222222223333333333333");
           dispatch(
             setUserMeta({
               name: user_Name,
               email: email,
               password: password,
+              fullname:fullname,
               userCode: user_Code,
               userId: user_ID,
+              groupType:groupType,
+              dbName:dbName,
               
             })
           );

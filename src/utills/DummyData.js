@@ -162,6 +162,54 @@ export const imagesData = [
 //     ],
 //   },
 // ];
+export const EmployeeAttendenceData = [
+  {
+    name :"Azhar Naseem",
+    professional: "React Native Developer",
+    attendence: "present",
+  },
+  {
+    name :"Waqar Khan",
+    professional: "Vp Software",
+    attendence: "present",
+  },
+  {
+    name :"Murtaza",
+    professional: "Database Engineer",
+    attendence: "present",
+  },
+  {
+    name :"Wahib Shakil",
+    professional: "Sales Team",
+    attendence: "Absent",
+  },
+  {
+    name :"Azhar Naseem",
+    professional: "React Native Developer",
+    attendence: "present",
+  },
+  {
+    name :"Adeeb ",
+    professional: "Purchase Manager",
+    attendence: "present",
+  },
+  {
+    name :"Ajaz",
+    professional: "CFO",
+    attendence: "present",
+  },
+  {
+    name :"Mahak",
+    professional: "HR Manager",
+    attendence: "present",
+  },
+  {
+    name :"Sama Tariq",
+    professional: "Account",
+    attendence: "Absent",
+  },
+  
+];
 export const AllLeadsData = [
   {
     companyName: "Agrius It",

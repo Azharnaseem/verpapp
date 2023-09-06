@@ -31,8 +31,8 @@ const LeadsOppComponent = ({
       colors={AppColors.red}
     > */}
       {showLead ? (
-        <>
-          <View style={{ flexDirection: "row" }}>
+      
+          <View style={{ width:width(88), flexDirection: "row" }}>
             <Image
               source={showLead ? LeadIcon : Oppartunity}
               style={{
@@ -43,26 +43,29 @@ const LeadsOppComponent = ({
               }}
             />
             <View style={{ paddingLeft: width(1.5) }}>
-              <Text numberOfLines={2} style={styles.nameText}>
+              <View style={{ alignItems:"center",flexDirection:"row",}}>
+              <Text numberOfLines={1} style={styles.nameText}>
                 Leader Owner:
-                <Text style={styles.valueName}>{` ${leadOwner}`}</Text>
               </Text>
-              <Text numberOfLines={2} style={styles.nameText}>
+              <Text numberOfLines={1} style={styles.valueName}>{` ${leadOwner}`}</Text>
+              </View>
+              <View style={{ alignItems:"center",flexDirection:"row",}}>
+              <Text  style={styles.nameText}>
                 Company Name:
-                <Text style={styles.valueName}>{` ${companyName}`}</Text>
               </Text>
-              <Text numberOfLines={2} style={styles.nameText}>
+              <Text numberOfLines={1} style={styles.valueName}>{` ${companyName}`}</Text>
+              </View>
+              <View style={{ alignItems:"center",flexDirection:"row",}}>
+              <Text numberOfLines={1} style={styles.nameText}>
                 Type:
-                <Text style={styles.valueName}>{` ${type}`}</Text>
               </Text>
+              <Text numberOfLines={1} style={styles.valueName}>{` ${type}`}</Text>
             </View>
           </View>
+          </View>
 
-          {/* <Text style={styles.nameText}>
-            Lead No:
-            <Text style={styles.valueName}> {leadNo}</Text>
-          </Text> */}
-        </>
+         
+        
       ) : (
         <View style={{ flexDirection: "row" }}>
           <Image

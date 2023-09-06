@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef,useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -31,13 +31,15 @@ import { welcomeImage } from "~assets/images";
 import ScreenNames from "~routes/routes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SearchSVG from "~assets/SVG/searchSvg";
+import axios from "axios";
 
 // import { PDFGenerator } from "~utills/Methods";
 export default function Home({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
-  console.log("login infooo ===", userInfo);
+  console.log("login infooo ===>>>>>>>>>>>>>>>>>", userInfo);
   const [pdfFile, setPdfFile] = useState(null);
+  const [leadData, setLeadData] = useState(null);
   const [currentItemIndex, setCurrentItemIndex] = useState(null);
   // console.log("==================",currentItemIndex);
   const confirmationModal = useRef();
@@ -97,13 +99,35 @@ export default function Home({ navigation, route }) {
       console.log(error);
     }
   };
+  useEffect(() => {
+    getLeadData();
+  }, [userInfo]);
+  const getLeadData = async () => {
+    try {
+      let res = await axios
+        .get(
+          `http://192.168.0.220:8080/api/Lead/GetLead/GetLeadListtest?rows=10&pagenumber=0&Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userid=${userInfo?.userId}`
+        )
+        .catch((error) => {
+          console.log("error11111 in list by main catagory", error);
+        });
+      console.log("========..............api====", res);
+      if(res !=null){
+        setLeadData(res)
+      }else{
+        console.log("data is nilllllll");
+      }
+    } catch (error) {
+      console.log("error is  lear getting", error);
+    }
+  };
   const RenderLeads = ({ item, index }) => {
+    // console.log("item of lead data:::::::::::::::::::== ",item);
     return (
       <View style={{ marginHorizontal: width(1) }}>
         <LeadsOppComponent
-          containerViewStyle={{ width: width(70) }}
-          companyName={item?.cname}
-          leadOwner={item?.name}
+          companyName={item?.companyName}
+          leadOwner={item?.employeeName}
           type={item?.type}
           onPress={() => {
             navigation.navigate(ScreenNames.LEADDETAILINFO, {
@@ -211,7 +235,7 @@ export default function Home({ navigation, route }) {
                 color={AppColors.scndry}
                 fontFamily={FontFamily.montserrat_Bold}
               >
-                {`Welcome ,${userInfo?.email}`}
+                {`Welcome ${userInfo?.fullname}`}
               </SmallText>
               {/* <SmallText color={AppColors.darkGrey}>What do you want ?</SmallText> */}
               {/* <SearchField placeholderColor={AppColors.black} placeholder={"Search..."} containerStyle={{marginVertical:height(1)}} /> */}
@@ -240,14 +264,18 @@ export default function Home({ navigation, route }) {
                   Leads
                 </SmallText>
                 <Pressable
-                 onPress={() => {
-                  navigation.navigate(ScreenNames.AllLEADS);
-                }} 
-                style={{ flexDirection: "row", alignItems: "center", width: width(20),
-                justifyContent: "space-between", }}>
+                  onPress={() => {
+                    navigation.navigate(ScreenNames.AllLEADS);
+                  }}
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    width: width(20),
+                    justifyContent: "space-between",
+                  }}
+                >
                   <SearchSVG width={15} height={15} color={AppColors.primary} />
                   <SmallText
-                   
                     size={4}
                     color={AppColors.primary}
                     fontFamily={FontFamily.montserrat_SemiBold}
@@ -266,7 +294,7 @@ export default function Home({ navigation, route }) {
             >
               <FlatList
                 ref={flatlistRef}
-                data={data}
+                data={leadData}
                 keyExtractor={(i, n) => n}
                 renderItem={RenderLeads}
                 horizontal={true}

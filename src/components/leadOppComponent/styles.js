@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     // alignSelf: "center",
     width: width(93),
     // height: height(10),
-    paddingHorizontal: width(3),
+    paddingHorizontal: width(2),
     paddingVertical: height(2),
     backgroundColor: AppColors.scndry+"10",
     borderRadius: width(2),
@@ -24,13 +24,17 @@ const styles = StyleSheet.create({
     fontFamily:FontFamily.montserrat_SemiBold,
     color:AppColors.scndry,
     // backgroundColor:"green",
-   
+    // width:"79%",
     marginVertical:1
     
   },
   valueName:{
-    // backgroundColor:'red',
-    fontSize:width(3.2),
+    // backgroundColor:'green',
+    width:"55%",
+    // width:width(50),
+    fontFamily:FontFamily.montserrat_SemiBold,
+
+    // fontSize:width(3.2),
     color:AppColors.greyText2
 
 
