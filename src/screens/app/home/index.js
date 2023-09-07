@@ -1,4 +1,4 @@
-import React, { useRef,useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -32,35 +32,35 @@ import ScreenNames from "~routes/routes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SearchSVG from "~assets/SVG/searchSvg";
 import axios from "axios";
+import { PlusIcon } from "~assets/SVG";
+import CalBack from "~assets/SVG/calBack";
+import FrwordSvg from "~assets/SVG/frwrdSvg";
+import BackSvg from "~assets/SVG/backSvg";
 
 // import { PDFGenerator } from "~utills/Methods";
 export default function Home({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
-  console.log("login infooo ===>>>>>>>>>>>>>>>>>", userInfo);
+  // console.log("login infooo ===>>>>>>>>>>>>>>>>>", userInfo);
   const [pdfFile, setPdfFile] = useState(null);
+  const leadRef = useRef(null);
   const [leadData, setLeadData] = useState(null);
+  const [index, setIndex] = useState(0);
   const [currentItemIndex, setCurrentItemIndex] = useState(null);
   // console.log("==================",currentItemIndex);
   const confirmationModal = useRef();
-  const flatlistRef = useRef(null);
-  const screenScroll = useRef(null);
-  const handleScrolllllll = (event) => {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    const itemHeight = height(8); /* specify the height of each item */
-    const index = Math.floor(offsetY / itemHeight);
-    setCurrentItemIndex(index);
-  };
-  const scrollToIndex = (index) => {
-    scrollViewRef.current?.scrollToPosition(0, index * itemHeight, true);
-  };
-  const data = [
-    { name: "Azhar naseem", cname: "Agriust It", type: "it sprt" },
-    { name: "Azhar mughal", cname: "Agriust It", type: "it sprt" },
-    { name: "naseem", cname: "Agriust It", type: "it sprt" },
-    { name: "Azhar em", cname: "Agriust It", type: "it sprt" },
-    { name: "Azhar ", cname: "Agriust It", type: "it sprt" },
-  ];
+  // const flatlistRef = useRef(null);
+  // const screenScroll = useRef(null);
+  // const handleScrolllllll = (event) => {
+  //   const offsetY = event.nativeEvent.contentOffset.y;
+  //   const itemHeight = height(8); /* specify the height of each item */
+  //   const index = Math.floor(offsetY / itemHeight);
+  //   setCurrentItemIndex(index);
+  // };
+  // const scrollToIndex = (index) => {
+  //   scrollViewRef.current?.scrollToPosition(0, index * itemHeight, true);
+  // };
+
   const generatePDF = async () => {
     try {
       // Define the HTML content to convert to PDF
@@ -111,18 +111,19 @@ export default function Home({ navigation, route }) {
         .catch((error) => {
           console.log("error11111 in list by main catagory", error);
         });
-      console.log("========..............api====", res);
-      if(res !=null){
-        setLeadData(res)
-      }else{
+      // console.log("========..............api====", res);
+      if (res != null) {
+        setLeadData(res);
+      } else {
         console.log("data is nilllllll");
       }
     } catch (error) {
       console.log("error is  lear getting", error);
     }
   };
+
   const RenderLeads = ({ item, index }) => {
-    // console.log("item of lead data:::::::::::::::::::== ",item);
+    // console.log("item of lead data:::::::::::::::::::== ", item);
     return (
       <View style={{ marginHorizontal: width(1) }}>
         <LeadsOppComponent
@@ -133,41 +134,81 @@ export default function Home({ navigation, route }) {
             navigation.navigate(ScreenNames.LEADDETAILINFO, {
               id: item?.companyName,
               name: "Lead Detail Info",
+              leadProfileId: item?.leadProfileId,
             });
           }}
         />
       </View>
     );
   };
-  const handleEndReached = () => {
-    // console.log("end reached");
-    let tepmDta = data;
-    tepmDta.push();
-    // flatlistRef.current.scrollToIndex({ animated: true, index: 0 });
-  };
-
-  const itemWidth = width(51); // Replace with the actual item width
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const handleScroll = (event) => {
-    // console.log("sssssssssssss");
-    const scrollOffset = event.nativeEvent.contentOffset.x;
-    // const { contentOffset, layoutMeasurement } = event.nativeEvent;
-    const index = Math.floor(scrollOffset / itemWidth);
-    // const index = Math.floor(scrollOffset / itemWidth);
-    // const index = Math.floor(contentOffset.x / layoutMeasurement);
-    // console.log(index,"===",data.length);
-    if (index === data.length) {
-      // console.log("callled if ");
-      // Reached the last item, scroll back to the first item
-      flatlistRef.current.scrollToIndex({ animated: false, index: 0 });
+  const scrollToIndex = () => {
+    // Check if data is not empty before calling scrollToIndex
+    if (leadData.length > 0) {
+      console.log("calllllll2222222111111111111");
+      if (index == leadData.length - 1) {
+        return;
+      } else {
+        setIndex(index + 1);
+        leadRef.current.scrollToIndex({ animated: true, index });
+      }
+    } else {
+      console.log("calllllll2222222");
+      if (index == 0) {
+        return;
+      } else {
+        setIndex(index - 1);
+        leadRef.current.scrollToIndex({ animated: true, index });
+      }
     }
-    setCurrentIndex(index);
   };
-  const getItemLayout = (_, index) => ({
-    length: itemWidth,
-    offset: itemWidth * index,
-    index,
-  });
+  const scrollToIndexx = () => {
+    // Check if data is not empty before calling scrollToIndex
+  
+      console.log("calllllll2222222");
+      if (index == 0) {
+        return;
+      } else {
+        setIndex(index - 1);
+        leadRef.current.scrollToIndex({ animated: true, index });
+      }
+    
+  };
+  // useEffect(() => {
+  //   // if(index< leadData.length){
+  // //  leadRef?.current.scrollToIndex({
+  // //   index,
+  // //   animated: true,
+  // //  })
+  // }, [index]);
+  // const handleEndReached = () => {
+  //   // console.log("end reached");
+  //   let tepmDta = data;
+  //   tepmDta.push();
+  //   // flatlistRef.current.scrollToIndex({ animated: true, index: 0 });
+  // };
+
+  // const itemWidth = width(51); // Replace with the actual item width
+  // const [currentIndex, setCurrentIndex] = useState(0);
+  // const handleScroll = (event) => {
+  //   // console.log("sssssssssssss");
+  //   const scrollOffset = event.nativeEvent.contentOffset.x;
+  //   // const { contentOffset, layoutMeasurement } = event.nativeEvent;
+  //   const index = Math.floor(scrollOffset / itemWidth);
+  //   // const index = Math.floor(scrollOffset / itemWidth);
+  //   // const index = Math.floor(contentOffset.x / layoutMeasurement);
+  //   // console.log(index,"===",data.length);
+  //   if (index === data.length) {
+  //     // console.log("callled if ");
+  //     // Reached the last item, scroll back to the first item
+  //     flatlistRef.current.scrollToIndex({ animated: false, index: 0 });
+  //   }
+  //   setCurrentIndex(index);
+  // };
+  // const getItemLayout = (_, index) => ({
+  //   length: itemWidth,
+  //   offset: itemWidth * index,
+  //   index,
+  // });
 
   // const handleScroll = (event) => {
   //   console.log("callllll");
@@ -196,18 +237,18 @@ export default function Home({ navigation, route }) {
       </View>
     );
   };
-  const hhandleScroll = (event) => {
-    const { contentOffset } = event.nativeEvent;
-    const scrollX = contentOffset.x; // Horizontal scroll position
-    const scrollY = contentOffset.y; // Vertical scroll position
+  // const hhandleScroll = (event) => {
+  //   const { contentOffset } = event.nativeEvent;
+  //   const scrollX = contentOffset.x; // Horizontal scroll position
+  //   const scrollY = contentOffset.y; // Vertical scroll position
 
-    // console.log('Scroll position:', { scrollX, scrollY });
-  };
+  //   // console.log('Scroll position:', { scrollX, scrollY });
+  // };
 
   return (
     <ScreenWrapper
       scrollEnabled
-      ref={screenScroll}
+      // ref={screenScroll}
       headerUnScrollable={() => {
         return (
           <View>
@@ -225,111 +266,31 @@ export default function Home({ navigation, route }) {
       onScroll={hhandleScroll}
       showsVerticalScrollIndicator={false}> */}
       <View style={styles.mainViewContainer}>
-        {currentItemIndex <= 4 ? (
-          <>
-            <View
-              style={{ alignSelf: "flex-start", marginHorizontal: width(3.5) }}
+        <>
+          <View
+            style={{ alignSelf: "flex-start", marginHorizontal: width(3.5) }}
+          >
+            <SmallText
+              size={4}
+              color={AppColors.scndry}
+              fontFamily={FontFamily.montserrat_Bold}
             >
-              <SmallText
-                size={4}
-                color={AppColors.scndry}
-                fontFamily={FontFamily.montserrat_Bold}
-              >
-                {`Welcome ${userInfo?.fullname}`}
-              </SmallText>
-              {/* <SmallText color={AppColors.darkGrey}>What do you want ?</SmallText> */}
-              {/* <SearchField placeholderColor={AppColors.black} placeholder={"Search..."} containerStyle={{marginVertical:height(1)}} /> */}
-              <Image
-                source={welcomeImage}
-                resizeMode="stretch"
-                resizeMethod="resize"
-                style={{
-                  width: width(93),
-                  height: width(30),
-                  marginVertical: height(1),
-                }}
-              />
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  paddingHorizontal: width(1),
-                }}
-              >
-                <SmallText
-                  size={4}
-                  color={AppColors.scndry}
-                  fontFamily={FontFamily.montserrat_SemiBold}
-                >
-                  Leads
-                </SmallText>
-                <Pressable
-                  onPress={() => {
-                    navigation.navigate(ScreenNames.AllLEADS);
-                  }}
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    width: width(20),
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <SearchSVG width={15} height={15} color={AppColors.primary} />
-                  <SmallText
-                    size={4}
-                    color={AppColors.primary}
-                    fontFamily={FontFamily.montserrat_SemiBold}
-                  >
-                    Search
-                  </SmallText>
-                </Pressable>
-              </View>
-            </View>
-            <View
+              {`Welcome ${userInfo?.fullname}`}
+            </SmallText>
+            {/* <SmallText color={AppColors.darkGrey}>What do you want ?</SmallText> */}
+            {/* <SearchField placeholderColor={AppColors.black} placeholder={"Search..."} containerStyle={{marginVertical:height(1)}} /> */}
+            <Image
+              source={welcomeImage}
+              resizeMode="stretch"
+              resizeMethod="resize"
               style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
+                width: width(93),
+                height: width(30),
+                marginVertical: height(1),
               }}
-            >
-              <FlatList
-                ref={flatlistRef}
-                data={leadData}
-                keyExtractor={(i, n) => n}
-                renderItem={RenderLeads}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                // onScroll={handleScroll}
-
-                // getItemLayout={getItemLayout}
-                // initialScrollIndex={currentIndex}
-                // snapToInterval={itemWidth}
-                // decelerationRate={'fast'}
-                // initialScrollIndex={data.length}
-                // getItemLayout={(data, index) => ({
-                //   length: width(20), // Replace ITEM_WIDTH with the actual item width
-                //   offset: width(20) * index,
-                //   index,
-                // })}
-                // snapToAlignment="start"
-                // snapToInterval={ width(20)}
-                // onScroll={handleScroll}
-                // onEndReached={handleEndReached}
-                style={styles.flatlistFilterStyle}
-                contentContainerStyle={[
-                  { paddingVertical: height(1) },
-                  // CommonStyles.marginBottom_5,
-                  // CommonStyles.paddingLeft_4,
-                  CommonStyles.paddingRight_6,
-                ]}
-                showsVerticalScrollIndicator={false}
-                pagingEnabled={true}
-                // snapToInterval={width(10)}
-              />
-            </View>
+            />
             <View
               style={{
-                width: width(95),
                 flexDirection: "row",
                 justifyContent: "space-between",
                 paddingHorizontal: width(1),
@@ -340,17 +301,17 @@ export default function Home({ navigation, route }) {
                 color={AppColors.scndry}
                 fontFamily={FontFamily.montserrat_SemiBold}
               >
-                Opportunity
+                Leads
               </SmallText>
               <Pressable
                 onPress={() => {
-                  navigation.navigate(ScreenNames.ALLOPPARTUNATIES);
+                  navigation.navigate(ScreenNames.AllLEADS);
                 }}
                 style={{
-                  width: width(20),
-                  justifyContent: "space-between",
                   flexDirection: "row",
                   alignItems: "center",
+                  width: width(20),
+                  justifyContent: "space-between",
                 }}
               >
                 <SearchSVG width={15} height={15} color={AppColors.primary} />
@@ -363,12 +324,126 @@ export default function Home({ navigation, route }) {
                 </SmallText>
               </Pressable>
             </View>
-          </>
-        ) : (
-          <View>
-            <SmallText>this happen</SmallText>
           </View>
-        )}
+          <View
+            style={{
+              // flex: 1,
+              height: height(16),
+              alignItems: "center",
+              justifyContent: "center",
+              // backgroundColor:",
+            }}
+          >
+            <FlatList
+              // ref={flatlistRef}
+              ref={leadRef}
+              initialScrollIndex={index}
+              data={leadData}
+              keyExtractor={(i, n) => n}
+              renderItem={RenderLeads}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              // onScroll={handleScroll}
+
+              // getItemLayout={getItemLayout}
+              // initialScrollIndex={currentIndex}
+              // snapToInterval={itemWidth}
+              // decelerationRate={'fast'}
+              // initialScrollIndex={data.length}
+              // getItemLayout={(data, index) => ({
+              //   length: width(20), // Replace ITEM_WIDTH with the actual item width
+              //   offset: width(20) * index,
+              //   index,
+              // })}
+              // snapToAlignment="start"
+              // snapToInterval={ width(20)}
+              // onScroll={handleScroll}
+              // onEndReached={handleEndReached}
+              style={styles.flatlistFilterStyle}
+              contentContainerStyle={[
+                { paddingVertical: height(1) },
+                // CommonStyles.marginBottom_5,
+                // CommonStyles.paddingLeft_4,
+                CommonStyles.paddingRight_6,
+              ]}
+              showsVerticalScrollIndicator={false}
+              // pagingEnabled={true}
+              // snapToInterval={width(10)}
+            />
+          </View>
+          {/* <View
+            style={{
+              flexDirection: "row",
+              alignSelf: "flex-end",
+              marginRight: width(4),
+            }}
+          >
+            <Pressable
+              style={{ marginRight: width(3) }}
+              onPress={
+                scrollToIndexx
+              //   () => {
+              //   if (index === 0) {
+              //     return;
+              //   }
+              //   setIndex(index - 1);
+              // }
+            }
+            >
+              <BackSvg />
+            </Pressable>
+            <Pressable
+              onPress={
+                // ()=>{
+                // if(index===leadData.length-1){
+                //   return;
+                // }
+                scrollToIndex
+                // setIndex(index+1);
+                // }
+              }
+            >
+              <FrwordSvg />
+            </Pressable>
+          </View> */}
+          <View
+            style={{
+              width: width(95),
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingHorizontal: width(1),
+            }}
+          >
+            <SmallText
+              size={4}
+              color={AppColors.scndry}
+              fontFamily={FontFamily.montserrat_SemiBold}
+            >
+              Opportunity
+            </SmallText>
+            <Pressable
+              onPress={() => {
+                navigation.navigate(ScreenNames.ALLOPPARTUNATIES);
+              }}
+              style={{
+                width: width(20),
+                justifyContent: "space-between",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <SearchSVG width={15} height={15} color={AppColors.primary} />
+              <SmallText
+                size={4}
+                color={AppColors.primary}
+                fontFamily={FontFamily.montserrat_SemiBold}
+              >
+                Search
+              </SmallText>
+            </Pressable>
+          </View>
+        </>
+
         <View style={{ marginVertical: height(1) }}>
           <FlatList
             data={[

@@ -73,7 +73,7 @@ export default function Login({ navigation, route }) {
   // useEffect(() => {
   //   getLocation();
   // }, []);
-  console.log("loggg location", location);
+  // console.log("loggg location", location);
   const _login = async (data) => {
     // console.log("======",data);s
     // try {
