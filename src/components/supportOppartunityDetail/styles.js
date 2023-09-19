@@ -19,8 +19,11 @@ const styles = StyleSheet.create({
     // marginVertical: width(1),
     
   },
+  tttt:{
+  textAlign:"justify",
+  },
   nameText:{
-    fontSize:width(4),
+    fontSize:width(3.7),
     fontFamily:FontFamily.montserrat_SemiBold,
     color:AppColors.scndry,
   },
@@ -40,7 +43,7 @@ const styles = StyleSheet.create({
     
   },
   btnText:{
-    fontSize:width(2),
+    fontSize:width(2.5),
   
     
   }

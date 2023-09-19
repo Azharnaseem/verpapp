@@ -82,7 +82,7 @@ export default function InvoiceScreen({ navigation, route }) {
         invoiceAmount: "60,000.00 $",
         dueDate: "16/09/2023",
         remarks: "Nill",
-        customeraName: "Agrius IT",
+        customeraName: "Rammes Sol",
         detailCode: "RE-122-323-33",
         creditTerm: "Credit",
         creditDay: "12",

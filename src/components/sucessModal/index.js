@@ -39,9 +39,9 @@ const SuccessModal = (
     <ModalWrapper
       // wraperContainer={{width:wid}}
       isVisible={isVisible}
-      // onClose={() => {
-      //   setVisible(false);
-      // }}
+      onClose={() => {
+        setVisible(false);
+      }}
       containerStyle={styles.modalStyle}
       backdropOpacity={0.08}
     >

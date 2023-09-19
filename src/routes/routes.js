@@ -19,6 +19,7 @@ const ScreenNames = {
   TICKETDETAILSCREEN:"TicketDetailScreen",
   INVOICESSCREEN:"InvoiceScreen",
   CRMSTACKSCREEN:"CrmStackScreen",
+  OPPARTUNITYDETAILINFO:"OppartunityDetailInfo"
   
 
 };

@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     
   },
   valueName:{
-    // backgroundColor:'green',
+    // backgroundColor:'pink',
     width:"55%",
     // width:width(50),
     fontFamily:FontFamily.montserrat_SemiBold,
@@ -38,6 +38,18 @@ const styles = StyleSheet.create({
     color:AppColors.greyText2
 
 
+  },
+  stageName:{
+    fontSize:width(3.5),
+    fontFamily:FontFamily.montserrat_SemiBold,
+    color:AppColors.scndry,
+    // backgroundColor:'green',
+    width:width(76),
+    // width:width(50),
+    fontFamily:FontFamily.montserrat_SemiBold,
+
+    // fontSize:width(3.2),
+    // color:AppColors.greyText2
   }
  
 });

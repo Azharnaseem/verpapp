@@ -192,26 +192,39 @@ import { AllLeadsData, AllOppartunatiesData } from "~utills/DummyData";
 import { log } from "react-native-reanimated";
 import AppColors from "~utills/AppColors";
 import { SmallText } from "~components/texts";
+import axios from "axios";
 
 // import { PDFGenerator } from "~utills/Methods";
 export default function AllOppartunaties({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
-
+// console.log("---------------->>>",route?.params?.AllOppartunatiesDataaaa);
+let allOppartunatiesData=route?.params?.AllOppartunatiesDataaaa;
   const [searchQuery, setSearchQuery] = useState(null);
   // console.log("====",searchQuery);
   const [loader, setLoader] = useState(false);
-  console.log("----", loader);
+  // console.log("----", loader);
   const getData = async (text) => {
-    console.log("text-----", text);
+    // console.log("text-----", text);
     setLoader(true);
-    setTimeout(() => {
+    setTimeout(async() => {
       try {
-        setSearchQuery(
-          AllOppartunatiesData?.filter((i) =>
-            i.opportunityName.toLowerCase().includes(text.toLowerCase())
-          )
-        );
+        await axios
+        .get(
+          `http://192.168.0.220:8080/api/Opportunity/GetOpportunitySearch/GetOpportunitySearch?Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userId=${userInfo?.userId}&DocNo=${text}`
+        ).then(response => {
+          console.log("data on Search",response);
+          setSearchQuery(response);
+          setLoader(false);
+        })
+        .catch((error) => {
+          console.log("error11111 in list by main catagory", error);
+        });
+        // setSearchQuery(
+        //   AllOppartunatiesData?.filter((i) =>
+        //     i.opportunityName.toLowerCase().includes(text.toLowerCase())
+        //   )
+        // );
         // setSearchQuery(AllLeadsData);
         setLoader(false);
         // setSearchQuery(resp?.data?.result);
@@ -248,19 +261,21 @@ export default function AllOppartunaties({ navigation, route }) {
   };
 
   const RenderOppartunities = ({ item, index }) => {
+    // console.log("item:===========",item);
         return (
           <View style={{ marginVertical: width(1) }}>
             <LeadsOppComponent
               showLead={false}
               opportunityName={item?.opportunityName}
-              documentNo={item.documentNo}
-              companyName={item.companyName}
-              leadOwner={item?.opportunityOwner}
-              stage={item.stage}
+              docNo={item?.docNo}
+              companyName={item?.companyName}
+              opportunityOwner={item?.opportunityOwner}
+              opportunityType={item?.opportunityType}
+              stage={item?.stage}
               onPress={() => {
-                navigation.navigate(ScreenNames.LEADDETAILINFO, {
-                  id: item?.companyName,
-                  name: "Opportunity Detail Info",
+                navigation.navigate(ScreenNames.OPPARTUNITYDETAILINFO, {
+                  opportunityId: item?.opportunityId,
+              opportunityType: item?.opportunityType,
                 });
               }}
             />
@@ -271,7 +286,7 @@ export default function AllOppartunaties({ navigation, route }) {
 
   return (
     <ScreenWrapper
-      scrollEnabled
+      // scrollEnabled
       headerUnScrollable={() => {
         return (
           <View>
@@ -279,7 +294,7 @@ export default function AllOppartunaties({ navigation, route }) {
             <SearchField
               onChangeText={searchMethod}
               //  onPressBar={()=>navigation.navigate(ScreenNames.SEARCHSCREEN)} editable={false}
-              placeholder={"Search Leads"}
+              placeholder={"Search Opportunities"}
               containerStyle={{ marginVertical: height(1) }}
             />
           </View>
@@ -298,7 +313,7 @@ export default function AllOppartunaties({ navigation, route }) {
               //     </Text>
               //   )
               //  }}
-              data={AllOppartunatiesData}
+              data={allOppartunatiesData}
               keyExtractor={(i, n) => n}
               renderItem={RenderOppartunities}
               loop

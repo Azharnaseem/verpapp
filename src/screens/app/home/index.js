@@ -6,6 +6,7 @@ import {
   FlatList,
   ScrollView,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -43,11 +44,14 @@ export default function Home({ navigation, route }) {
   const userInfo = useSelector(selectUserMeta);
   // console.log("login infooo ===>>>>>>>>>>>>>>>>>", userInfo);
   const [pdfFile, setPdfFile] = useState(null);
+  const [page, setPage] = useState(0);
   const leadRef = useRef(null);
   const [leadData, setLeadData] = useState(null);
+  const [oppartunityData, setOppartunityData] = useState(null);
   const [index, setIndex] = useState(0);
+  const [loader, setLoader] = useState(false);
   const [currentItemIndex, setCurrentItemIndex] = useState(null);
-  // console.log("==================",currentItemIndex);
+  // console.log("==================",oppartunityData);
   const confirmationModal = useRef();
   // const flatlistRef = useRef(null);
   // const screenScroll = useRef(null);
@@ -100,8 +104,14 @@ export default function Home({ navigation, route }) {
     }
   };
   useEffect(() => {
+    dispatch(setAppLoader(true));
     getLeadData();
+    getOpportunityData();
+    dispatch(setAppLoader(false));
   }, [userInfo]);
+  // useEffect(() => {
+  //   getOpportunityData();
+  // }, [userInfo]);
   const getLeadData = async () => {
     try {
       let res = await axios
@@ -119,6 +129,32 @@ export default function Home({ navigation, route }) {
       }
     } catch (error) {
       console.log("error is  lear getting", error);
+    }
+  };
+  const getOpportunityData = async () => {
+    console.log("ifffffff callllllllllllllllllllllllllllllll");
+    try {
+      let res = await axios
+        .get(
+          `http://192.168.0.220:8080/api/Opportunity/GetOpportunity/GetOpportunity?rows=10&pagenumber=${page}&Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userId=${userInfo?.userId}`
+        )
+        .catch((error) => {
+          console.log("error11111 in list by main catagory opp", error);
+        });
+      // console.log("========..............api====", res);
+      if (res != null && page == 0) {
+        setOppartunityData(res);
+        setPage(page + 1);
+      } else {
+        console.log("elsee callllleddddddddddddd");
+        let temp = [...oppartunityData];
+        temp.push(...res);
+        setOppartunityData(temp);
+        setPage(page + 1);
+        setLoader(false);
+      }
+    } catch (error) {
+      console.log("error is  ooooppp getting", error);
     }
   };
 
@@ -163,15 +199,14 @@ export default function Home({ navigation, route }) {
   };
   const scrollToIndexx = () => {
     // Check if data is not empty before calling scrollToIndex
-  
-      console.log("calllllll2222222");
-      if (index == 0) {
-        return;
-      } else {
-        setIndex(index - 1);
-        leadRef.current.scrollToIndex({ animated: true, index });
-      }
-    
+
+    // console.log("calllllll2222222");
+    if (index == 0) {
+      return;
+    } else {
+      setIndex(index - 1);
+      leadRef.current.scrollToIndex({ animated: true, index });
+    }
   };
   // useEffect(() => {
   //   // if(index< leadData.length){
@@ -223,14 +258,21 @@ export default function Home({ navigation, route }) {
   //   }
   // };
   const RenderOppartunities = ({ item, index }) => {
+    console.log("iteem====SSSSSSS======", item?.opportunityId);
     return (
       <View style={{ marginVertical: width(1) }}>
         <LeadsOppComponent
           showLead={false}
+          opportunityName={item?.opportunityName}
+          companyName={item?.companyName}
+          stage={item?.stage}
+          opportunityOwner={item?.opportunityOwner}
+          docNo={item?.docNo}
+          opportunityType={item?.opportunityType}
           onPress={() => {
-            navigation.navigate(ScreenNames.LEADDETAILINFO, {
-              id: item?.companyName,
-              name: "Opportunity Detail Info",
+            navigation.navigate(ScreenNames.OPPARTUNITYDETAILINFO, {
+              opportunityId: item?.opportunityId,
+              opportunityType: item?.opportunityType,
             });
           }}
         />
@@ -305,7 +347,9 @@ export default function Home({ navigation, route }) {
               </SmallText>
               <Pressable
                 onPress={() => {
-                  navigation.navigate(ScreenNames.AllLEADS);
+                  navigation.navigate(ScreenNames.AllLEADS,{
+                    allLeadData:leadData
+                  });
                 }}
                 style={{
                   flexDirection: "row",
@@ -339,6 +383,7 @@ export default function Home({ navigation, route }) {
               ref={leadRef}
               initialScrollIndex={index}
               data={leadData}
+              // data={["1", "2", "3", "4", "5", "6]}
               keyExtractor={(i, n) => n}
               renderItem={RenderLeads}
               horizontal={true}
@@ -419,11 +464,13 @@ export default function Home({ navigation, route }) {
               color={AppColors.scndry}
               fontFamily={FontFamily.montserrat_SemiBold}
             >
-              Opportunity
+              Opportunities
             </SmallText>
             <Pressable
               onPress={() => {
-                navigation.navigate(ScreenNames.ALLOPPARTUNATIES);
+                navigation.navigate(ScreenNames.ALLOPPARTUNATIES, {
+                  AllOppartunatiesDataaaa: oppartunityData,
+                });
               }}
               style={{
                 width: width(20),
@@ -446,29 +493,42 @@ export default function Home({ navigation, route }) {
 
         <View style={{ marginVertical: height(1) }}>
           <FlatList
-            data={[
-              "1",
-              "2",
-              "3",
-              "5",
-              "6",
-              "7",
-              "8",
-              "9",
-              "10",
-              "11",
-              "12",
-              "13",
-              "14",
-              "15",
-            ]}
+            data={oppartunityData}
+            // data={["1", "2", "3", "4", "5", "6", "7", "8", "9"]}
             keyExtractor={(i, n) => n}
             renderItem={RenderOppartunities}
             // onScroll={handleScrolllllll}
             loop
             // style={styles.flatlistFilterStyle}
-            contentContainerStyle={[CommonStyles.paddingBottom_15]}
+            contentContainerStyle={[CommonStyles.paddingBottom_10]}
             showsVerticalScrollIndicator={false}
+            ListFooterComponent={() => {
+              return (
+                <View style={{ marginVertical: height(1) }}>
+                  {loader ? (
+                    <View style={styles.container}>
+                      <ActivityIndicator
+                        size="small"
+                        color={AppColors.primary}
+                      />
+                      <Text style={styles.text}>Loading ...</Text>
+                    </View>
+                  ) : (
+                    <View>
+                    { oppartunityData&&  <Button
+                      containerStyle={{ width: width(30) }}
+                      title={"Load More"}
+                      onPress={()=>{
+                        setLoader(true)
+                        getOpportunityData()
+                      }}
+                    />}
+                      </View>
+                   
+                  )}
+                </View>
+              );
+            }}
             // ListHeaderComponent={() => (
             //   <Text
             //     style={{

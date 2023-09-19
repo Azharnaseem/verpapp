@@ -36,6 +36,7 @@ export default function IntroScreen({ navigation, route }) {
             size={5}
             fontFamily={FontFamily.montserrat_BoldItalic}
             color={AppColors.scndry}
+            textStyles={styles.mainText}
           >
             Welcome to Valueable ERP
           </SmallText>

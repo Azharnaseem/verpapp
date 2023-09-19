@@ -19,6 +19,11 @@ const styles = StyleSheet.create({
     // marginVertical: width(1),
     
   },
+  emailText:{
+    width:width(65),
+// backgroundColor:"pink",
+textAlign:"right"
+  },
   nameText:{
     fontSize:width(4),
     fontFamily:FontFamily.montserrat_SemiBold,

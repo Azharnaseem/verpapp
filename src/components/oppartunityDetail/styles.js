@@ -19,10 +19,15 @@ const styles = StyleSheet.create({
     // marginVertical: width(1),
     
   },
+  tttt:{
+  textAlign:"justify",
+  },
   nameText:{
-    fontSize:width(4),
+    fontSize:width(3.5),
     fontFamily:FontFamily.montserrat_SemiBold,
     color:AppColors.scndry,
+    width:width(50),
+    // backgroundColor:"red"
   },
   valueName:{
     width:width(3),
@@ -40,7 +45,7 @@ const styles = StyleSheet.create({
     
   },
   btnText:{
-    fontSize:width(2),
+    fontSize:width(2.5),
   
     
   }

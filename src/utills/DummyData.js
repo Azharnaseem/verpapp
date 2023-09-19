@@ -30,7 +30,7 @@ export const DatabaseCountries = [
 export const OfficesLocationData = [
   {
     name: "Islamabad",
-    location:{latitude:"33.600525810292226",longitude:"73.15271654233932"},
+    location:{latitude:"33.60075250864236",longitude:"73.15277786214838"},
   },
   {
     name: "Srilanka",

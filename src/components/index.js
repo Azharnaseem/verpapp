@@ -16,4 +16,7 @@ export { default as TicketDetailBox } from "./TicketDetailBox";
 export { default as InboxDueTicketBox } from "./invoiceDueTicketBox";
 export { default as ProfileDetail } from "./profileDetail";
 export { default as SuccessModal } from "./sucessModal";
+export { default as OppartunityDetail } from "./oppartunityDetail";
+export { default as SupprtOppartunityDetail } from "./supportOppartunityDetail";
+export { default as DescriptionModal } from "./descriptionModal";
 

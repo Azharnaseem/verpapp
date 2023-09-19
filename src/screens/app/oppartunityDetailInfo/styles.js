@@ -4,21 +4,11 @@ import AppColors from '../../../utills/AppColors';
 
 const styles = StyleSheet.create({
   mainViewContainer: {
-    // flex: 1,
+    flex: 1,
     backgroundColor: AppColors.white,
     // justifyContent: 'center',
     alignItems: 'center'
   },
-  container: {
-    // backgroundColor: AppColors.white,
-    // width: width(50),
-    // paddingVertical: height(3),
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
-    // borderRadius: width(3),
-    flexDirection: 'row',
-},
   title: {
     color: AppColors.black,
     fontWeight: 'bold',
@@ -27,10 +17,10 @@ const styles = StyleSheet.create({
   },
   flatlistFilterStyle: {
     paddingLeft: width(4),
-    paddingRight:width(4),
 
     // height: height(20),
     // backgroundColor: "red",
   },
 });
 export default styles;
+ 

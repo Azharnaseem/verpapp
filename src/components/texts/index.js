@@ -76,6 +76,7 @@ export const SmallText = ({
       color: color,
       textAlign: textAlign,
       fontFamily: fontFamily,
+      
     },
   });
   return (

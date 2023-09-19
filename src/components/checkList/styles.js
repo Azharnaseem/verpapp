@@ -7,6 +7,7 @@ import { height, width } from "~utills/Dimension";
 
 const styles = StyleSheet.create({
   container: {
+
     alignSelf: "center",
     width: width(85),
     paddingHorizontal: width(3),

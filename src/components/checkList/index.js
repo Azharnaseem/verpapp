@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, Text } from "react-native";
+import { Pressable, Text,TouchableOpacity } from "react-native";
 import styles from "./styles";
 
 import SvgIcon, { CheckedSvg, UncheckedSvg } from "../../assets/SVG";
@@ -11,14 +11,14 @@ const CheckList = ({
   onPress,
 }) => {
   return (
-    <Pressable onPress={onPress} style={[styles.container, containerViewStyle]}>
-      <Pressable onPress={onPress}>
+    <TouchableOpacity  activeOpacity={0.6} onPress={onPress} style={[styles.container, containerViewStyle]}>
+      <Pressable>
         {selected ? <SvgIcon.Checked /> : <SvgIcon.Unchecked />}
       </Pressable>
       <Text style={styles.nameText} numberOfLines={1}>
         {tittle}
       </Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

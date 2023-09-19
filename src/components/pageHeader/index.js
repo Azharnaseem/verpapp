@@ -20,7 +20,7 @@ const PageHeader = ({
       <Pressable onPress={onPressBack} style={styles.backCircleCon}>
         <SvgIcon.BackIcon />
       </Pressable>
-      <View style={{justifyContent:"center",alignItems:"center",width:width(50),marginHorizontal:width(15)}}>
+      <View style={{justifyContent:"center",alignItems:"center",width:width(60),marginHorizontal:width(10)}}>
       <SmallText size={4} color={AppColors.scndry} fontFamily={FontFamily.montserrat_SemiBold} >{pageTitle}</SmallText>
       </View>
       </View>

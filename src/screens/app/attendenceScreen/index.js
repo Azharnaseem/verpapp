@@ -18,6 +18,7 @@ import {
   ScreenWrapper,
   BottomSheet,
   SuccessModal,
+  ConfirmationModal,
 } from "~components";
 
 import { selectUserMeta, setIsLoggedIn, setUserMeta } from "~redux/slices/user";
@@ -44,23 +45,26 @@ import Geolocation from "@react-native-community/geolocation";
 import TextInputSimple from "~components/textInputSimple";
 import SvgIcon from "~assets/SVG";
 import TickCheck from "~assets/SVG/tickCheck";
+import GetLocation from 'react-native-get-location'
 
 // import { PDFGenerator } from "~utills/Methods";
 export default function AttendenceScreen({ navigation, route }) {
   const dispatch = useDispatch();
   const successModalRef = useRef();
   const CheckModelRef = useRef();
+  const confirmationModal = useRef();
   const bottomSheetRef = useRef(null);
   const userInfo = useSelector(selectUserMeta);
   const [office, setOffice] = useState(false);
   const [seletedItem, setSelectedItem] = useState("");
   const [officeLocation, setOfficeLocation] = useState("");
-  const radiusInMeters = 1000;
+  const radiusInMeters = 50;
   const [location, setLocation] = useState(null);
-  // console.log("location is ====",officeLocation);
+  console.log("location is ====",officeLocation);
 
   const [dt, setDt] = useState(new Date().toLocaleString());
   const [distancee, setDistance] = useState(null);
+  console.log(radiusInMeters,"==============================++++",distancee);
   const [markAttendence, setAttendence] = useState("CheckIn");
 
   const [searchQuery, setSearchQuery] = useState(null);
@@ -68,18 +72,36 @@ export default function AttendenceScreen({ navigation, route }) {
   const [loader, setLoader] = useState(false);
   // console.log("----", loader);
   const currentTime = dayjs().format("h:mm A");
+  useEffect(() => {
+    getLocation();
+  }, []);
   const getLocation = () => {
-    Geolocation.getCurrentPosition(
-      (position) => {
-        console.log("=====================", position?.coords);
-        const { latitude, longitude } = position?.coords;
-        setLocation({ latitude, longitude });
-      },
-      (error) => {
-        console.error(error);
-      },
-      { enableHighAccuracy: true, timeout: 16000, maximumAge: 10000 }
-    );
+    GetLocation.getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 60000,
+  })
+  .then(location => {
+      console.log("---->>>",location?.latitude);
+      const { latitude, longitude } = location;
+      console.log("======================>>>",latitude,longitude);
+      setLocation({latitude,longitude })
+  })
+  .catch(error => {
+      const { code, message } = error;
+      console.warn("errorrrr+++",code, message);
+  })
+    // Geolocation.getCurrentPosition(
+    //   (position) => {
+    //     console.log("=====================", position?.coords);
+    //     const { latitude, longitude } = position?.coords;
+    //     console.log("=============", latitude, "=====",longitude);
+    //     setLocation({ latitude, longitude });
+    //   },
+    //   (error) => {
+    //     console.error("location err",error);
+    //   },
+    //   { enableHighAccuracy: true, timeout: 16000, maximumAge: 10000 }
+    // );
   };
   //   useEffect(() => {
   //     let secTimerr = setInterval( () => {
@@ -89,9 +111,7 @@ export default function AttendenceScreen({ navigation, route }) {
 
   //     return () => clearInterval(secTimerr);
   // }, []);
-  useEffect(() => {
-    getLocation();
-  }, []);
+
   const renderSelectedCountry = ({ item, index }) => {
     return (
       <View>
@@ -191,7 +211,7 @@ export default function AttendenceScreen({ navigation, route }) {
   // }
 
   // console.log(distancee, "---------=====", location);
-  let role = "admin";
+  let role = "user";
 
   return (
     <ScreenWrapper
@@ -265,16 +285,18 @@ export default function AttendenceScreen({ navigation, route }) {
 
                   setTimeout(() => {
                     successModalRef.current.hide();
-                    navigation.navigate(ScreenNames.HOME);
+                    // navigation.navigate(ScreenNames.HOME);
                   }, 2000);
-                } else {
-                  setAttendence("CheckIn");
-                  CheckModelRef.current.show();
+                } else if(distancee <= radiusInMeters &&
+                  markAttendence === "CheckOut") {
+                  // setAttendence("CheckIn");
+                  confirmationModal.current.show();
 
-                  setTimeout(() => {
-                    CheckModelRef.current.hide();
-                    navigation.navigate(ScreenNames.HOME);
-                  }, 2000);
+
+                  // setTimeout(() => {
+                  //   CheckModelRef.current.hide();
+                  //   // navigation.navigate(ScreenNames.HOME);
+                  // }, 2000);
                 }
               }}
               style={{
@@ -398,6 +420,22 @@ export default function AttendenceScreen({ navigation, route }) {
         //   }, 600);
         //   confirmationModal.current.hide();
         // }}
+      />
+      <ConfirmationModal
+        yesBtnName="Yes"
+        ref={confirmationModal}
+        text={`Are you sure to Checkout?`}
+        onNoPress={() => confirmationModal.current.hide()}
+        onYesPress={() => {
+          setAttendence("CheckIn");
+          confirmationModal.current.hide();
+          CheckModelRef.current.show();
+          //  setTimeout(() => {
+          //           CheckModelRef.current.hide();
+          //           // navigation.navigate(ScreenNames.HOME);
+          //         }, 2000);
+         
+        }}
       />
       <SuccessModal
         text="Good Bye!"

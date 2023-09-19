@@ -31,8 +31,11 @@ const styles = StyleSheet.create({
 
   },
   pdfbtnStyle:{
-    height:height(5),
-    width:width(20)
+    // height:height(6),
+    // height:height(10),
+    // paddingVertical:height(),
+    width:width(20),
+    // backgroundColor:"red"
   },
   btnText:{
     fontSize:width(2.5),

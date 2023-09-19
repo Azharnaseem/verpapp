@@ -29,10 +29,18 @@ export default function LeadDetailInfo({ navigation, route }) {
   const [leadInfoData, setLeadInfoData] = useState(null);
   const [showEmptyComponent, setShowEmptyComponent] = useState(false);
   const makePhoneCall = (mobile) => {
+    console.log("CALLLLLLLLLLLLLLLL",mobile);
     const phoneNumber = "+923407685573"; // Replace with the desired phone number
 
-    Linking.openURL(`tel:${phoneNumber}`).catch((error) =>
+    Linking.openURL(`tel:${mobile}`).catch((error) =>
       console.log("Error making phone call:", error)
+    );
+  };
+  const makeMail = (emailAddress) => {
+   // Replace with the desired phone number
+
+    Linking.openURL(`mailto:${emailAddress}`).catch((error) =>
+      console.log("Error making email :", error)
     );
   };
   useEffect(() => {
@@ -83,7 +91,7 @@ export default function LeadDetailInfo({ navigation, route }) {
    
     };
   const RenderLeadsInfo = ({ item, index }) => {
-    // console.log("=============",item);
+    console.log("=============",item?.phone);
     return (
       <View style={{ marginVertical: width(1) }}>
         <LeadOpprtunityInfoDetail
@@ -93,8 +101,12 @@ export default function LeadDetailInfo({ navigation, route }) {
           // department={item?.department}
           // country={item?.country}
           onPressPhoneNo={() => makePhoneCall(item?.phone)}
-          onPressEmail={() => Linking.openURL(item?.email1)}
-          onPressPdf={() => navigation.navigate(ScreenNames.PDFREPORTSCREEN)}
+          onPressEmail={() => {
+            makeMail(item?.email1)
+          // console.log("sssssssssssssssssss clicked",item?.email1);
+          //   Linking.openURL("azhar@gmail.com")
+          }}
+          // onPressPdf={() => navigation.navigate(ScreenNames.PDFREPORTSCREEN)}
         />
       </View>
     );

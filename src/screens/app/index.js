@@ -13,3 +13,4 @@ export { default as ContractDetailScreen } from "./contractDetailScreen";
 export { default as TicketDetailScreen } from "./TicketDetailScreen";
 export { default as InvoiceScreen } from "./invoicesScreen";
 export { default as AttendenceScreen } from "./attendenceScreen";
+export { default as OppartunityDetailInfo } from "./oppartunityDetailInfo";

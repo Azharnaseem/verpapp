@@ -75,7 +75,7 @@ export default function Login({ navigation, route }) {
   // }, []);
   // console.log("loggg location", location);
   const _login = async (data) => {
-    // console.log("======",data);s
+    // console.log("======","calllllll");
     // try {
     // let userName=data?.username
     dispatch(setAppLoader(true));
@@ -86,12 +86,13 @@ export default function Login({ navigation, route }) {
       .then(async (res) => {
         // console.log("resssssssssssssssssss===>>>", res);
         if (res?.data === null) {
+          // console.log("callllllllled ifff");
           erroMessage("Error", res?.messages);
           dispatch(setAppLoader(false));
         } else {
           // console.log("elsssssssssssssssseeeeee callll");
           let { email, password,fullname,groupType, user_Code, user_ID, user_Name } = res?.data[0];
-          console.log("login data ==========", email);
+          // console.log("login data ==========", email);
 
           // console.log("callled");
           // await firestore()
@@ -261,16 +262,21 @@ export default function Login({ navigation, route }) {
           onPress={handleSubmit(_login)}
         />
         <SmallText
-          onPress={() => navigation.navigate(ScreenNames.REGISTERSCREEN)}
+        size={4}
+        fontFamily={FontFamily.montserrat_Bold}
+          // onPress={() => navigation.navigate(ScreenNames.REGISTERSCREEN)}
         >
-          Don’t have an account?
+         Login to use<Text style={{
+              color: AppColors.scndry,
+              fontFamily: FontFamily.montserrat_SemiBoldItalic,
+            }}> Agrius IT</Text>
           <Text
             style={{
               color: AppColors.primary,
               fontFamily: FontFamily.montserrat_SemiBoldItalic,
             }}
           >
-            Register
+             {`  VERP`}
           </Text>
         </SmallText>
         {/* <View style={styles.row}>

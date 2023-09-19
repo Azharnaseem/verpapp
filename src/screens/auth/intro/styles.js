@@ -9,8 +9,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  mainText:{
+    // backgroundColor:"red",
+    textAlign:"center",
+     width: width(75),
+
+  },
   desText: {
-    width: width(70),
+    width: width(90),
     textAlign: "center",
     marginVertical: height(2),
   },

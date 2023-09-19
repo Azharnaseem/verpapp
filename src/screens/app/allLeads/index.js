@@ -21,12 +21,14 @@ import { log } from "react-native-reanimated";
 import AppColors from "~utills/AppColors";
 import { SmallText } from "~components/texts";
 import BottomTabBar from "~routes/bottomTabBar";
+import axios from "axios";
 
 // import { PDFGenerator } from "~utills/Methods";
 export default function AllLeads({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
-
+  let AllLeadsDataa=route?.params?.allLeadData;
+// console.log("==========>>>",AllLeadsDataa);
   const [searchQuery, setSearchQuery] = useState(null);
   // console.log("====",searchQuery);
   const [loader, setLoader] = useState(false);
@@ -34,13 +36,24 @@ export default function AllLeads({ navigation, route }) {
   const getData = async (text) => {
     // console.log("text-----", text);
     setLoader(true);
-    setTimeout(() => {
+    setTimeout(async() => {
       try {
-        setSearchQuery(
-          AllLeadsData?.filter((i) =>
-            i.companyName.toLowerCase().includes(text.toLowerCase())
-          )
-        );
+        await axios
+        .get(
+          `http://192.168.0.220:8080/api/Lead/GetLeadSearch/GetLeadListtestSearch?rows=10&pagenumber=0&Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userid=${userInfo?.userId}&Companyname=${text}`
+        ).then(response => {
+          console.log("data on Search",response);
+          setSearchQuery(response);
+          setLoader(false);
+        })
+        .catch((error) => {
+          console.log("error11111 in list by main catagory", error);
+        });
+        // setSearchQuery(
+        //   AllLeadsData?.filter((i) =>
+        //     i.companyName.toLowerCase().includes(text.toLowerCase())
+        //   )
+        // );
         // setSearchQuery(AllLeadsData);
         setLoader(false);
         // setSearchQuery(resp?.data?.result);
@@ -77,18 +90,19 @@ export default function AllLeads({ navigation, route }) {
   };
 
   const RenderAllLeads = ({ item, index }) => {
+    console.log("=========================>>>",item);
     return (
       <View style={{ marginVertical: width(1) }}>
         <LeadsOppComponent
          
           type={item?.type}
-          leadOwner={item?.leadOwner}
-          leadNo={item?.leadNo}
+          leadOwner={item?.employeeName}
           companyName={item?.companyName}
           onPress={() => {
             navigation.navigate(ScreenNames.LEADDETAILINFO, {
               id: item?.companyName,
               name: "Lead Detail Info",
+              leadProfileId: item?.leadProfileId,
             });
           }}
         />
@@ -98,11 +112,11 @@ export default function AllLeads({ navigation, route }) {
 
   return (
     <ScreenWrapper
-      scrollEnabled
+      // scrollEnabled
       headerUnScrollable={() => {
         return (
           <View>
-            <PageHeader onPressBack={() => navigation.goBack()} />
+            <PageHeader pageTitle="All Leads" onPressBack={() => navigation.goBack()} />
             <SearchField
               onChangeText={searchMethod}
               //  onPressBar={()=>navigation.navigate(ScreenNames.SEARCHSCREEN)} editable={false}
@@ -126,7 +140,7 @@ export default function AllLeads({ navigation, route }) {
               //     </Text>
               //   )
               //  }}
-              data={AllLeadsData}
+              data={AllLeadsDataa}
               keyExtractor={(i, n) => n}
               renderItem={RenderAllLeads}
               loop

@@ -16,7 +16,7 @@ export default function Loader() {
       isVisible={appLoader}
       backdropOpacity={0.4}>
       <View style={styles.container}>
-        <ActivityIndicator size="small" color={AppColors.black} />
+        <ActivityIndicator size="small" color={AppColors.primary} />
         <Text style={styles.text}>Loading</Text>
       </View>
     </Modal>
