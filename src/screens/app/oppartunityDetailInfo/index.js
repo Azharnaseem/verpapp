@@ -26,7 +26,9 @@ import { setAppLoader } from "~redux/slices/config";
 // import { PDFGenerator } from "~utills/Methods";
 export default function OppartunityDetailInfo({ navigation, route }) {
   const routsData = route.params;
-  const descriptionRef=useRef()
+  const descriptionRef=useRef();
+  const partNoRef=useRef();
+
   console.log("==222222ssssssssssssssssssssss2==", routsData);
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
@@ -127,6 +129,7 @@ export default function OppartunityDetailInfo({ navigation, route }) {
       <View style={{ marginVertical: width(1) }}>
          <OppartunityDetail 
          item={item}
+         pressPartNo={()=>{partNoRef.current?.show({des:item?.partNo})}}
          onPressDescription={()=>{descriptionRef.current?.show({des:item?.description})}}
          onPressViewDetail={() => navigation.navigate(ScreenNames.PDFREPORTSCREEN,{opportunityId:item?.opportunityId})}
          />
@@ -236,6 +239,7 @@ export default function OppartunityDetailInfo({ navigation, route }) {
         </View>
       </View>
       <DescriptionModal ref={descriptionRef}   />
+      <DescriptionModal ref={partNoRef} tittle="Part No"  />
     </ScreenWrapper>
   );
 }

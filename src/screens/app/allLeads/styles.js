@@ -10,6 +10,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height:height(100)
   },
+  text:{
+    color:AppColors.primary
+   },
+   containers: {
+    // backgroundColor: AppColors.white,
+    // width: width(50),
+    // paddingVertical: height(3),
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    // borderRadius: width(3),
+    flexDirection: 'row',
+},
   title: {
     color: AppColors.black,
     fontWeight: 'bold',

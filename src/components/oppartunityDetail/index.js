@@ -23,6 +23,7 @@ const OppartunityDetail = ({
   // creditDay = "12",
   // due = "0.00$",
   // recieptAmount="0.00$",
+  pressPartNo,
   image=Oppartunity,
   invoiceDate='06/09/2022',
   onPressViewDetail,
@@ -30,7 +31,7 @@ const OppartunityDetail = ({
   onPressPhoneNo,
   item,
 }) => {
-  console.log("=====sssssssssss",item);
+  // console.log("=====sssssssssss",item);
   return (
     <View style={[styles.container, containerViewStyle]}>
       <View
@@ -47,7 +48,7 @@ const OppartunityDetail = ({
             resizeMode="contain"
             style={{tintColor:AppColors.primary, width: width(12), height: width(12) }}
           />
-          <View >
+          <Pressable onPress={pressPartNo}>
             <Text numberOfLines={2} style={styles.nameText}>{`Part No: ${item?.partNo?item?.partNo:"Not found"}`}</Text>
             <Pressable
               // onPress={onPressPhoneNo}
@@ -71,7 +72,7 @@ const OppartunityDetail = ({
                 {`${item?.leadTime?item?.leadTime:"Nill"}`}
               </SmallText>
             </Pressable>
-          </View>
+          </Pressable>
         </View>
         <View >
         <Button
@@ -191,7 +192,7 @@ const OppartunityDetail = ({
           marginTop: height(0.5),
           // flexDirection: "row",
           // justifyContent: "space-between",
-          backgroundColor: AppColors.green,
+          backgroundColor: AppColors.lightGrey,
           borderRadius: width(4),
           padding: width(2),
         }}

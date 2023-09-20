@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     alignSelf:"center",
     alignItems:"center",
     justifyContent:"center",
-    width: width(80),
+    width: width(90),
     backgroundColor: AppColors.white,
     paddingTop: height(3.69),
     paddingBottom: height(5),

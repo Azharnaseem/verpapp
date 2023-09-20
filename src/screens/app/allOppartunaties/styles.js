@@ -9,6 +9,24 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     alignItems: 'center'
   },
+  text:{
+   color:AppColors.primary
+  },
+  containers: {
+    // backgroundColor: AppColors.white,
+    // width: width(50),
+    // paddingVertical: height(3),
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    // borderRadius: width(3),
+    flexDirection: 'row',
+},
+  btnStyle:{
+      width:width(30),
+      
+      borderColor:AppColors?.scndry
+  },
   title: {
     color: AppColors.black,
     fontWeight: 'bold',

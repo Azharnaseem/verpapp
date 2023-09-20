@@ -32,5 +32,32 @@ const styles = StyleSheet.create({
     // height: height(20),
     // backgroundColor: "red",
   },
+  // newww
+  contractBoxStyle: {
+    marginVertical:height(0),
+    alignItems: "center",
+    justifyContent: "center",
+    width: width(70),
+    backgroundColor: AppColors.grey2,
+    height: width(30),
+    borderRadius: width(3),
+    marginBottom: 33,
+    shadowColor: AppColors.primary,
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.39,
+    shadowRadius: 8.3,
+
+    elevation: 13,
+  },
+  imageStyle: {
+    // backgroundColor:"red",
+    width: width(15),
+    height: width(15),
+    marginBottom:height(2),
+    tintColor:AppColors?.primary
+  },
 });
 export default styles;

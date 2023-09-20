@@ -169,8 +169,7 @@
 //   );
 // }
 
-
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import { View, Text, Image, FlatList, ActivityIndicator } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -193,33 +192,39 @@ import { log } from "react-native-reanimated";
 import AppColors from "~utills/AppColors";
 import { SmallText } from "~components/texts";
 import axios from "axios";
+import { setAppLoader } from "~redux/slices/config";
 
 // import { PDFGenerator } from "~utills/Methods";
 export default function AllOppartunaties({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
-// console.log("---------------->>>",route?.params?.AllOppartunatiesDataaaa);
-let allOppartunatiesData=route?.params?.AllOppartunatiesDataaaa;
+  // console.log("---------------->>>",route?.params?.AllOppartunatiesDataaaa);
+  let allOppartunatiesData = route?.params?.AllOppartunatiesDataaaa;
   const [searchQuery, setSearchQuery] = useState(null);
+  const [active, setActive] = useState(false);
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [oppartunityData, setOppartunityData] = useState(null);
   // console.log("====",searchQuery);
   const [loader, setLoader] = useState(false);
   // console.log("----", loader);
   const getData = async (text) => {
     // console.log("text-----", text);
     setLoader(true);
-    setTimeout(async() => {
+    setTimeout(async () => {
       try {
         await axios
-        .get(
-          `http://192.168.0.220:8080/api/Opportunity/GetOpportunitySearch/GetOpportunitySearch?Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userId=${userInfo?.userId}&DocNo=${text}`
-        ).then(response => {
-          console.log("data on Search",response);
-          setSearchQuery(response);
-          setLoader(false);
-        })
-        .catch((error) => {
-          console.log("error11111 in list by main catagory", error);
-        });
+          .get(
+            `http://192.168.0.220:8080/api/Opportunity/GetOpportunitySearch/GetOpportunitySearch?Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userId=${userInfo?.userId}&DocNo=${text}`
+          )
+          .then((response) => {
+            console.log("data on Search", response);
+            setSearchQuery(response);
+            setLoader(false);
+          })
+          .catch((error) => {
+            console.log("error11111 in list by main catagory", error);
+          });
         // setSearchQuery(
         //   AllOppartunatiesData?.filter((i) =>
         //     i.opportunityName.toLowerCase().includes(text.toLowerCase())
@@ -262,27 +267,58 @@ let allOppartunatiesData=route?.params?.AllOppartunatiesDataaaa;
 
   const RenderOppartunities = ({ item, index }) => {
     // console.log("item:===========",item);
-        return (
-          <View style={{ marginVertical: width(1) }}>
-            <LeadsOppComponent
-              showLead={false}
-              opportunityName={item?.opportunityName}
-              docNo={item?.docNo}
-              companyName={item?.companyName}
-              opportunityOwner={item?.opportunityOwner}
-              opportunityType={item?.opportunityType}
-              stage={item?.stage}
-              onPress={() => {
-                navigation.navigate(ScreenNames.OPPARTUNITYDETAILINFO, {
-                  opportunityId: item?.opportunityId,
+    return (
+      <View style={{ marginVertical: width(1) }}>
+        <LeadsOppComponent
+          showLead={false}
+          opportunityName={item?.opportunityName}
+          docNo={item?.docNo}
+          companyName={item?.companyName}
+          opportunityOwner={item?.opportunityOwner}
+          opportunityType={item?.opportunityType}
+          stage={item?.stage}
+          onPress={() => {
+            navigation.navigate(ScreenNames.OPPARTUNITYDETAILINFO, {
+              opportunityId: item?.opportunityId,
               opportunityType: item?.opportunityType,
-                });
-              }}
-            />
-          </View>
-        );
-      };
+            });
+          }}
+        />
+      </View>
+    );
+  };
+  useEffect(() => {
+    dispatch(setAppLoader(true));
     
+    getOpportunityData();
+    dispatch(setAppLoader(false));
+  }, [userInfo]);
+  const getOpportunityData = async () => {
+    console.log("ifffffff callllllllllllllllllllllllllllllll");
+    try {
+      let res = await axios
+        .get(
+          `http://192.168.0.220:8080/api/Opportunity/GetOpportunity/GetOpportunity?rows=10&pagenumber=${page}&Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userId=${userInfo?.userId}`
+        )
+        .catch((error) => {
+          console.log("error11111 in list by main catagory opp", error);
+        });
+      // console.log("========..............api====", res);
+      if (res != null && page == 0) {
+        setOppartunityData(res);
+        setPage(page + 1);
+      } else {
+        console.log("elsee callllleddddddddddddd");
+        let temp = [...oppartunityData];
+        temp.push(...res);
+        setOppartunityData(temp);
+        setPage(page + 1);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log("error is  ooooppp getting", error);
+    }
+  };
 
   return (
     <ScreenWrapper
@@ -290,13 +326,58 @@ let allOppartunatiesData=route?.params?.AllOppartunatiesDataaaa;
       headerUnScrollable={() => {
         return (
           <View>
-            <PageHeader  pageTitle={"All Opportunaties"} onPressBack={() => navigation.goBack()} />
+            <PageHeader
+              pageTitle={"All Opportunaties"}
+              onPressBack={() => navigation.goBack()}
+            />
             <SearchField
               onChangeText={searchMethod}
               //  onPressBar={()=>navigation.navigate(ScreenNames.SEARCHSCREEN)} editable={false}
               placeholder={"Search Opportunities"}
               containerStyle={{ marginVertical: height(1) }}
             />
+            <View
+              style={{
+                width: width(90),
+                // backgroundColor: "red",
+                // alignItems: "center",
+                // justifyContent: "center",
+                alignSelf: "center",
+                paddingHorizontal: width(2),
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+              }}
+            >
+              <Button
+                onPress={() => {
+                  setActive(false);
+                }}
+                textStyle={{color:active?AppColors?.textColor:AppColors.white}}
+                containerStyle={[
+                  styles.btnStyle,
+                  {
+                    backgroundColor: active
+                      ? AppColors.lightGrey
+                      : AppColors?.primary,
+                      borderWidth:active?1:0,
+                  },
+                ]}
+                title={"Hardware"}
+              />
+              <Button
+                onPress={() => {
+                  setActive(true);
+                }}
+                containerStyle={[styles.btnStyle, {
+                  backgroundColor: active
+                    ? AppColors.primary
+                    : AppColors?.lightGrey,
+                    borderWidth:active?0 :1,
+                },]}
+                textStyle={{color:active?AppColors?.white:AppColors.textColor}}
+                title={"Support"}
+              />
+            </View>
           </View>
         );
       }}
@@ -313,15 +394,43 @@ let allOppartunatiesData=route?.params?.AllOppartunatiesDataaaa;
               //     </Text>
               //   )
               //  }}
-              data={allOppartunatiesData}
+              data={oppartunityData}
               keyExtractor={(i, n) => n}
               renderItem={RenderOppartunities}
               loop
               // style={styles.flatlistFilterStyle}
               contentContainerStyle={[CommonStyles.marginBottom_5]}
               showsVerticalScrollIndicator={false}
+              ListFooterComponent={() => {
+                return (
+                  <View style={{ marginVertical: height(1) }}>
+                    {loading ? (
+                      <View style={styles.containers}>
+                        <ActivityIndicator
+                          size="small"
+                          color={AppColors.primary}
+                        />
+                        <Text style={styles.text}>Loading ...</Text>
+                      </View>
+                    ) : (
+                      <View>
+                      { oppartunityData&&  <Button
+                        containerStyle={{ width: width(30) }}
+                        title={"Load More"}
+                        onPress={()=>{
+                          setLoading(true)
+                          getOpportunityData()
+                        }}
+                      />}
+                        </View>
+                     
+                    )}
+                  </View>
+                );
+              }}
             />
           ) : (
+            
             <>
               {loader ? (
                 <ActivityIndicator size={"large"} color={AppColors.primary} />

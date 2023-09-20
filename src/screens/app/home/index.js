@@ -7,6 +7,7 @@ import {
   ScrollView,
   Pressable,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -28,7 +29,7 @@ import AppColors from "~utills/AppColors";
 import { SmallText } from "~components/texts";
 import { FontFamily } from "~assets/fonts";
 import SearchField from "~components/searchField";
-import { welcomeImage } from "~assets/images";
+import { ContractImage, LeadIcon, Oppartunity, Tickets, welcomeImage } from "~assets/images";
 import ScreenNames from "~routes/routes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SearchSVG from "~assets/SVG/searchSvg";
@@ -331,7 +332,45 @@ export default function Home({ navigation, route }) {
                 marginVertical: height(1),
               }}
             />
-            <View
+            </View>
+            </>
+            {/* newwww */}
+            <TouchableOpacity
+          style={styles.contractBoxStyle}
+          onPress={() => navigation.navigate(ScreenNames.AllLEADS)}
+        >
+          <Image
+            source={LeadIcon}
+            style={styles.imageStyle}
+            resizeMode="contain"
+          />
+          <SmallText
+            size={5}
+            fontFamily={FontFamily.montserrat_Bold}
+            color={AppColors.scndry}
+          >
+            Leads
+          </SmallText>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.contractBoxStyle}
+          onPress={() => navigation.navigate(ScreenNames.ALLOPPARTUNATIES)}
+        >
+          <Image
+            source={Oppartunity}
+            style={styles.imageStyle}
+            resizeMode="contain"
+          />
+          <SmallText
+            size={5}
+            fontFamily={FontFamily.montserrat_Bold}
+            color={AppColors.scndry}
+          >
+            Opportunaties
+          </SmallText>
+        </TouchableOpacity>
+            {/* newwww */}
+            {/* <View
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
@@ -367,9 +406,9 @@ export default function Home({ navigation, route }) {
                   Search
                 </SmallText>
               </Pressable>
-            </View>
-          </View>
-          <View
+            </View> */}
+          {/* </View> */}
+          {/* <View
             style={{
               // flex: 1,
               height: height(16),
@@ -415,7 +454,7 @@ export default function Home({ navigation, route }) {
               // pagingEnabled={true}
               // snapToInterval={width(10)}
             />
-          </View>
+          </View> */}
           {/* <View
             style={{
               flexDirection: "row",
@@ -451,7 +490,7 @@ export default function Home({ navigation, route }) {
               <FrwordSvg />
             </Pressable>
           </View> */}
-          <View
+          {/* <View
             style={{
               width: width(95),
               flexDirection: "row",
@@ -488,10 +527,10 @@ export default function Home({ navigation, route }) {
                 Search
               </SmallText>
             </Pressable>
-          </View>
-        </>
+          </View> */}
+        {/* </> */}
 
-        <View style={{ marginVertical: height(1) }}>
+        {/* <View style={{ marginVertical: height(1) }}>
           <FlatList
             data={oppartunityData}
             // data={["1", "2", "3", "4", "5", "6", "7", "8", "9"]}
@@ -549,7 +588,7 @@ export default function Home({ navigation, route }) {
             //   </Text>
             // )}
           />
-        </View>
+        </View> */}
 
         {/* <PDFGenerator /> */}
         {/* <Text style={styles.title}>{userInfo?.name}</Text>
