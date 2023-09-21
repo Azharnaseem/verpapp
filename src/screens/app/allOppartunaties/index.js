@@ -202,9 +202,11 @@ export default function AllOppartunaties({ navigation, route }) {
   let allOppartunatiesData = route?.params?.AllOppartunatiesDataaaa;
   const [searchQuery, setSearchQuery] = useState(null);
   const [active, setActive] = useState(false);
+    console.log("==========",active);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [oppartunityData, setOppartunityData] = useState(null);
+  const [oppartunityHardwareData, setOppartunityhardwareData] = useState(null);
+  const [oppartunitySupportData, setOppartunitySupportData] = useState(null);
   // console.log("====",searchQuery);
   const [loader, setLoader] = useState(false);
   // console.log("----", loader);
@@ -289,29 +291,55 @@ export default function AllOppartunaties({ navigation, route }) {
   };
   useEffect(() => {
     dispatch(setAppLoader(true));
-    
-    getOpportunityData();
+    getOpportunitySupportData();
+    getOpportunityHardwareData();
     dispatch(setAppLoader(false));
   }, [userInfo]);
-  const getOpportunityData = async () => {
+  const getOpportunityHardwareData = async () => {
     console.log("ifffffff callllllllllllllllllllllllllllllll");
     try {
       let res = await axios
         .get(
-          `http://192.168.0.220:8080/api/Opportunity/GetOpportunity/GetOpportunity?rows=10&pagenumber=${page}&Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userId=${userInfo?.userId}`
+          `http://192.168.0.220:8080/api/Opportunity/OpportunityHardware/GetOpportunityHardware?rows=10&pagenumber=${page}&Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userId=${userInfo?.userId}&Type=Hardware`
         )
         .catch((error) => {
           console.log("error11111 in list by main catagory opp", error);
         });
       // console.log("========..............api====", res);
       if (res != null && page == 0) {
-        setOppartunityData(res);
+        setOppartunityhardwareData(res);
         setPage(page + 1);
       } else {
         console.log("elsee callllleddddddddddddd");
-        let temp = [...oppartunityData];
+        let temp = [...oppartunityHardwareData];
         temp.push(...res);
-        setOppartunityData(temp);
+        setOppartunityhardwareData(temp);
+        setPage(page + 1);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log("error is  ooooppp getting", error);
+    }
+  };
+  const getOpportunitySupportData = async () => {
+    console.log("ifffffff callllllllllllllllllllllllllllllll");
+    try {
+      let res = await axios
+        .get(
+          `http://192.168.0.220:8080/api/Opportunity/OpportunityHardware/GetOpportunityHardware?rows=10&pagenumber=${page}&Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userId=${userInfo?.userId}&Type=Support`
+        )
+        .catch((error) => {
+          console.log("error11111 in list by main catagory opp", error);
+        });
+      // console.log("========..............api====", res);
+      if (res != null && page == 0) {
+        setOppartunitySupportData(res);
+        setPage(page + 1);
+      } else {
+        console.log("elsee callllleddddddddddddd");
+        let temp = [...oppartunitySupportData];
+        temp.push(...res);
+        setOppartunitySupportData(temp);
         setPage(page + 1);
         setLoading(false);
       }
@@ -384,7 +412,7 @@ export default function AllOppartunaties({ navigation, route }) {
     >
       <View style={styles.mainViewContainer}>
         {/* <Text>dsssssssssssssssd</Text> */}
-        <View style={{ marginVertical: height(1) }}>
+       {!active? <View style={{ marginVertical: height(1) }}>
           {searchQuery === null ? (
             <FlatList
               //  ListHeaderComponent={()=>{
@@ -394,7 +422,7 @@ export default function AllOppartunaties({ navigation, route }) {
               //     </Text>
               //   )
               //  }}
-              data={oppartunityData}
+              data={oppartunityHardwareData}
               keyExtractor={(i, n) => n}
               renderItem={RenderOppartunities}
               loop
@@ -414,12 +442,12 @@ export default function AllOppartunaties({ navigation, route }) {
                       </View>
                     ) : (
                       <View>
-                      { oppartunityData&&  <Button
+                      { oppartunityHardwareData&&  <Button
                         containerStyle={{ width: width(30) }}
                         title={"Load More"}
                         onPress={()=>{
                           setLoading(true)
-                          getOpportunityData()
+                          getOpportunityHardwareData()
                         }}
                       />}
                         </View>
@@ -469,7 +497,92 @@ export default function AllOppartunaties({ navigation, route }) {
               )}
             </>
           )}
-        </View>
+        </View>:<View style={{ marginVertical: height(1) }}>
+          {searchQuery === null ? (
+            <FlatList
+              //  ListHeaderComponent={()=>{
+              //   return(
+              //     <Text>
+              //       eeeee
+              //     </Text>
+              //   )
+              //  }}
+              data={oppartunitySupportData}
+              keyExtractor={(i, n) => n}
+              renderItem={RenderOppartunities}
+              loop
+              // style={styles.flatlistFilterStyle}
+              contentContainerStyle={[CommonStyles.marginBottom_5]}
+              showsVerticalScrollIndicator={false}
+              ListFooterComponent={() => {
+                return (
+                  <View style={{ marginVertical: height(1) }}>
+                    {loading ? (
+                      <View style={styles.containers}>
+                        <ActivityIndicator
+                          size="small"
+                          color={AppColors.primary}
+                        />
+                        <Text style={styles.text}>Loading ...</Text>
+                      </View>
+                    ) : (
+                      <View>
+                      { oppartunitySupportData&&  <Button
+                        containerStyle={{ width: width(30) }}
+                        title={"Load More"}
+                        onPress={()=>{
+                          setLoading(true)
+                          getOpportunitySupportData()
+                        }}
+                      />}
+                        </View>
+                     
+                    )}
+                  </View>
+                );
+              }}
+            />
+          ) : (
+            
+            <>
+              {loader ? (
+                <ActivityIndicator size={"large"} color={AppColors.primary} />
+              ) : (
+                <FlatList
+                  //  ListHeaderComponent={()=>{
+                  //   return(
+                  //     <Text>
+                  //       99999
+                  //     </Text>
+                  //   )
+                  //  }}
+                  data={searchQuery}
+                  keyExtractor={(i, n) => n}
+                  renderItem={RenderOppartunities}
+                  loop
+                  // style={styles.flatlistFilterStyle}
+                  contentContainerStyle={[CommonStyles.marginBottom_5]}
+                  showsVerticalScrollIndicator={false}
+                  ListEmptyComponent={() => {
+                    return (
+                      <View
+                        style={{
+                          flex: 1,
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <SmallText color={AppColors.greyText2}>
+                          Data Not Found
+                        </SmallText>
+                      </View>
+                    );
+                  }}
+                />
+              )}
+            </>
+          )}
+        </View>}
       </View>
     </ScreenWrapper>
   );

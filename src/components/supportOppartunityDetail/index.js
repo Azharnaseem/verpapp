@@ -48,7 +48,7 @@ const SupprtOppartunityDetail = ({
             style={{tintColor:AppColors.primary, width: width(12), height: width(12) }}
           />
           <View >
-            <Text style={styles.nameText}>{`Modal No: ${item?.modelNo?item?.modelNo:"Not found"}`}</Text>
+            <Text numberOfLines={2} style={styles.nameText}>{`Modal No: ${item?.modelNo?item?.modelNo:"Not found"}`}</Text>
             <Pressable
               // onPress={onPressPhoneNo}
               style={{
@@ -56,18 +56,20 @@ const SupprtOppartunityDetail = ({
                 flexDirection: "row",
                 alignItems: "center",
                 // justifyContent:"center",
-                paddingLeft:3
+                // width:width(38),
+                paddingLeft:3,
+                // backgroundColor:"red"
               
               }}
             >
-              <SmallText size={3} fontFamily={FontFamily.montserrat_SemiBold} color={AppColors?.scndry}>Serial No:</SmallText>
+              {/* <SmallText  size={3} fontFamily={FontFamily.montserrat_SemiBold} color={AppColors?.scndry}>Serial No:</SmallText> */}
              {/* <Image
             source={CompanyIcon}
             resizeMode="contain"
             style={{ width: width(6), height: width(6) ,tintColor:AppColors.primary}}
           /> */}
-              <SmallText fontFamily={FontFamily.montserrat_SemiBold} textStyles={{ marginTop: 1}} size={3} color={AppColors.primary}>
-                {`${item?.serialNo?item?.serialNo:"Nill"}`}
+              <SmallText numberOfLines={2} fontFamily={FontFamily.montserrat_SemiBold} textStyles={{ width:width(38), marginTop: 1}} size={3} color={AppColors.primary}>
+                {`Serial No: ${item?.serialNo?item?.serialNo:"Nill"}`}
               </SmallText>
             </Pressable>
           </View>
@@ -83,7 +85,7 @@ const SupprtOppartunityDetail = ({
         </View>
       </View>
       <View style={{marginTop:height(0.5), flexDirection:"row",justifyContent:"space-between"}}>
-      <SmallText fontFamily={FontFamily.montserrat_SemiBold} size={3}color={AppColors.scndry}>Unit Price<Text style={{color:AppColors.primary,fontSize:width(3)}}>{` ${item?.unitPrice}`}</Text></SmallText>
+      <SmallText numberOfLines={2} textStyles={{width:width(40)}} fontFamily={FontFamily.montserrat_SemiBold} size={3}color={AppColors.scndry}>Unit Price<Text style={{color:AppColors.primary,fontSize:width(3)}}>{` ${item?.unitPrice}`}</Text></SmallText>
       <SmallText fontFamily={FontFamily.montserrat_SemiBold} size={3}color={AppColors.scndry}>End Date<Text style={{color:AppColors.primary,fontSize:width(3)}}>{` ${dayjs(item?.endDate).format('DD/MM/YYYY')}`}</Text></SmallText>
 
       </View>

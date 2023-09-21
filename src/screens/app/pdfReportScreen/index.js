@@ -215,8 +215,9 @@ export default function PdfReportScreen({ navigation, route }) {
     
       padding: 10px;
       max-width: 200px; /* Adjust the value to your desired fixed width */
-      border: 2px solid #40464D;
-      background-color:  #BFBFBF;
+      border: 2px solid #808080 ;
+     
+      background-color:  #E8E8E8;
       word-break: break-word;
 
     }
@@ -231,7 +232,7 @@ export default function PdfReportScreen({ navigation, route }) {
       margin-top:10px;
       // display: flex;
       // justify-content: space-between;
-      background-color: darkblue;
+      background-color: #002157;
       width: 100%;
     }
     
@@ -267,11 +268,11 @@ export default function PdfReportScreen({ navigation, route }) {
     th, td {
       padding: 10px;
       text-align: center;
-      border: 1px solid #40464D;
+      border: 1px solid #808080;
     }
     
     th {
-      background-color: #BFBFBF;
+      background-color: #E8E8E8;
       color: black;
       font-weight:bold;
     }
@@ -284,11 +285,11 @@ export default function PdfReportScreen({ navigation, route }) {
     .column-header, .column-data {
       padding: 10px;
       text-align: center;
-      border: 1px solid #40464D;
+      border: 1px solid #808080;
     }
     
     .column-header {
-      background-color: #BFBFBF;
+      background-color: #E8E8E8;
       color: black;
     }
     

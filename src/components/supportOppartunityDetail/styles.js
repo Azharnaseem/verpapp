@@ -23,6 +23,8 @@ const styles = StyleSheet.create({
   textAlign:"justify",
   },
   nameText:{
+    width:width(40),
+    // backgroundColor:"red",
     fontSize:width(3.7),
     fontFamily:FontFamily.montserrat_SemiBold,
     color:AppColors.scndry,
