@@ -20,9 +20,11 @@ export default function PdfReportScreen({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
   const [pdfFile, setPdfFile] = useState(null);
+  const [totalPage, setTotalPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
   const [pdfData, setPdfData] = useState(null);
   const [subTotal, setSubTotal] = useState(null);
-  // console.log("============dss===============", subTotal);
+  console.log("============dss===============", totalPage);
   const a1 = "https://nodejs.org/static/images/logo.svg";
 
   // console.log("pdf file is :", pdfFile);
@@ -39,7 +41,7 @@ export default function PdfReportScreen({ navigation, route }) {
       total += i?.qty * i?.price;
     });
     // console.log("===============__>>>>", total);
-   /// setSubTotal(total);
+    /// setSubTotal(total);
     return total;
     // console.log("callllleddd ==========>", total);
   };
@@ -171,6 +173,7 @@ export default function PdfReportScreen({ navigation, route }) {
     .company-info-text {
       margin: 1px 0;
       font-size: 10px;
+      color:red,
     }
 
     .header {
@@ -179,15 +182,17 @@ export default function PdfReportScreen({ navigation, route }) {
     }
 
     .quotation-heading {
-      font-size: 20px;
+      font-size: 36px;
       font-weight: bold;
       margin-left: 20px;
+      color:#002157;
+      font-family: 'Bahnschrift', sans-serif;
     }
 
     .header img {
       align-items: center;
-    max-width: 100%;
-     height: auto;
+      max-width: 100%;
+      height: auto;
     
     }
     .document-container {
@@ -201,15 +206,49 @@ export default function PdfReportScreen({ navigation, route }) {
       margin-right: 20px;
       align-items:center;
       justify-content:center;
-    
-      margin-top:15px
+      margin-top:8.5px
     }
     
     .company-info-text {
       padding:1px;
       margin-bottom: 3px;
-      font-size: 14px;
+      font-size: 10px;
+      // font-weight: bold;
+      font-family: 'Bahnschrift', sans-serif;
+      // color:red
+    } 
+    .company-name-text {
+      padding:1px;
+      margin-bottom: 3px;
+      font-size: 16px;
       font-weight: bold;
+      color:#002157;
+      font-family: 'Bahnschrift', sans-serif;
+      
+    }
+    .company-info-outbox {
+      padding:1px;
+      margin-bottom: 3px;
+      font-size: 9.5px;
+       font-weight: bold;
+      // color:#002157;
+      font-family: 'Bahnschrift', sans-serif;
+    }
+    .company-info-texts{
+      padding:1px;
+      margin-bottom: 3px;
+      font-size: 9.5px;
+      // font-weight: bold;
+      // color:#002157;
+      font-family: 'Bahnschrift', sans-serif;
+    }
+    .company-info-lead {
+      padding:1px;
+      margin-bottom: 3px;
+      font-size:8px;
+      // font-weight: bold;
+      // color:#002157;
+      font-family: 'Bahnschrift', sans-serif;
     }
     .box {
     
@@ -226,6 +265,8 @@ export default function PdfReportScreen({ navigation, route }) {
       // background-color: green;
       // inline-size: 150px;
       // overflow-wrap: ;
+      font-size:9.5px;
+      // color: white;
       margin-bottom: 2px;
     }
     .header-container {
@@ -237,14 +278,16 @@ export default function PdfReportScreen({ navigation, route }) {
     }
     
     .heading {
-      font-size:15px;
+      font-size:9.5px;
+      font-family: 'Bahnschrift', sans-serif;
+      font-weight: bold;
       color: white;
-      padding: 5px;
+      padding: 0px;
     }
     .heading-wrapper {
       display: flex;
       justify-content: space-between;
-      width: 68%;
+      width: 62%;
     }
     .main-container {
       margin-top:10px;
@@ -266,15 +309,20 @@ export default function PdfReportScreen({ navigation, route }) {
     }
     
     th, td {
-      padding: 10px;
+      padding: 6px;
       text-align: center;
       border: 1px solid #808080;
+      font-size:9px;
+      font-family: 'Bahnschrift', sans-serif;
+      
     }
     
     th {
       background-color: #E8E8E8;
       color: black;
-      font-weight:bold;
+      font-size:9px;
+      font-family: 'Bahnschrift', sans-serif;
+      font-weight: bold;
     }
     .custom-table {
       margin-top:20px;
@@ -283,14 +331,25 @@ export default function PdfReportScreen({ navigation, route }) {
     }
     
     .column-header, .column-data {
-      padding: 10px;
+      padding: 2px;
       text-align: center;
       border: 1px solid #808080;
+      color:red
+      font-size:9px;
+      font-family: 'Bahnschrift', sans-serif;
+   
+      
     }
     
     .column-header {
       background-color: #E8E8E8;
-      color: black;
+      font-size:9px;
+      color:black;
+      font-family: 'Bahnschrift', sans-serif;
+     
+    }
+    .header {
+      background-color:red;
     }
     
     
@@ -300,23 +359,23 @@ export default function PdfReportScreen({ navigation, route }) {
 <div class="mainContainer">
   <div class="container">
     <div class="company-info">
-      <div class="company-info-text">AGRIUS IT (PVT) LTD</div>
+      <div class="company-name-text">AGRIUS IT (PVT) LTD</div>
       <div class="company-info-text">Office No. 509, 5th Floor, Gulberg Empire, Civic Center, Gulberg Green, Islamabad.</div>
       <div class="company-info-text">Tel No: +92 51 2362020</div>
       <div class="company-info-text">Email: info@agriusit.com</div>
       <div class="company-info-text">Website: www.agriusit.com</div>
     </div>
     <div class="header">
-      <img src="https://lh3.googleusercontent.com/p/AF1QipPSI5wGdZMdCQ4XMo7hr-blFoaczv6TOXK2T5bP=s1360-w1360-h1020" alt="Company Logo" width="150" height="150">
+      <img src="https://lh3.googleusercontent.com/p/AF1QipPSI5wGdZMdCQ4XMo7hr-blFoaczv6TOXK2T5bP=s1360-w1360-h1020" alt="Company Logo" width="180" height="20" >
     </div>
     <div class="quotation-heading">QUOTATION</div>
   </div>
 
 <div class="document-container">
   <div class="document-info">
-    <div class="company-info-text">Document No</div>
-    <div class="company-info-text">Document Date</div>
-    <div class="company-info-text">Quote Subject</div>
+    <div class="company-info-outbox">Document No</div>
+    <div class="company-info-outbox">Document Date</div>
+    <div class="company-info-outbox">Quote Subject</div>
   </div>
   <div class="box">
     <div class="box-row">${docNo ? docNo : "Nill"}</div>
@@ -369,8 +428,8 @@ export default function PdfReportScreen({ navigation, route }) {
      
   </div>
   <div class="inner-container">
-        <div class="company-info-texts"><b>* LT = Lead Time (Working Days)</b></div>
-        <div class="company-info-texts"><b>Quote Validity = 7 Days or while stock last</b></div>
+        <div class="company-info-lead"><b>* LT = Lead Time (Working Days)</b></div>
+        <div class="company-info-lead"><b>Quote Validity = 7 Days or while stock last</b></div>
        
   </div>
 </div>
@@ -430,40 +489,45 @@ ${pdfData
 
 <div class="document-container">
   <div class="document-info">
-    <div class="company-info-text">Sub Total</div>
-    <div class="company-info-text">GST/SST</div>
-    <div class="company-info-text">Total</div>
+    <div class="company-info-outbox">Sub Total</div>
+    <div class="company-info-outbox">GST/SST</div>
+    <div class="company-info-outbox">Total</div>
   </div>
   <div class="box">
     <div class="box-row">${subTotalCalculate().toFixed(2)}</div>
-    <div class="box-row">${((subTotalCalculate()*taxAmount)% 100).toFixed(2)}</div>
-    <div class="box-row">${(subTotalCalculate()+((subTotalCalculate()*taxAmount)% 100)).toFixed(2)}</div>
+    <div class="box-row">${((subTotalCalculate() * taxAmount) % 100).toFixed(
+      2
+    )}</div>
+    <div class="box-row">${(
+      subTotalCalculate() +
+      ((subTotalCalculate() * taxAmount) % 100)
+    ).toFixed(2)}</div>
   </div>
 </div>
 
 
   </div>
+ 
   <script src="script.js"></script>
 </body>
 </html>
 
       `;
-     
+
     try {
       const options = {
         html: htmlContent,
-        fileName: "table.pdf",
+        fileName: "Report",
         directory: "Documents",
       };
       // subTotalCalculate();
       // console.log("=========11===========",subTotal);
       // if(subTotal !=null){
-        const pdf = await RNHTMLtoPDF.convert(options);
-        // console.log("PDF generated", pdf.filePath);
-        
-        setPdfFile(pdf?.filePath);
+      const pdf = await RNHTMLtoPDF.convert(options);
+      // console.log("PDF generated", pdf?.numberOfPages);
+      // setTotalPage(pdf?.numberOfPages);
+      setPdfFile(pdf?.filePath);
       // }
-      
     } catch (error) {
       console.error("Error generating PDF", error);
     }
@@ -588,16 +652,19 @@ ${pdfData
             <ActivityIndicator size="large" color={AppColors.primary} />
           ) : (
             <Pdf
+              // page={}
               trustAllCerts={false}
               source={{
                 uri: pdfFile,
                 cache: true,
               }}
               onLoadComplete={(numberOfPages, filePath) => {
-                // console.log(`Number of pages: ${numberOfPages}`);
+                console.log(`Number of pages=========: ${numberOfPages}`);
               }}
               onPageChanged={(page, numberOfPages) => {
-                // console.log(`Current page: ${page}`);
+                console.log(`Current page: ${page} ${numberOfPages}`);
+                // setCurrentPage(page);
+                // setTotalPage(numberOfPages)
               }}
               onError={(error) => {
                 console.log("ddddddd pdf rrr", error);
