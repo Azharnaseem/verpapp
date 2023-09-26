@@ -15,16 +15,20 @@ import BottomTabBar from "./bottomTabBar";
 import Home from "~screens/app/home";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BackgroundTimer from 'react-native-background-timer';
-import { AppState } from "react-native";
+import { AppState, Text, TouchableOpacity } from "react-native";
 import NetInfo from "@react-native-community/netinfo";
 import { erroMessage, successMessage } from "~utills/Methods";
+import Modal from 'react-native-modal';
+import VersionCheck from 'react-native-version-check';
+import { View } from "react-native";
 // import styles from "./styles";
 // import styles from "./styles";
 let timerReference = null;
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 export default function Routes() {
-  const [isConnected, setIsconected]=useState(false)
+  const [isConnected, setIsconected]=useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
     useEffect(() => {
     setTimeout(() => {
       SplashScreen.hide();
@@ -50,6 +54,59 @@ export default function Routes() {
     };
   }, []);
   const dispatch = useDispatch();
+  useEffect(() => {
+    checkUpdate();
+  }, []);
+  async function checkUpdate() {
+    VersionCheck.needUpdate().then(async res => {
+      if (!res.isNeeded) {
+        // Alert.alert("Update Available", "You must update the app before use")
+        setModalVisible(true);
+      }
+    });
+  }
+  async function goToStore() {
+    if (Platform.OS === 'android') {
+      Linking.openURL(
+        'https://play.google.com/store/apps/details?id=com.eightytech.eighty',
+      );
+    } else {
+      Linking.openURL('https://apps.apple.com/us/app/808080/id1481558476');
+    }
+  }
+  <Modal
+        isVisible={modalVisible}
+        animationIn={'zoomInUp'}
+        animationOut={'zoomOutDown'}
+        style={{flex: 1}}>
+        <View style={{backgroundColor: 'white', padding: 15, borderRadius: 5}}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 24,
+              textAlign: 'center',
+              marginBottom: 20,
+            }}>
+            Update Available
+          </Text>
+          <Text
+            style={{
+              fontWeight: '400',
+              fontSize: 18,
+              textAlign: 'center',
+              marginBottom: 40,
+            }}>
+            You must update the app before use.
+          </Text>
+          <TouchableOpacity
+            style={{alignSelf: 'flex-end', backgroundColor: ''}}
+            onPress={() => goToStore()}>
+            <Text style={{color: '#0B0080', fontSize: 18, padding: 5}}>
+              Update
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
   // const checkToken = async () => {
   //   try {
   //     let token = await AsyncStorage.getItem("userToken");

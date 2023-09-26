@@ -1,4 +1,4 @@
-package com.boilerplate;
+package com.verpsolution;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import android.app.Application;
 import android.content.Context;
@@ -9,7 +9,7 @@ import org.wonday.pdf.RCTPdfView;
 import com.ReactNativeBlobUtil.ReactNativeBlobUtilPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.config.ReactFeatureFlags;
-import com.boilerplate.newarchitecture.MainApplicationReactNativeHost;
+import com.verpsolution.newarchitecture.MainApplicationReactNativeHost;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
@@ -77,7 +77,7 @@ public class MainApplication extends Application implements ReactApplication {
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("com.boilerplate.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("com.verpsolution.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);

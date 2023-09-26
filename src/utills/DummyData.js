@@ -18,11 +18,11 @@ export const DatabaseCountries = [
     dbName:"RemmsTech_UAE_DB"
   },
   {
-    name: "Agrius Saudia",
+    name: "Agrius Saudi Arabia",
     dbName:"SIRIUS_KSA_DB"
   },
   {
-    name: "Agrius Malesia",
+    name: "Agrius Malaysia",
     dbName:"SIRIUS_MY_DB"
   },
  
@@ -33,16 +33,16 @@ export const OfficesLocationData = [
     location:{latitude:"33.60075250864236",longitude:"73.15277786214838"},
   },
   {
-    name: "Srilanka",
+    name: "Sri Lanka",
     location:{latitude:"37.421998333333335",longitude:"-122.084"},
   },
   {
    
-    name: "Lohore",
+    name: "Lahore",
     location:{latitude:"31.519470051248483",longitude:"74.32292788849351"},
   },
   { 
-    name: "Krachi",
+    name: "Karachi",
     location:{latitude:"37.421998333333335",longitude:"-122.084"},
   },
   {
@@ -50,7 +50,7 @@ export const OfficesLocationData = [
     location:{latitude:"24.464111624884534",longitude:"54.32769457308308"},
   },
   {
-    name: "Malshiya",
+    name: "Malaysia",
     location:{latitude:"37.421998333333335",longitude:"-122.084"},
   },
  

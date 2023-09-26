@@ -1,7 +1,7 @@
 import React from "react";
 import Svg, { Path } from "react-native-svg";
 import AppColors from "~utills/AppColors";
-const SearchSVG = ({ color = AppColors.primary+"70", width = 22, height = 24 }) => {
+const SearchSVG = ({ color = AppColors.primary, width = 22, height = 24 }) => {
   return (
     <Svg
       key={color}

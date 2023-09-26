@@ -13,7 +13,7 @@ const SearchField = ({
   onPressClear,
   containerStyle = {},
   placeholder,
-  placeholderColor = AppColors.gray,
+  placeholderColor = AppColors.grey1+"70",
   value,
   onChangeText,
   onSubmitEditing,

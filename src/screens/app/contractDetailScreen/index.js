@@ -230,7 +230,7 @@ export default function ContractDetailScreen({ navigation, route }) {
               fontFamily={FontFamily.montserrat_SemiBold}
               color={AppColors.greyText2}
             >
-              Oppartunity No
+              Opportunity No
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
               323
