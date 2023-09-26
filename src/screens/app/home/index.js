@@ -366,7 +366,7 @@ export default function Home({ navigation, route }) {
             fontFamily={FontFamily.montserrat_Bold}
             color={AppColors.scndry}
           >
-            Opportunaties
+            Opportunities
           </SmallText>
         </TouchableOpacity>
             {/* newwww */}
