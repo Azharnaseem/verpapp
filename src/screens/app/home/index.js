@@ -29,7 +29,7 @@ import AppColors from "~utills/AppColors";
 import { SmallText } from "~components/texts";
 import { FontFamily } from "~assets/fonts";
 import SearchField from "~components/searchField";
-import { ContractImage, LeadIcon, Oppartunity, Tickets, welcomeImage } from "~assets/images";
+import { BannerImage, ContractImage, LeadIcon, Oppartunity, Tickets, welcomeImage } from "~assets/images";
 import ScreenNames from "~routes/routes";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SearchSVG from "~assets/SVG/searchSvg";
@@ -43,7 +43,7 @@ import BackSvg from "~assets/SVG/backSvg";
 export default function Home({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
-  // console.log("login infooo ===>>>>>>>>>>>>>>>>>", userInfo);
+  console.log("login infooo =================>>>>>>>>>>>>>>>>>", userInfo);
   const [pdfFile, setPdfFile] = useState(null);
   const [page, setPage] = useState(0);
   const leadRef = useRef(null);
@@ -318,12 +318,12 @@ export default function Home({ navigation, route }) {
               color={AppColors.scndry}
               fontFamily={FontFamily.montserrat_Bold}
             >
-              {`Welcome ${userInfo?.fullname}`}
+              {`Welcome ${userInfo?.fullname} on  ${userInfo?.DataBaseName} `}
             </SmallText>
             {/* <SmallText color={AppColors.darkGrey}>What do you want ?</SmallText> */}
             {/* <SearchField placeholderColor={AppColors.black} placeholder={"Search..."} containerStyle={{marginVertical:height(1)}} /> */}
             <Image
-              source={welcomeImage}
+              source={BannerImage}
               resizeMode="stretch"
               resizeMethod="resize"
               style={{

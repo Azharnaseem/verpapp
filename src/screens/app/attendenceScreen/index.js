@@ -244,7 +244,7 @@ export default function AttendenceScreen({ navigation, route }) {
         ) : (
           <>
           
-            <ProfileDetail />
+            <ProfileDetail name={userInfo?.fullname} />
             <TextInputSimple
               mainContainerStyle={{ marginTop: height(1) }}
               prefixIcon={<SvgIcon.Database />}

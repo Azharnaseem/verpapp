@@ -6,23 +6,23 @@ export const DatabaseCountries = [
     dbName:"SIRIUS1_DB"
   },
   {
-    name: "UAE Dubai",
+    name: "AIT UAE",
     dbName:"SIRIUS_UAE_DB"
   },
   {
-    name: "Remms PAK",
+    name: "RIT PAK",
     dbName:"RemmsPAK_DB"
   },
   { 
-    name: "Remms UAE",
+    name: "RIT UAE",
     dbName:"RemmsTech_UAE_DB"
   },
   {
-    name: "Agrius Saudi Arabia",
+    name: "AIT KSA",
     dbName:"SIRIUS_KSA_DB"
   },
   {
-    name: "Agrius Malaysia",
+    name: "AIT MY",
     dbName:"SIRIUS_MY_DB"
   },
  

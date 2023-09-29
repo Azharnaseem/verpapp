@@ -126,6 +126,7 @@ export default function Login({ navigation, route }) {
               userId: user_ID,
               groupType:groupType,
               dbName:dbName,
+              DataBaseName:country,
               
             })
           );

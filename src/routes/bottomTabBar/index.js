@@ -230,7 +230,7 @@ const AcntStackScreen=() =>{
                   color={focused ? AppColors.primary : AppColors.black+"90"}
                   size={3}
                 >
-                  Profile
+                  Attendance
                 </SmallText>
               </View>
             );

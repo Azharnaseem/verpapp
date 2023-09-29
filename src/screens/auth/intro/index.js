@@ -40,14 +40,14 @@ export default function IntroScreen({ navigation, route }) {
           >
             Welcome to Valueable ERP
           </SmallText>
-          <SmallText
+          {/* <SmallText
             size={4}
             fontFamily={FontFamily.montserrat_Regular}
             color={AppColors.scndry}
             textStyles={styles.desText}
           >
             Welcome as you learn a world changing skill to get a better job.
-          </SmallText>
+          </SmallText> */}
         </View>
 
         <Button
