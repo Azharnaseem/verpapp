@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { FlatList, Text, View } from "react-native";
+import { Alert, FlatList, Text, View } from "react-native";
 import styles from "./styles";
 import { useDispatch } from "react-redux";
 import {
@@ -30,8 +30,9 @@ import { erroMessage, successMessage } from "~utills/Methods";
 import { ApiManager } from "~backend/ApiManager";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { log } from "react-native-reanimated";
-import firestore from "@react-native-firebase/firestore";
+
 import Geolocation from "@react-native-community/geolocation";
+import axios from "axios";
 export default function Login({ navigation, route }) {
   const dispatch = useDispatch();
   const passwordRef = useRef(null);
@@ -41,12 +42,14 @@ export default function Login({ navigation, route }) {
   const [country, setCountry] = useState(false);
   const [dbName, setDbName] = useState("");
   const [location, setLocation] = useState(null);
+
   // console.log("item---------", dbName);
   const [seletedItem, setSelectedItem] = useState("");
   const schema = Yup.object().shape({
     username: Yup.string().required("User name is required"),
     password: Yup.string().required("Password is required"),
   });
+
   const {
     control,
     handleSubmit,
@@ -76,106 +79,77 @@ export default function Login({ navigation, route }) {
   // console.log("loggg location", location);
   const _login = async (data) => {
     // console.log("======","calllllll");
-    // try {
-    // let userName=data?.username
-    dispatch(setAppLoader(true));
+    try {
+      // let userName=data?.username
+      dispatch(setAppLoader(true));
 
-    const res = await ApiManager.get(
-      `${data?.username.toUpperCase()}/${data?.password}/${dbName}`
-    )
-      .then(async (res) => {
-        // console.log("resssssssssssssssssss===>>>", res);
-        if (res?.data === null) {
-          // console.log("callllllllled ifff");
-          erroMessage("Error", res?.messages);
-          dispatch(setAppLoader(false));
-        } else {
-          // console.log("elsssssssssssssssseeeeee callll");
-          let { email, password,fullname,groupType, user_Code, user_ID, user_Name } = res?.data[0];
-          // console.log("login data ==========", email);
+      const res = await ApiManager.get(
+        `${data?.username.toUpperCase()}/${data?.password}/${dbName}`
+      )
+      // await axios
+      //   .get(
+      //     `http://192.168.0.220:8080/api/User/GetUser/${data?.username.toUpperCase()}/${
+      //       data?.password
+      //     }/${dbName}`
+      //   )
+        // .then(async (res) => {
+          // console.log("===============222222222==", res?.error);
+          // if (res.error) {
+          //   console.log("2222222222211111111111111");
+          //   erroMessage("Please connect Vpn");
+          //   // Alert.alert("vpn issss");
+          //   dispatch(setAppLoader(false));
+          // } else {
+            console.log("resssssssssssssssssss11111111111111===>>>1", res);
+            if (res?.data === null) {
+              console.log("callllllllled ifff");
+              erroMessage("Error", res?.messages);
+              dispatch(setAppLoader(false));
+            } else {
+              console.log("elsssssssssssssssseeeeee callll4442");
+              let {
+                email,
+                password,
+                fullname,
+                groupType,
+                user_Code,
+                user_ID,
+                user_Name,
+                employeeId,
+              } = res?.data[0];
+            
 
-          // console.log("callled");
-          // await firestore()
-          //   .collection("Users")
-          //   .doc("1")
-          //   .set({
-          //     email,
-          //     password,
-          //     user_Code,
-          //     user_ID,
-          //     location,
-          //   })
-          //   .then(async (res) => {
-          //     console.log("dataaaas in firebase ===", res);
-          //   });
-          // console.log("callllll1111111111111111",res?.data[0]?.user_ID);
-          await AsyncStorage.setItem(
-            "userToken",
-            JSON.stringify(res?.data[0]?.user_ID)
-          );
-          console.log("callllll222222222222222222");
-          await AsyncStorage.setItem("userData", JSON.stringify(res?.data));
-          console.log("callllll222222222223333333333333");
-          dispatch(
-            setUserMeta({
-              name: user_Name,
-              email: email,
-              password: password,
-              fullname:fullname,
-              userCode: user_Code,
-              userId: user_ID,
-              groupType:groupType,
-              dbName:dbName,
-              DataBaseName:country,
-              
-            })
-          );
-          dispatch(setIsLoggedIn(true));
-          dispatch(setAppLoader(false));
-          successMessage("Login Successfully");
-          dispatch(setAppLoader(false));
-        }
-      })
-      .catch((err) => {
-        dispatch(setAppLoader(false));
-        // console.log("errrrr==333============", err);
-        erroMessage("Please Check your Internet/VPN connection");
-      });
-    // console.log("res on login===sssssssssssssssssssss",res);
+             
+              // await AsyncStorage.setItem("userData", JSON.stringify(res?.data));
 
-    let { email, password, user_Code, user_ID, user_Name } = res?.data;
-    // if(res?.error=="Something went wrong") {
-    //   console.log("if callllll");
-    //   console.log("ccccccccccccc");
-    //   erroMessage("Please Check your Internet/VPN Connection");
-    // }
-    //  else
-    //  if  (res?.messages === "Success") {
-    //   console.log("elsa if callllll");
-    //   await AsyncStorage.setItem("userToken",JSON.stringify( res?.data?.user_ID));
-    //   await AsyncStorage.setItem("userData",  JSON.stringify(res?.data));
-    //   dispatch(
-    //     setUserMeta({
-    //       name: user_Name,
-    //       email: email,
-    //       password: password,
-    //       userCode: user_Code,
-    //       userId: user_ID,
-    //     })
-    //   );
-    //   dispatch(setIsLoggedIn(true));
-    //   dispatch(setAppLoader(false));
-    //   successMessage("Login Successfully");
-    // }
-    //  else {
-    //   console.log("else callllll");
-    //   dispatch(setAppLoader(false));
-    //   erroMessage("Error", res?.messages);
-    // }
-    // } catch (error) {
-    //   dispatch(setAppLoader(false));
-    //   erroMessage("Credential not Matched");
-    // }
+              let userDataa = {
+                name: user_Name,
+                email: email,
+                password: password,
+                fullname: fullname,
+                userCode: user_Code,
+                userId: user_ID,
+                groupType: groupType,
+                employeeId: employeeId,
+                dbName: dbName,
+                DataBaseName: country,
+              };
+              await AsyncStorage.setItem("userToken", JSON.stringify(user_ID));
+              await AsyncStorage.setItem("userData", JSON.stringify(userDataa));
+              dispatch(setUserMeta(JSON.stringify(userDataa)));
+              // dispatch(setToken(user_ID));
+              dispatch(setIsLoggedIn(true));
+              dispatch(setAppLoader(false));
+              successMessage("Login Successfully");
+              dispatch(setAppLoader(false));
+            }
+          // }
+        // });
+    } catch (error) {
+      dispatch(setAppLoader(false));
+      erroMessage("Please connect Vpn");
+      console.log("ssssssssssssssssssscallllllllllllllllllllllllllllllll3");
+    }
   };
   const renderSelectedCountry = ({ item, index }) => {
     return (
@@ -223,6 +197,8 @@ export default function Login({ navigation, route }) {
           onSubmitEditing={() => passwordRef.current.focus()}
         />
         <TextField
+          autoCapitalize={"none"}
+          // keyboardType={"numeric"}
           prefixIcon={<SvgIcon.Password />}
           ref={passwordRef}
           innerRow={{ width: width(85) }}
@@ -260,24 +236,33 @@ export default function Login({ navigation, route }) {
           containerStyle={styles.btnStyle}
           // buttonIcon={<LoginSVG />}
           title={"Login"}
-          onPress={handleSubmit(_login)}
+          onPress={()=>{
+            navigation.navigate(ScreenNames.REGISTERSCREEN)
+          }}
+          // onPress={handleSubmit(_login)}
         />
         <SmallText
-        size={4}
-        fontFamily={FontFamily.montserrat_Bold}
+          size={4}
+          fontFamily={FontFamily.montserrat_Bold}
           // onPress={() => navigation.navigate(ScreenNames.REGISTERSCREEN)}
         >
-         Login to use<Text style={{
+          Login to use
+          <Text
+            style={{
               color: AppColors.scndry,
               fontFamily: FontFamily.montserrat_SemiBoldItalic,
-            }}> Agrius IT</Text>
+            }}
+          >
+            {" "}
+            Agrius IT
+          </Text>
           <Text
             style={{
               color: AppColors.primary,
               fontFamily: FontFamily.montserrat_SemiBoldItalic,
             }}
           >
-             {`  VERP`}
+            {`  VERP`}
           </Text>
         </SmallText>
         {/* <View style={styles.row}>

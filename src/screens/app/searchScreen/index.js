@@ -23,13 +23,14 @@ import axios from "axios";
 export default function SearchScreen({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
+  var stringify=JSON.parse(userInfo);
   const [searchQuery, setSearchQuery] = useState([]);
   const [loader, setLoader] = useState(false);
   const getLeadData = async () => {
     try {
       let res = await axios
         .get(
-          `http://192.168.0.220:8080/api/Lead/GetLead/GetLeadListtest?rows=10&pagenumber=0&Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userid=${userInfo?.userId}`
+          `http://192.168.0.220:8080/api/Lead/GetLead/GetLeadListtest?rows=10&pagenumber=0&Databasename=${stringify?.dbName}&usergroup=${stringify?.groupType}&userid=${stringify?.userId}`
         )
         .catch((error) => {
           console.log("error11111 in list by main catagory", error);

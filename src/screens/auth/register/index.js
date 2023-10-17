@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
@@ -20,6 +20,7 @@ import { height, width } from "~utills/Dimension";
 import AppColors from "~utills/AppColors";
 import ScreenNames from "~routes/routes";
 import { Image } from "react-native";
+import DeviceInfo from 'react-native-device-info';
 import { Logo } from "~assets/images";
 import { SmallText } from "~components/texts";
 import SvgIcon from "~assets/SVG";
@@ -29,22 +30,30 @@ import TextInputSimple from "~components/textInputSimple";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function ResgisterScreen({ navigation, route }) {
   const dispatch = useDispatch();
+  const emailRef = useRef(null);
   const titleRef = useRef(null);
   const sernameRef = useRef(null);
   const databaseuserRef = useRef(null);
   const databasenameRef= useRef(null);
   const bottomSheetRef = useRef(null);
   const passwordRef = useRef(null);
+  const confirmPassword=useRef(null);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [country, setCountry] = useState(false);
   const [arr, setArr] = useState([]);
   const [seletedItem, setSelectedItem] = useState("");
   const schema = Yup.object().shape({
     tittle: Yup.string().required("User name is required"),
-    servername: Yup.string().required("User name is required"),
-    databaseuser: Yup.string().required("User name is required"),
+    // servername: Yup.string().required("User name is required"),
+    // databaseuser: Yup.string().required("User name is required"),
+    email: Yup.string().required("email is required"),
     password: Yup.string().required("Password is required"),
-    databasename: Yup.string().required("User name is required"),
+    confrmpassword: Yup.string().required("confirmed is required"),
+    confrmpassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], `password not matched`)
+    .required(`confirmed password is required`),
+
+    // databasename: Yup.string().required("User name is required"),
   });
   const {
     control,
@@ -52,7 +61,7 @@ export default function ResgisterScreen({ navigation, route }) {
     formState: { errors, isValid },
   } = useForm({
     mode: "all",
-    defaultValues: { tittle: "", servername: "",databaseuser: "", password: "", databasename: "",  },
+    defaultValues: { tittle: "", servername: "",databaseuser: "", password: "", confrmpassword: "",email:""  },
     resolver: yupResolver(schema),
   });
   const _resgister = async (data) => {
@@ -70,6 +79,11 @@ export default function ResgisterScreen({ navigation, route }) {
     navigation.navigate(ScreenNames.LOGIN)
    }
   };
+  useEffect(() => {
+    let deviceId = DeviceInfo.getDeviceId();
+    console.log("deviceId=====ddddd",deviceId);
+
+  }, []);
   const renderSelectedCountry = ({ item, index }) => {
     return (
       <View>
@@ -105,40 +119,52 @@ export default function ResgisterScreen({ navigation, route }) {
         <TextField
           innerRow={{ width: width(85) }}
           numberOfLines={1}
+          ref={emailRef}
+          label={"E-Mail"}
+          placeholder="Enter User e-mail"
+          control={control}
+          errorMsg={errors?.email}
+          name="email"
+          returnKeyType={"next"}
+          onSubmitEditing={() => titleRef.current.focus()}
+        />
+        <TextField
+          innerRow={{ width: width(85) }}
+          numberOfLines={1}
           ref={titleRef}
-          label={"Tittle"}
-          placeholder="Enter tittle"
+          label={"User Name"}
+          placeholder="Enter User Name"
           control={control}
           errorMsg={errors?.tittle}
           name="tittle"
           returnKeyType={"next"}
-          onSubmitEditing={() => sernameRef.current.focus()}
+          onSubmitEditing={() => passwordRef.current.focus()}
         />
-         <TextField
+         {/* <TextField
          ref={sernameRef}
           innerRow={{ width: width(85) }}
           numberOfLines={1}
-          label={"servername"}
-          placeholder="Enter tittle"
+          label={"Phone Number"}
+          placeholder="Enter Phone Number"
           control={control}
           errorMsg={errors?.servername}
           name="servername"
           returnKeyType={"next"}
           onSubmitEditing={() => databaseuserRef.current.focus()}
-        />
-         <TextField
+        /> */}
+         {/* <TextField
           innerRow={{ width: width(85) }}
           numberOfLines={1}
           ref={databaseuserRef}
-          label={"databaseuser"}
+          label={""}
           placeholder="Enter databaseuser"
           control={control}
           errorMsg={errors?.databaseuser}
           name="databaseuser"
           returnKeyType={"next"}
           onSubmitEditing={() => passwordRef.current.focus()}
-        />
-        <TextField
+        /> */}
+         <TextField
           // prefixIcon={<SvgIcon.Password />}
           ref={passwordRef}
           innerRow={{ width: width(85) }}
@@ -154,12 +180,34 @@ export default function ResgisterScreen({ navigation, route }) {
           }
           secureTextEntry={!passwordVisible}
           onIconPress={() => setPasswordVisible(!passwordVisible)}
-          onSubmitEditing={() => databasenameRef.current.focus()}
+          onSubmitEditing={() => confirmPassword.current.focus()}
           // onPressForgot={() => navigation.navigate(ScreenNames.FORGOTPASSWORD)}
           // showForgotPassword
           returnKeyType={"next"}
         />
-         <TextField
+        <TextField
+          // prefixIcon={<SvgIcon.Password />}
+          ref={confirmPassword}
+          innerRow={{ width: width(85) }}
+          label={"Confirm Password"}
+          placeholder="Confirm your password"
+          control={control}
+          errorMsg={errors?.confrmpassword}
+          name="confrmpassword"
+          Icon={
+            <OpenEyeSVG
+              color={passwordVisible ? AppColors.primary : AppColors.darkGrey}
+            />
+          }
+          secureTextEntry={!passwordVisible}
+          onIconPress={() => setPasswordVisible(!passwordVisible)}
+          returnKeyType={"done"}
+          // onSubmitEditing={() => databasenameRef.current.focus()}
+          // onPressForgot={() => navigation.navigate(ScreenNames.FORGOTPASSWORD)}
+          // showForgotPassword
+          // returnKeyType={"next"}
+        />
+         {/* <TextField
           innerRow={{ width: width(85) }}
           numberOfLines={1}
           ref={databasenameRef}
@@ -170,7 +218,7 @@ export default function ResgisterScreen({ navigation, route }) {
           name="databasename"
           returnKeyType={"done"}
          
-        />
+        /> */}
         
         <Button
           fontFamily={FontFamily.montserrat_Bold}

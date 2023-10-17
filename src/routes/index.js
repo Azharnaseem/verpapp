@@ -37,7 +37,7 @@ export default function Routes() {
   
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
-      console.log("Connection type", state.type);
+      console.log("Connection typeeeeeeeeeeeeeeee======", state);
       console.log("Is connected?", state.isConnected);
       if(state.isConnected==true) {
         console.log("ccccccccccccccccc");
@@ -68,7 +68,7 @@ export default function Routes() {
   async function goToStore() {
     if (Platform.OS === 'android') {
       Linking.openURL(
-        'https://play.google.com/store/apps/details?id=com.eightytech.eighty',
+        'https://play.google.com/apps/internaltest/4701734792978015845',
       );
     } else {
       Linking.openURL('https://apps.apple.com/us/app/808080/id1481558476');
@@ -128,8 +128,32 @@ export default function Routes() {
   //     console.log("Something went wrong unable to get the token", error);
   //   }
   // };
+  const checkToken = async () => {
+    try {
+      let token = await AsyncStorage.getItem("userToken");
+      let userData = await AsyncStorage.getItem("userData");
+      console.log("data =33333333333333333333===", userData, "=======token===:", token);
+      if (token) {
+        console.log("yes we have token");
+        dispatch(setToken(token));
+        dispatch(setIsLoggedIn(true));
+        dispatch(setUserMeta(userData));
+      } else {
+        console.log("Something went wrong");
+        // erroMessage("Something went wrong");
+        // SplashScreen.hide();
+      }
+    } catch (error) {
+      // SplashScreen.hide();
+      // erroMessage("Something went wrong unable to get the token");
+      console.log("Something went wrong unable to get the token", error);
+    }
+  };
   const isLogin = useSelector(selectIsLoggedIn);
    
+  useEffect(() => {
+    checkToken();
+  }, []);
   const handleUserActivity = () => {
     console.log("cllllllllllllllllllllllllllllllllllllllllll");
     // Reset the timer on user activity

@@ -21,8 +21,8 @@ const ProfileDetail = ({
     <View style={[styles.container, containerViewStyle]}>
     
       <View>
-        <SmallText color={AppColors.scndry}fontFamily={FontFamily.montserrat_Bold}>{name}</SmallText>
-        <SmallText>{profession}</SmallText>
+        <SmallText numberOfLines={1} color={AppColors.scndry}fontFamily={FontFamily.montserrat_Bold}>{`${name}`}</SmallText>
+        {/* <SmallText>{profession}</SmallText> */}
       </View>
         {/* <Image
         resizeMode="contain"

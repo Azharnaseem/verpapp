@@ -26,6 +26,7 @@ export default function LeadDetailInfo({ navigation, route }) {
   console.log("==2222222==", routsData?.leadProfileId);
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
+  var stringify=JSON.parse(userInfo);
   const [leadInfoData, setLeadInfoData] = useState(null);
   const [showEmptyComponent, setShowEmptyComponent] = useState(false);
   const makePhoneCall = (mobile) => {
@@ -51,7 +52,7 @@ export default function LeadDetailInfo({ navigation, route }) {
       dispatch(setAppLoader(true));
       let res = await axios
         .get(
-          `http://192.168.0.220:8080/api/Lead/GetLeadContact/GetLeadContact?Databasename=${userInfo?.dbName}&LeadProfileId=${routsData?.leadProfileId}`
+          `http://192.168.0.220:8080/api/Lead/GetLeadContact/GetLeadContact?Databasename=${stringify?.dbName}&LeadProfileId=${routsData?.leadProfileId}`
         )
         .catch((error) => {
           dispatch(setAppLoader(false));

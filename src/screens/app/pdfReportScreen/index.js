@@ -19,6 +19,7 @@ import dayjs from "dayjs";
 export default function PdfReportScreen({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
+  var   stringify=JSON.parse(userInfo);
   const [pdfFile, setPdfFile] = useState(null);
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -388,7 +389,7 @@ export default function PdfReportScreen({ navigation, route }) {
 
 <div class="header-container">
   <div class="heading-wrapper">
-     <h1 class="heading">Customer</h1>
+     <h1 class=" ">Customer</h1>
     <h1 class="heading">Delivery Address</h1>
   </div>
 </div>
@@ -537,7 +538,7 @@ ${pdfData
       dispatch(setAppLoader(true));
       let res = await axios
         .get(
-          `http://192.168.0.220:8080/api/Opportunity/GetOpportunityHardwareReport/OpportunityHardwareReport?Databasename=${userInfo?.dbName}&OpportunityId=${route?.params?.opportunityId}`
+          `http://192.168.0.220:8080/api/Opportunity/GetOpportunityHardwareReport/OpportunityHardwareReport?Databasename=${stringify?.dbName}&OpportunityId=${route?.params?.opportunityId}`
         )
         .catch((error) => {
           dispatch(setAppLoader(false));

@@ -193,20 +193,23 @@ import AppColors from "~utills/AppColors";
 import { SmallText } from "~components/texts";
 import axios from "axios";
 import { setAppLoader } from "~redux/slices/config";
+import { erroMessage } from "~utills/Methods";
 
 // import { PDFGenerator } from "~utills/Methods";
 export default function AllOppartunaties({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
-  // console.log("---------------->>>",route?.params?.AllOppartunatiesDataaaa);
+  var stringify =JSON.parse(userInfo) ;
+   // console.log("---------------->>>",route?.params?.AllOppartunatiesDataaaa);
   let allOppartunatiesData = route?.params?.AllOppartunatiesDataaaa;
   const [searchQuery, setSearchQuery] = useState(null);
   const [active, setActive] = useState(false);
     console.log("==========",active);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [oppartunityHardwareData, setOppartunityhardwareData] = useState(null);
-  const [oppartunitySupportData, setOppartunitySupportData] = useState(null);
+  const [oppartunityHardwareData, setOppartunityhardwareData] = useState([]);
+  const [oppartunitySupportData, setOppartunitySupportData] = useState([]);
+  console.log("00000000000000>>>>,",oppartunitySupportData);
   // console.log("====",searchQuery);
   const [loader, setLoader] = useState(false);
   // console.log("----", loader);
@@ -217,7 +220,7 @@ export default function AllOppartunaties({ navigation, route }) {
       try {
         await axios
           .get(
-            `http://192.168.0.220:8080/api/Opportunity/GetOpportunitySearch/GetOpportunitySearch?Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userId=${userInfo?.userId}&DocNo=${text}`
+            `http://192.168.0.220:8080/api/Opportunity/GetOpportunitySearch/GetOpportunitySearch?Databasename=${stringify?.dbName}&usergroup=${stringify?.groupType}&userId=${stringify?.userId}&DocNo=${text}`
           )
           .then((response) => {
             console.log("data on Search", response);
@@ -290,62 +293,106 @@ export default function AllOppartunaties({ navigation, route }) {
     );
   };
   useEffect(() => {
-    dispatch(setAppLoader(true));
+    // dispatch(setAppLoader(true));
     getOpportunitySupportData();
     getOpportunityHardwareData();
-    dispatch(setAppLoader(false));
+    // dispatch(setAppLoader(false));
   }, [userInfo]);
   const getOpportunityHardwareData = async () => {
+    dispatch(setAppLoader(true));
     console.log("ifffffff callllllllllllllllllllllllllllllll");
-    try {
-      let res = await axios
+    // try {
+      // let res = 
+      await axios
         .get(
-          `http://192.168.0.220:8080/api/Opportunity/OpportunityHardware/GetOpportunityHardware?rows=10&pagenumber=${page}&Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userId=${userInfo?.userId}&Type=Hardware`
+          `http://192.168.0.220:8080/api/Opportunity/OpportunityHardware/GetOpportunityHardware?rows=10&pagenumber=${page}&Databasename=${stringify?.dbName}&usergroup=${stringify?.groupType}&userId=${stringify?.userId}&Type=Hardware`
         )
         .catch((error) => {
+          dispatch(setAppLoader(false));
           console.log("error11111 in list by main catagory opp", error);
-        });
+        }).then((resss) => {
+          dispatch(setAppLoader(true));
+          if(resss.error){
+            dispatch(setAppLoader(false));
+            erroMessage("Please connect Vpn")
+          }else{
+            if (resss != null && page == 0) {
+            
+              setOppartunityhardwareData(resss);
+              setPage(page + 1);
+              dispatch(setAppLoader(false));
+            } else {
+              console.log("elsee callllleddddddddddddd");
+              let temp = [...oppartunityHardwareData];
+              temp.push(...resss);
+              setOppartunityhardwareData(temp);
+              setPage(page + 1);
+              setLoading(false);
+              dispatch(setAppLoader(false));
+            }
+          }});
       // console.log("========..............api====", res);
-      if (res != null && page == 0) {
-        setOppartunityhardwareData(res);
-        setPage(page + 1);
-      } else {
-        console.log("elsee callllleddddddddddddd");
-        let temp = [...oppartunityHardwareData];
-        temp.push(...res);
-        setOppartunityhardwareData(temp);
-        setPage(page + 1);
-        setLoading(false);
-      }
-    } catch (error) {
-      console.log("error is  ooooppp getting", error);
-    }
+      // if (res != null && page == 0) {
+      //   setOppartunityhardwareData(res);
+      //   setPage(page + 1);
+      // } else {
+      //   console.log("elsee callllleddddddddddddd");
+      //   let temp = [...oppartunityHardwareData];
+      //   temp.push(...res);
+      //   setOppartunityhardwareData(temp);
+      //   setPage(page + 1);
+      //   setLoading(false);
+      // }
+    // } catch (error) {
+    //   console.log("error is  ooooppp getting", error);
+    // }
   };
   const getOpportunitySupportData = async () => {
+    dispatch(setAppLoader(true));
     console.log("ifffffff callllllllllllllllllllllllllllllll");
-    try {
-      let res = await axios
+    // try {
+      // let res =
+       await axios
         .get(
-          `http://192.168.0.220:8080/api/Opportunity/OpportunityHardware/GetOpportunityHardware?rows=10&pagenumber=${page}&Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userId=${userInfo?.userId}&Type=Support`
+          `http://192.168.0.220:8080/api/Opportunity/OpportunityHardware/GetOpportunityHardware?rows=10&pagenumber=${page}&Databasename=${stringify?.dbName}&usergroup=${stringify?.groupType}&userId=${stringify?.userId}&Type=Support`
         )
         .catch((error) => {
+          dispatch(setAppLoader(false));
           console.log("error11111 in list by main catagory opp", error);
+        }).then((res) => {
+          if(res.error){
+            dispatch(setAppLoader(false));
+            erroMessage("Please connect Vpn")
+          }else{
+          if (res != null && page == 0) {
+            setOppartunitySupportData(res);
+            setPage(page + 1);
+            dispatch(setAppLoader(false));
+          } else {
+            console.log("elsee callllleddddddddddddd");
+            let temp = [...oppartunitySupportData];
+            temp.push(...res);
+            setOppartunitySupportData(temp);
+            setPage(page + 1);
+            setLoading(false);
+            dispatch(setAppLoader(false));
+          }}
         });
       // console.log("========..............api====", res);
-      if (res != null && page == 0) {
-        setOppartunitySupportData(res);
-        setPage(page + 1);
-      } else {
-        console.log("elsee callllleddddddddddddd");
-        let temp = [...oppartunitySupportData];
-        temp.push(...res);
-        setOppartunitySupportData(temp);
-        setPage(page + 1);
-        setLoading(false);
-      }
-    } catch (error) {
-      console.log("error is  ooooppp getting", error);
-    }
+      // if (res != null && page == 0) {
+      //   setOppartunitySupportData(res);
+      //   setPage(page + 1);
+      // } else {
+      //   console.log("elsee callllleddddddddddddd");
+      //   let temp = [...oppartunitySupportData];
+      //   temp.push(...res);
+      //   setOppartunitySupportData(temp);
+      //   setPage(page + 1);
+      //   setLoading(false);
+      // }
+    // } catch (error) {
+    //   console.log("error is  ooooppp getting", error);
+    // }
   };
 
   return (
@@ -442,7 +489,10 @@ export default function AllOppartunaties({ navigation, route }) {
                       </View>
                     ) : (
                       <View>
-                      { oppartunityHardwareData&&  <Button
+                      { oppartunityHardwareData?.length === 0 ?<Text>
+                        No oppartunity found
+
+                      </Text> :<Button
                         containerStyle={{ width: width(30) }}
                         title={"Load More"}
                         onPress={()=>{
@@ -527,7 +577,7 @@ export default function AllOppartunaties({ navigation, route }) {
                       </View>
                     ) : (
                       <View>
-                      { oppartunitySupportData&&  <Button
+                      { oppartunitySupportData?.length === 0?<Text>No oppartunity found</Text>:  <Button
                         containerStyle={{ width: width(30) }}
                         title={"Load More"}
                         onPress={()=>{

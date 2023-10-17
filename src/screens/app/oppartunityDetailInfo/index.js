@@ -32,6 +32,7 @@ export default function OppartunityDetailInfo({ navigation, route }) {
   console.log("==222222ssssssssssssssssssssss2==", routsData);
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
+  const stringify=JSON.parse(userInfo);
   // console.log("----",userInfo?.dbName);
   const [oppInfoData, setOppInfoData] = useState(null);
   const [suprtOppInfoData, setSuprtOppInfoData] = useState(null);
@@ -57,7 +58,7 @@ export default function OppartunityDetailInfo({ navigation, route }) {
       dispatch(setAppLoader(true));
       let res = await axios
         .get(
-          `http://192.168.0.220:8080/api/Opportunity/GetOpportunityHardware/OpportunityHardware?Databasename=${userInfo?.dbName}&OpportunityId=${routsData?.opportunityId}`
+          `http://192.168.0.220:8080/api/Opportunity/GetOpportunityHardware/OpportunityHardware?Databasename=${stringify?.dbName}&OpportunityId=${routsData?.opportunityId}`
         )
         .catch((error) => {
           dispatch(setAppLoader(false));
@@ -82,7 +83,7 @@ export default function OppartunityDetailInfo({ navigation, route }) {
       dispatch(setAppLoader(true));
       let res = await axios
         .get(
-          `http://192.168.0.220:8080/api/Opportunity/GetOpportunitySupport/OpportunitySupport?Databasename=${userInfo?.dbName}&OpportunityId=${routsData?.opportunityId}`
+          `http://192.168.0.220:8080/api/Opportunity/GetOpportunitySupport/OpportunitySupport?Databasename=${stringify?.dbName}&OpportunityId=${routsData?.opportunityId}`
         )
         .catch((error) => {
           dispatch(setAppLoader(false));

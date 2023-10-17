@@ -6,6 +6,7 @@ import {
   FlatList,
   ActivityIndicator,
   Pressable,
+  Alert,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -34,7 +35,7 @@ import {
   EmployeeAttendenceData,
   OfficesLocationData,
 } from "~utills/DummyData";
-import { log } from "react-native-reanimated";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppColors from "~utills/AppColors";
 import { SmallText } from "~components/texts";
 import BottomTabBar from "~routes/bottomTabBar";
@@ -45,7 +46,12 @@ import Geolocation from "@react-native-community/geolocation";
 import TextInputSimple from "~components/textInputSimple";
 import SvgIcon from "~assets/SVG";
 import TickCheck from "~assets/SVG/tickCheck";
-import GetLocation from 'react-native-get-location'
+import GetLocation from "react-native-get-location";
+import axios from "axios";
+import { useIsFocused } from "@react-navigation/native";
+import { setAppLoader } from "~redux/slices/config";
+import { erroMessage, successMessage } from "~utills/Methods";
+import { baseUrl } from "~utills/Constants";
 
 // import { PDFGenerator } from "~utills/Methods";
 export default function AttendenceScreen({ navigation, route }) {
@@ -55,41 +61,72 @@ export default function AttendenceScreen({ navigation, route }) {
   const confirmationModal = useRef();
   const bottomSheetRef = useRef(null);
   const userInfo = useSelector(selectUserMeta);
-  const [office, setOffice] = useState(false);
+  var stringify = JSON.parse(userInfo);
+  const [office, setOffice] = useState("");
   const [seletedItem, setSelectedItem] = useState("");
   const [officeLocation, setOfficeLocation] = useState("");
+  // let userData =  AsyncStorage.getItem("userData");
+  const isFocused = useIsFocused();
+
   const radiusInMeters = 50;
   const [location, setLocation] = useState(null);
-  console.log("location is ====",officeLocation);
+  // console.log("===33333333333333333333====3333333=", officeLocation);
+  // console.log("location is ====", officeLocation);
+
+  // console.log("issssssssss focused====",isFocused);
 
   const [dt, setDt] = useState(new Date().toLocaleString());
   const [distancee, setDistance] = useState(null);
-  console.log(radiusInMeters,"==============================++++",distancee);
+  // console.log(radiusInMeters, "==============================++++", distancee);
   const [markAttendence, setAttendence] = useState("CheckIn");
+  let checkIn="CheckIn";
+  let checkOut="CheckOut";
+  console.log("============state===", markAttendence);
+  const [selectedTimeZone, setSelectedTimeZone] = useState("Asia/Karachi");
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const [date, SetDate] = useState("");
+  // console.log(currentTime,"===222222222222====>>>>",currentTime.substring(0,10));
+  // console.log("--------dateee---------->ssss>>>",date);
+  // console.log("timeeeeeeee", dayjs(currentTime).format("h:mm A"));
 
   const [searchQuery, setSearchQuery] = useState(null);
   // console.log("====",searchQuery);
   const [loader, setLoader] = useState(false);
   // console.log("----", loader);
-  const currentTime = dayjs().format("h:mm A");
+  const currentTimer = dayjs().format("h:mm A");
+
   useEffect(() => {
-    getLocation();
-  }, []);
+    (async () => {
+      let userData = await AsyncStorage.getItem("attendnceStatus");
+    console.log("-------------------rrrrrrrr--------999--",userData);
+    if(userData==='CheckOut'){
+      setAttendence("CheckOut")
+    }
+    else{
+      setAttendence("CheckIn")
+    }
+    })();
+
+  }, [isFocused]);
+  // useEffect(() => {
+  //   getLocation();
+  // }, [isFocused]);
   const getLocation = () => {
+    console.log("1111111111111111111111111111111111111 getlocation");
     GetLocation.getCurrentPosition({
       enableHighAccuracy: true,
       timeout: 60000,
-  })
-  .then(location => {
-      console.log("---->>>",location?.latitude);
-      const { latitude, longitude } = location;
-      console.log("======================>>>",latitude,longitude);
-      setLocation({latitude,longitude })
-  })
-  .catch(error => {
-      const { code, message } = error;
-      console.warn("errorrrr+++",code, message);
-  })
+    })
+      .then((location) => {
+        // console.log("---->>>", location?.latitude);
+        const { latitude, longitude } = location;
+        // console.log("======================>>>", latitude, longitude);
+        setLocation({ latitude, longitude });
+      })
+      .catch((error) => {
+        const { code, message } = error;
+        console.warn("errorrrr+++", code, message);
+      });
     // Geolocation.getCurrentPosition(
     //   (position) => {
     //     console.log("=====================", position?.coords);
@@ -111,8 +148,195 @@ export default function AttendenceScreen({ navigation, route }) {
 
   //     return () => clearInterval(secTimerr);
   // }, []);
+  const handleCountryChange = async (newCountry, offset) => {
+    let linkhttps =
+      "https://timeapi.io/api/Time/current/zone?timeZone=Europe/Amsterdam";
+    // setSelectedCountry(newCountry);
+    await axios
+      .get(
+        `https://timeapi.io/api/Time/current/zone?timeZone=${selectedTimeZone}`
+      )
+      .catch((error) => {
+        console.log("error11111 in list by main catagory", error);
+      })
+      .then((res) => {
+        // console.log("resss=====>>", dayjs(res?.dateTime).format("h:mm A"));
+        setCurrentTime(res?.dateTime);
+        // dayjs(currentTime)?.format("ddd, MMMM YYYY")
+        SetDate(dayjs(res?.dateTime)?.format("DD/MM/YYYY"));
+        // setSelectedCountryTime(res?.dateTime)
+      });
+    // var b =new Date();
+    // var utc=b.getTime()+(b.getTimezoneOffset()*60000);
+    // var nd =new Date(utc+(3600000*offset));
+    // return console.log(newCountry,"=sssssssssssssssssssss===>P__>>>>",nd.toLocaleString());
+
+    // Calculate the current time in the selected time zone
+    // const currentLocalTime = DateTime.now().setZone(newCountry);
+    // setCurrentTime(currentLocalTime.toFormat('yyyy-MM-dd HH:mm:ss'));
+  };
+  const markAttdence = async (newCountry, offset) => {
+    dispatch(setAppLoader(true));
+    console.log("FUNCTUION44444444444444444444444444444444444 CALLLED");
+    let linkhttps =
+      "https://timeapi.io/api/Time/current/zone?timeZone=Europe/Amsterdam";
+    // setSelectedCountry(newCountry);
+    let addAttendance = {
+      empID: stringify?.employeeId,
+      attendanceDate: currentTime?.substring(0, 10),
+      attendanceType: markAttendence,
+      attendanceTime: currentTime,
+      attendanceStatus: "Present",
+      shiftId: 0,
+      officeLocation: office,
+      latitude: officeLocation?.latitude,
+      longitude: officeLocation?.longitude,
+    };
+    // console.log("333222222222222222",stringify?.dbName);
+    await axios
+      .post(
+        `${baseUrl}/Attendance/AddAttendance/Attendance?Databasename=${stringify?.dbName}`,
+        addAttendance
+      )
+
+      .catch((error) => {
+        dispatch(setAppLoader(false));
+        Alert.alert("${error} in mark attendence");
+        // console.log("error in mark attendence", error);
+      })
+      .then(async(res) => {
+        console.log("resss=====>>Done this task check in", res);
+        if(res?.error){
+          erroMessage("Please Connect your VPN to CheckIn")
+          dispatch(setAppLoader(false));
+          console.log("errro",res);
+        }else{
+          dispatch(setAppLoader(false));
+          // successMessage("")
+          // Alert.alert("success")
+          // if (
+             
+          //   markAttendence === "CheckIn"
+          // ) {
+            // markAttdence();
+            successModalRef.current.show();
+            setAttendence("CheckOut");
+            
+            setTimeout(async() => {
+              
+              successModalRef.current.hide();
+              setOffice("");
+              setOfficeLocation("");
+              setSelectedItem("");
+             
+              navigation.goBack();
+            }, 2000);
+          // } else if (
+          //   markAttendence === "CheckOut"
+          // ) {
+          //   // setAttendence("CheckIn");
+
+          //   confirmationModal.current.show();
+
+          //   // setTimeout(() => {
+          //   //   CheckModelRef.current.hide();
+          //   //   // navigation.navigate(ScreenNames.HOME);
+          //   // }, 2000);
+          // }
+          await AsyncStorage.setItem(
+            "attendnceStatus",
+            checkOut
+          );
+        }
+
+        // setSelectedCountryTime(res?.dateTime)
+      });
+    // var b =new Date();
+    // var utc=b.getTime()+(b.getTimezoneOffset()*60000);
+    // var nd =new Date(utc+(3600000*offset));
+    // return console.log(newCountry,"=sssssssssssssssssssss===>P__>>>>",nd.toLocaleString());
+
+    // Calculate the current time in the selected time zone
+    // const currentLocalTime = DateTime.now().setZone(newCountry);
+    // setCurrentTime(currentLocalTime.toFormat('yyyy-MM-dd HH:mm:ss'));
+  };
+  const markAttdenceCheckOut = async (newCountry, offset) => {
+    dispatch(setAppLoader(true));
+    console.log("Function Check Outtt Called CALLLED");
+    let linkhttps =
+      "https://timeapi.io/api/Time/current/zone?timeZone=Europe/Amsterdam";
+    // setSelectedCountry(newCountry);
+    let addAttendance = {
+      empID: stringify?.employeeId,
+      attendanceDate: currentTime?.substring(0, 10),
+      attendanceType: markAttendence,
+      attendanceTime: currentTime,
+      attendanceStatus: "Present",
+      shiftId: 0,
+      officeLocation: office,
+      latitude: officeLocation?.latitude,
+      longitude: officeLocation?.longitude,
+    };
+    // console.log("333222222222222222",stringify?.dbName);
+    await axios
+      .post(
+        `${baseUrl}/Attendance/AddAttendance/Attendance?Databasename=${stringify?.dbName}`,
+        addAttendance
+      )
+
+      .catch((error) => {
+        dispatch(setAppLoader(false));
+        Alert.alert("${error} in mark attendence");
+        // console.log("error in mark attendence", error);
+      })
+      .then(async(res) => {
+        console.log("resss=====>>Done this task check in", res);
+        if(res?.error){
+          erroMessage("Please Connect your VPN to CheckIn")
+          dispatch(setAppLoader(false));
+          console.log("errro",res);
+        }else{
+          dispatch(setAppLoader(false));
+          setAttendence("CheckIn");
+          // await AsyncStorage.setItem(
+          //   "attendnceStatus",
+          //   JSON.stringify(markAttendence)
+          // );
+          confirmationModal.current.hide();
+          CheckModelRef.current.show();
+          setTimeout(async() => {
+            
+            CheckModelRef.current.hide();
+            setOffice("");
+            setOfficeLocation("");
+            setSelectedItem("");
+           
+            navigation.goBack();
+            // navigation.navigate(ScreenNames.HOME);
+          }, 2000);
+          await AsyncStorage.setItem(
+            "attendnceStatus",
+           checkIn
+          );
+        }
+
+        // setSelectedCountryTime(res?.dateTime)
+      });
+    // var b =new Date();
+    // var utc=b.getTime()+(b.getTimezoneOffset()*60000);
+    // var nd =new Date(utc+(3600000*offset));
+    // return console.log(newCountry,"=sssssssssssssssssssss===>P__>>>>",nd.toLocaleString());
+
+    // Calculate the current time in the selected time zone
+    // const currentLocalTime = DateTime.now().setZone(newCountry);
+    // setCurrentTime(currentLocalTime.toFormat('yyyy-MM-dd HH:mm:ss'));
+  };
+  useEffect(() => {
+    handleCountryChange();
+  }, [office]);
 
   const renderSelectedCountry = ({ item, index }) => {
+    // console.log("sssssssssssssssssssss===>>>))", item);
     return (
       <View>
         <CheckList
@@ -122,6 +346,7 @@ export default function AttendenceScreen({ navigation, route }) {
             setSelectedItem(index);
             setOffice(item.name);
             setOfficeLocation(item?.location);
+            setSelectedTimeZone(item?.timeZone);
             setTimeout(() => {
               bottomSheetRef.current.close();
             }, 1000);
@@ -134,8 +359,20 @@ export default function AttendenceScreen({ navigation, route }) {
   const renderEmployeeList = ({ item, index }) => {
     // console.log("data==============>>",item);
     return (
-      <View style={{marginBottom:height(1)}}>
-       <ProfileDetail name={item?.name} profession={item?.professional}  icon={<TickCheck color={item?.attendence=="Absent"?AppColors.red:AppColors.darkGreen}/>}/>
+      <View style={{ marginBottom: height(1) }}>
+        <ProfileDetail
+          name={item?.name}
+          profession={item?.professional}
+          icon={
+            <TickCheck
+              color={
+                item?.attendence == "Absent"
+                  ? AppColors.red
+                  : AppColors.darkGreen
+              }
+            />
+          }
+        />
       </View>
     );
   };
@@ -165,6 +402,7 @@ export default function AttendenceScreen({ navigation, route }) {
     };
   };
   function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
+    console.log("222222222222222222 call distance");
     const earthRadius = 6371000; // Earth's radius in meters
 
     const latDiff = (lat2 - lat1) * (Math.PI / 180);
@@ -182,6 +420,26 @@ export default function AttendenceScreen({ navigation, route }) {
     return distance;
   }
   useEffect(() => {
+    getLocation();
+    setOffice("");
+    setOfficeLocation("");
+    setSelectedItem("");
+    //  handleCountryChange();
+    // const myLat = location?.latitude; // Your latitude
+    // const myLon = location?.longitude; // Your longitude
+    // const otherUserLat = officeLocation?.latitude; // Other user's latitude
+    // const otherUserLon = officeLocation?.longitude; // Other user's longitude
+
+    // const distance = calculateHaversineDistance(
+    //   myLat,
+    //   myLon,
+    //   otherUserLat,
+    //   otherUserLon
+    // );
+    // setDistance(distance);
+  }, [isFocused]);
+  useEffect(() => {
+    // getLocation();
     const myLat = location?.latitude; // Your latitude
     const myLon = location?.longitude; // Your longitude
     const otherUserLat = officeLocation?.latitude; // Other user's latitude
@@ -218,7 +476,7 @@ export default function AttendenceScreen({ navigation, route }) {
       scrollEnabled
       headerUnScrollable={() => {
         return (
-          <View >
+          <View>
             <PageHeader
               pageTitle={
                 role == "admin" ? "Check Attendence" : "Mark Attendence"
@@ -235,7 +493,10 @@ export default function AttendenceScreen({ navigation, route }) {
           <View>
             <FlatList
               data={EmployeeAttendenceData}
-              contentContainerStyle={{ paddingBottom: height(10),marginVertical:height(1) }}
+              contentContainerStyle={{
+                paddingBottom: height(10),
+                marginVertical: height(1),
+              }}
               showsVerticalScrollIndicator={false}
               keyExtractor={(i, n) => n}
               renderItem={renderEmployeeList}
@@ -243,8 +504,7 @@ export default function AttendenceScreen({ navigation, route }) {
           </View>
         ) : (
           <>
-          
-            <ProfileDetail name={userInfo?.fullname} />
+            <ProfileDetail name={stringify?.fullname} />
             <TextInputSimple
               mainContainerStyle={{ marginTop: height(1) }}
               prefixIcon={<SvgIcon.Database />}
@@ -265,7 +525,11 @@ export default function AttendenceScreen({ navigation, route }) {
                 size={5}
                 fontFamily={FontFamily?.montserrat_Bold}
               >
-                {dayjs()?.format("h:mm:ss A")}
+                {/* {
+                   new Date().toLocaleString("en-US",{timeStyle:"medium",timeZone:"Asia/Pakistan"})
+              } */}
+                {dayjs(currentTime)?.format("h:mm A")}
+                {/* {dayjs()?.format("h:mm:ss A")} */}
               </SmallText>
               <SmallText size={4}>
                 {dayjs()?.format("ddd, MMMM YYYY")}
@@ -275,30 +539,21 @@ export default function AttendenceScreen({ navigation, route }) {
           </Text> */}
             </View>
             <Pressable
-              onPress={() => {
+              onPress={() =>{
                 if (
                   distancee <= radiusInMeters &&
                   markAttendence === "CheckIn"
-                ) {
-                  successModalRef.current.show();
-                  setAttendence("CheckOut");
-
-                  setTimeout(() => {
-                    successModalRef.current.hide();
-                    // navigation.navigate(ScreenNames.HOME);
-                  }, 2000);
-                } else if(distancee <= radiusInMeters &&
-                  markAttendence === "CheckOut") {
-                  // setAttendence("CheckIn");
-                  confirmationModal.current.show();
-
-
-                  // setTimeout(() => {
-                  //   CheckModelRef.current.hide();
-                  //   // navigation.navigate(ScreenNames.HOME);
-                  // }, 2000);
+                ){
+                  markAttdence()
                 }
-              }}
+                else if (distancee <= radiusInMeters &&
+                  markAttendence === "CheckOut"){
+                    confirmationModal.current.show();
+                  }
+                
+                
+                
+                }}
               style={{
                 marginVertical: height(1),
                 borderRadius: width(100),
@@ -427,14 +682,28 @@ export default function AttendenceScreen({ navigation, route }) {
         text={`Are you sure to Checkout?`}
         onNoPress={() => confirmationModal.current.hide()}
         onYesPress={() => {
-          setAttendence("CheckIn");
-          confirmationModal.current.hide();
-          CheckModelRef.current.show();
-          //  setTimeout(() => {
-          //           CheckModelRef.current.hide();
-          //           // navigation.navigate(ScreenNames.HOME);
-          //         }, 2000);
-         
+          if (distancee <= radiusInMeters &&
+            markAttendence === "CheckOut"){
+              markAttdenceCheckOut();
+            }
+          
+          // markAttdence();
+          // dispatch(setAppLoader(true))
+          // setAttendence("CheckIn");
+          // // await AsyncStorage.setItem(
+          // //   "attendnceStatus",
+          // //   JSON.stringify(markAttendence)
+          // // );
+          // confirmationModal.current.hide();
+          // CheckModelRef.current.show();
+          // setTimeout(() => {
+          //   CheckModelRef.current.hide();
+          //   setOffice("");
+          //   setOfficeLocation("");
+          //   setSelectedItem("");
+          //   navigation.goBack();
+          //   // navigation.navigate(ScreenNames.HOME);
+          // }, 2000);
         }}
       />
       <SuccessModal

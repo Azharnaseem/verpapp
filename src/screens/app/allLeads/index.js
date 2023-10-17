@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from "react";
-import { View, Text, Image, FlatList, ActivityIndicator } from "react-native";
+import { View, Text, Image, FlatList, ActivityIndicator, Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
@@ -23,49 +23,65 @@ import { SmallText } from "~components/texts";
 import BottomTabBar from "~routes/bottomTabBar";
 import axios from "axios";
 import { setAppLoader } from "~redux/slices/config";
+import { erroMessage } from "~utills/Methods";
 
 // import { PDFGenerator } from "~utills/Methods";
 export default function AllLeads({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
+  var stringify =JSON.parse(userInfo)
   let AllLeadsDataa=route?.params?.allLeadData;
-  const [leadData, setLeadData] = useState(null);
-// console.log("==========>>>",AllLeadsDataa);
+  const [leadData, setLeadData] = useState([]);
+console.log("======222222222====>>>",leadData);
   const [searchQuery, setSearchQuery] = useState(null);
   // console.log("====",searchQuery);
   const [loader, setLoader] = useState(false);
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    dispatch(setAppLoader(true));
     getLeadData();
-    dispatch(setAppLoader(false));
   }, [userInfo]);
   const getLeadData = async () => {
-    try {
+    // try {
+      dispatch(setAppLoader(true));
       let res = await axios
         .get(
-          `http://192.168.0.220:8080/api/Lead/GetLead/GetLeadListtest?rows=10&pagenumber=${page}&Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userid=${userInfo?.userId}`
+          `http://192.168.0.220:8080/api/Lead/GetLead/GetLeadListtest?rows=10&pagenumber=${page}&Databasename=${stringify?.dbName}&usergroup=${stringify?.groupType}&userid=${stringify?.userId}`
         )
         .catch((error) => {
+          dispatch(setAppLoader(false));
           console.log("error11111 in list by main catagory", error);
+        }).then((resss) => {
+          if(resss.error){
+            setLoading(false);
+            dispatch(setAppLoader(false));
+            erroMessage("Please connect Vpn")
+          }else{
+            console.log("=======+=====++++++++",resss);
+            if (resss != null&& page == 0) {
+              console.log("iffffffffffffffffffffffffffff");
+              setLeadData(resss);
+              setPage(page+1);
+              dispatch(setAppLoader(false));
+            } else {
+           console.log("elsssssssssssssssssssssss");
+              let temp = [...leadData];
+              temp.push(...resss);
+              setLeadData(temp);
+              setPage(page + 1);
+              setLoading(false);
+              dispatch(setAppLoader(false));
+              // console.log("data is nilllllll");
+            }
+          }
+         
+          // console.log("leadddddddddddddddddddddooooo",resss);
         });
       // console.log("========..............api====", res);
-      if (res != null&& page == 0) {
-        setLeadData(res);
-        setPage(page+1);
-      } else {
-     console.log("elsssssssssssssssssssssss");
-        let temp = [...leadData];
-        temp.push(...res);
-        setLeadData(temp);
-        setPage(page + 1);
-        setLoading(false);
-        console.log("data is nilllllll");
-      }
-    } catch (error) {
-      console.log("error is  lear getting", error);
-    }
+      
+    // } catch (error) {
+    //   console.log("error is  lear getting", error);
+    // }
   };
   // console.log("----", loader);
   const getData = async (text) => {
@@ -75,7 +91,7 @@ export default function AllLeads({ navigation, route }) {
       try {
         await axios
         .get(
-          `http://192.168.0.220:8080/api/Lead/GetLeadSearch/GetLeadListtestSearch?rows=10&pagenumber=0&Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userid=${userInfo?.userId}&Companyname=${text}`
+          `http://192.168.0.220:8080/api/Lead/GetLeadSearch/GetLeadListtestSearch?rows=10&pagenumber=0&Databasename=${stringify?.dbName}&usergroup=${stringify?.groupType}&userid=${stringify?.userId}&Companyname=${text}`
         ).then(response => {
           console.log("data on Search",response);
           setSearchQuery(response);
@@ -125,7 +141,7 @@ export default function AllLeads({ navigation, route }) {
   };
 
   const RenderAllLeads = ({ item, index }) => {
-    console.log("=========================>>>",item);
+    
     return (
       <View style={{ marginVertical: width(1) }}>
         <LeadsOppComponent
@@ -184,7 +200,8 @@ export default function AllLeads({ navigation, route }) {
               showsVerticalScrollIndicator={false}
               ListFooterComponent={() => {
                 return (
-                  <View style={{ marginVertical: height(1) }}>
+              
+                (  <View style={{ marginVertical: height(1) }}>
                     {loading ? (
                       <View style={styles.containers}>
                         <ActivityIndicator
@@ -195,7 +212,9 @@ export default function AllLeads({ navigation, route }) {
                       </View>
                     ) : (
                       <View>
-                      { leadData&&  <Button
+                      { leadData?.length === 0 ?
+                      <Text>No Lead Found</Text>:
+                      <Button
                         containerStyle={{ width: width(30) }}
                         title={"Load More"}
                         onPress={()=>{
@@ -206,7 +225,7 @@ export default function AllLeads({ navigation, route }) {
                         </View>
                      
                     )}
-                  </View>
+                  </View>)
                 );
               }}
             />

@@ -3,57 +3,72 @@ import { Flower, Flower2, Malta } from "~assets/images";
 export const DatabaseCountries = [
   {
     name: "AIT Pak",
-    dbName:"SIRIUS1_DB"
+    dbName: "SIRIUS1_DB",
   },
   {
     name: "AIT UAE",
-    dbName:"SIRIUS_UAE_DB"
+    dbName: "SIRIUS_UAE_DB",
   },
   {
     name: "RIT PAK",
-    dbName:"RemmsPAK_DB"
-  },
-  { 
-    name: "RIT UAE",
-    dbName:"RemmsTech_UAE_DB"
+    dbName: "RemmsPAK_DB",
   },
   {
-    name: "AIT KSA",
-    dbName:"SIRIUS_KSA_DB"
+    name: "RIT UAE",
+    dbName: "RemmsTech_UAE_DB",
   },
+  // {
+  //   name: "AIT KSA",
+  //   dbName: "SIRIUS_KSA_DB",
+  // },
   {
     name: "AIT MY",
-    dbName:"SIRIUS_MY_DB"
+    dbName: "SIRIUS_MY_DB",
   },
- 
+  {
+    name: "AIT SL",
+    dbName: "SIRIUS_SL_DB",
+  },
 ];
 export const OfficesLocationData = [
   {
     name: "Islamabad",
-    location:{latitude:"33.60075250864236",longitude:"73.15277786214838"},
+    location: { latitude: "33.60075250864236", longitude: "73.15277786214838" },
+    timeZone: "Asia/Karachi",
   },
   {
-    name: "Sri Lanka",
-    location:{latitude:"37.421998333333335",longitude:"-122.084"},
-  },
-  {
-   
     name: "Lahore",
-    location:{latitude:"31.519470051248483",longitude:"74.32292788849351"},
+    location: { latitude: "31.514490", longitude: "74.344628" },
+    timeZone: "Asia/Karachi",
   },
-  { 
+
+  {
     name: "Karachi",
-    location:{latitude:"37.421998333333335",longitude:"-122.084"},
+    location: { latitude: "24.881186", longitude: "67.069503" },
+    timeZone: "Asia/Karachi",
   },
   {
-    name: "Dubai",
-    location:{latitude:"24.464111624884534",longitude:"54.32769457308308"},
+    name: "Sri Lanka/Colombo",
+    location: {
+      latitude: "6.908310",
+      longitude: "79.896226",
+    },
+    timeZone: "Asia/Colombo",
   },
   {
-    name: "Malaysia",
-    location:{latitude:"37.421998333333335",longitude:"-122.084"},
+    name: "Abu Dhabi",
+    location: {
+      latitude: "24.490729",
+      longitude: "54.371236",
+    },
+    timeZone: "Asia/Dubai",
   },
- 
+  {
+    name: "Malaysia/Kuala_Lumpur",
+    location: { latitude: "3.1368027860997847", longitude: "101.687705671164474" },
+    timeZone: "Asia/Kuala_Lumpur",
+    
+  },
 ];
 export const imagesData = [
   {
@@ -164,51 +179,50 @@ export const imagesData = [
 // ];
 export const EmployeeAttendenceData = [
   {
-    name :"Azhar Naseem",
+    name: "Azhar Naseem",
     professional: "React Native Developer",
     attendence: "present",
   },
   {
-    name :"Waqar Khan",
+    name: "Waqar Khan",
     professional: "Vp Software",
     attendence: "present",
   },
   {
-    name :"Murtaza",
+    name: "Murtaza",
     professional: "Database Engineer",
     attendence: "present",
   },
   {
-    name :"Wahib Shakil",
+    name: "Wahib Shakil",
     professional: "Sales Team",
     attendence: "Absent",
   },
   {
-    name :"Azhar Naseem",
+    name: "Azhar Naseem",
     professional: "React Native Developer",
     attendence: "present",
   },
   {
-    name :"Adeeb ",
+    name: "Adeeb ",
     professional: "Purchase Manager",
     attendence: "present",
   },
   {
-    name :"Ajaz",
+    name: "Ajaz",
     professional: "CFO",
     attendence: "present",
   },
   {
-    name :"Mahak",
+    name: "Mahak",
     professional: "HR Manager",
     attendence: "present",
   },
   {
-    name :"Sama Tariq",
+    name: "Sama Tariq",
     professional: "Account",
     attendence: "Absent",
   },
-  
 ];
 export const AllLeadsData = [
   {

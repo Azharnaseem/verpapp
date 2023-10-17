@@ -43,7 +43,10 @@ import BackSvg from "~assets/SVG/backSvg";
 export default function Home({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
-  console.log("login infooo =================>>>>>>>>>>>>>>>>>", userInfo);
+  
+  console.log("1111111111111111111111111111111", userInfo);
+  var stringify = JSON.parse(userInfo);
+  console.log("2222222222222222222222222222222", stringify);
   const [pdfFile, setPdfFile] = useState(null);
   const [page, setPage] = useState(0);
   const leadRef = useRef(null);
@@ -54,6 +57,7 @@ export default function Home({ navigation, route }) {
   const [currentItemIndex, setCurrentItemIndex] = useState(null);
   // console.log("==================",oppartunityData);
   const confirmationModal = useRef();
+  
   // const flatlistRef = useRef(null);
   // const screenScroll = useRef(null);
   // const handleScrolllllll = (event) => {
@@ -117,7 +121,7 @@ export default function Home({ navigation, route }) {
     try {
       let res = await axios
         .get(
-          `http://192.168.0.220:8080/api/Lead/GetLead/GetLeadListtest?rows=10&pagenumber=0&Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userid=${userInfo?.userId}`
+          `http://192.168.0.220:8080/api/Lead/GetLead/GetLeadListtest?rows=10&pagenumber=0&Databasename=${stringify?.dbName}&usergroup=${stringify?.groupType}&userid=${stringify?.userId}`
         )
         .catch((error) => {
           console.log("error11111 in list by main catagory", error);
@@ -137,7 +141,7 @@ export default function Home({ navigation, route }) {
     try {
       let res = await axios
         .get(
-          `http://192.168.0.220:8080/api/Opportunity/GetOpportunity/GetOpportunity?rows=10&pagenumber=${page}&Databasename=${userInfo?.dbName}&usergroup=${userInfo?.groupType}&userId=${userInfo?.userId}`
+          `http://192.168.0.220:8080/api/Opportunity/GetOpportunity/GetOpportunity?rows=10&pagenumber=${page}&Databasename=${stringify?.dbName}&usergroup=${stringify?.groupType}&userId=${stringify?.userId}`
         )
         .catch((error) => {
           console.log("error11111 in list by main catagory opp", error);
@@ -317,8 +321,9 @@ export default function Home({ navigation, route }) {
               size={4}
               color={AppColors.scndry}
               fontFamily={FontFamily.montserrat_Bold}
+
             >
-              {`Welcome ${userInfo?.fullname} on  ${userInfo?.DataBaseName} `}
+              {`Welcome ${stringify?.fullname}    ${stringify?.DataBaseName} `}
             </SmallText>
             {/* <SmallText color={AppColors.darkGrey}>What do you want ?</SmallText> */}
             {/* <SearchField placeholderColor={AppColors.black} placeholder={"Search..."} containerStyle={{marginVertical:height(1)}} /> */}

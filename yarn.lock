@@ -938,12 +938,12 @@
 "@babel/regjsgen@^0.8.0":
   version "0.8.0"
 
-"@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
-  version "7.18.0"
-  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.18.0.tgz"
-  integrity sha512-YMQvx/6nKEaucl0MY56mwIG483xk8SDNdlUwb2Ts6FUpr7fm85DxEmsY18LXBNhcTz6tO6JwZV8w1W06v8UKeg==
+"@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.15.4", "@babel/runtime@^7.21.0", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
+  version "7.23.1"
+  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.23.1.tgz"
+  integrity sha512-hC2v6p8ZSI/W0HUzh3V8C5g+NwSKzKPtJwSpTjwl0o297GP9+ZLQSkdvHz46CM3LqyoXxq+5G9komY+eSqSO0g==
   dependencies:
-    regenerator-runtime "^0.13.4"
+    regenerator-runtime "^0.14.0"
 
 "@babel/template@^7.0.0", "@babel/template@^7.18.10", "@babel/template@^7.18.6", "@babel/template@^7.22.5", "@babel/template@^7.3.3":
   version "7.22.5"
@@ -1493,26 +1493,6 @@
   version "9.4.1"
   resolved "https://registry.npmjs.org/@react-native-community/netinfo/-/netinfo-9.4.1.tgz"
   integrity sha512-dAbY5mfw+6Kas/GJ6QX9AZyY+K+eq9ad4Su6utoph/nxyH3whp5cMSgRNgE2VhGQVRZ/OG0qq3IaD3+wzoqJXw==
-
-"@react-native-firebase/app@^18.3.0", "@react-native-firebase/app@18.3.0":
-  version "18.3.0"
-  resolved "https://registry.npmjs.org/@react-native-firebase/app/-/app-18.3.0.tgz"
-  integrity sha512-4sJf5mM551Y6E8D1hQufAU/PNEecJEaJbF4Me0JyclI2RXUHlTxJUpAsB/gxPY74LY99FaogFsDEB+3BuZ2B9w==
-  dependencies:
-    opencollective-postinstall "^2.0.1"
-    superstruct "^0.6.2"
-
-"@react-native-firebase/auth@^18.3.0":
-  version "18.3.0"
-  resolved "https://registry.npmjs.org/@react-native-firebase/auth/-/auth-18.3.0.tgz"
-  integrity sha512-2Z33pG+41RvYX6NxQfRhle+wAfhDKYStSANMVT4NMQKKhgmxryH0CXcfHA0RvfQysdrmBVX2td7l6hXriYL70A==
-  dependencies:
-    plist "^3.0.5"
-
-"@react-native-firebase/firestore@^18.3.0":
-  version "18.3.0"
-  resolved "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-18.3.0.tgz"
-  integrity sha512-lf++MjazL+5JH0wvlFb2WFqEtUvULaNy4ahlLYOoNwlCjDyvR3L9mYov6cbBVoSu1AJrQcv9u2aHZApEJKaFZg==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"
@@ -2675,16 +2655,6 @@ cliui@^6.0.0:
     strip-ansi "^6.0.0"
     wrap-ansi "^6.2.0"
 
-clone-deep@^2.0.1:
-  version "2.0.2"
-  resolved "https://registry.npmjs.org/clone-deep/-/clone-deep-2.0.2.tgz"
-  integrity sha512-SZegPTKjCgpQH63E+eN6mVEEPdQBOUzjyJm5Pora4lrwWRFS8I0QAxV/KD6vV/i0WuijHZWQC1fMsPEdxfdVCQ==
-  dependencies:
-    for-own "^1.0.0"
-    is-plain-object "^2.0.4"
-    kind-of "^6.0.0"
-    shallow-clone "^1.0.0"
-
 clone-deep@^4.0.1:
   version "4.0.1"
   resolved "https://registry.npmjs.org/clone-deep/-/clone-deep-4.0.1.tgz"
@@ -2981,6 +2951,18 @@ data-urls@^2.0.0:
     abab "^2.0.3"
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
+
+date-fns-tz@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/date-fns-tz/-/date-fns-tz-2.0.0.tgz"
+  integrity sha512-OAtcLdB9vxSXTWHdT8b398ARImVwQMyjfYGkKD2zaGpHseG2UPHbHjXELReErZFxWdSLph3c2zOaaTyHfOhERQ==
+
+date-fns@>=2.0.0:
+  version "2.30.0"
+  resolved "https://registry.npmjs.org/date-fns/-/date-fns-2.30.0.tgz"
+  integrity sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==
+  dependencies:
+    "@babel/runtime" "^7.21.0"
 
 dayjs@^1.11.9, dayjs@^1.8.15:
   version "1.11.9"
@@ -3788,22 +3770,10 @@ follow-redirects@^1.14.9:
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.0.tgz"
   integrity sha512-aExlJShTV4qOUOL7yF1U5tvLCB0xQuudbf6toyYA0E/acBNw71mvjFTnLaRp50aQaYocMR0a/RMMBIHeZnGyjQ==
 
-for-in@^0.1.3:
-  version "0.1.8"
-  resolved "https://registry.npmjs.org/for-in/-/for-in-0.1.8.tgz"
-  integrity sha512-F0to7vbBSHP8E3l6dCjxNOLuSFAACIxFy3UehTUlG7svlXi37HHsDkyVcHo0Pq8QwrE+pXvWSVX3ZT1T9wAZ9g==
-
-for-in@^1.0.1, for-in@^1.0.2:
+for-in@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/for-in/-/for-in-1.0.2.tgz"
   integrity sha1-gQaNKVqBQuwKxybG4iAMMPttXoA=
-
-for-own@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/for-own/-/for-own-1.0.0.tgz"
-  integrity sha512-0OABksIGrxKK8K4kynWkQ7y1zounQxP+CWnyclVwj81KW3vlLlGUx57DKGcP/LH216GzqnstnPocF16Nxs0Ycg==
-  dependencies:
-    for-in "^1.0.1"
 
 form-data@^3.0.0:
   version "3.0.1"
@@ -4235,6 +4205,11 @@ internal-slot@^1.0.3:
     has "^1.0.3"
     side-channel "^1.0.4"
 
+intl@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.npmjs.org/intl/-/intl-1.2.5.tgz"
+  integrity sha512-rK0KcPHeBFBcqsErKSpvZnrOmWOj+EmDkyJ57e90YWaQNqbcivcqmKDlHEeNprDWOsKzPsh1BfSpPQdDvclHVw==
+
 invariant@*, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.npmjs.org/invariant/-/invariant-2.2.4.tgz"
@@ -4359,7 +4334,7 @@ is-docker@^2.0.0:
   resolved "https://registry.npmjs.org/is-docker/-/is-docker-2.2.1.tgz"
   integrity sha512-F+i2BKsFrH66iaUFc0woD8sLy8getkwTwtOBjvs56Cx4CgJDeKQeqfz8wAYiSb8JOprWhHH5p77PbmYCvvUuXQ==
 
-is-extendable@^0.1.0:
+is-extendable@^0.1.0, is-extendable@^0.1.1:
   version "0.1.1"
   resolved "https://registry.npmjs.org/is-extendable/-/is-extendable-0.1.1.tgz"
   integrity sha1-YrEQ4omkcUGOPsNqYX1HLjAd/Ik=
@@ -4367,7 +4342,7 @@ is-extendable@^0.1.0:
 is-extendable@^0.1.1:
   version "0.1.1"
   resolved "https://registry.npmjs.org/is-extendable/-/is-extendable-0.1.1.tgz"
-  integrity sha512-5BMULNob1vgFX6EjQw5izWDxrecWK9AM72rugNr0TFldMOi0fj6Jk+zeKIt0xGj4cEfQIJth4w3OKWOJ4f+AFw==
+  integrity sha1-YrEQ4omkcUGOPsNqYX1HLjAd/Ik=
 
 is-extendable@^1.0.1:
   version "1.0.1"
@@ -5208,7 +5183,7 @@ kind-of@^5.0.0:
   resolved "https://registry.npmjs.org/kind-of/-/kind-of-5.1.0.tgz"
   integrity sha512-NGEErnH6F2vUuXDh+OlbcKW7/wOcfdRHaZ7VWtqCztfHri/++YKmP51OdWeGPuqCOba6kk2OTe5d02VmTB80Pw==
 
-kind-of@^6.0.0, kind-of@^6.0.1, kind-of@^6.0.2:
+kind-of@^6.0.0, kind-of@^6.0.2:
   version "6.0.3"
   resolved "https://registry.npmjs.org/kind-of/-/kind-of-6.0.3.tgz"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
@@ -5358,6 +5333,11 @@ lru-cache@^6.0.0:
   integrity sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
   dependencies:
     yallist "^4.0.0"
+
+luxon@^3.4.3:
+  version "3.4.3"
+  resolved "https://registry.npmjs.org/luxon/-/luxon-3.4.3.tgz"
+  integrity sha512-tFWBiv3h7z+T/tDaoxA8rqTxy1CHV6gHS//QdaH4pulbq/JuBSGgQspQQqcgnwdAx6pNI7cmvz5Sv/addzHmUg==
 
 make-dir@^2.0.0:
   version "2.1.0"
@@ -5767,14 +5747,6 @@ mixin-deep@^1.2.0:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
 
-mixin-object@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/mixin-object/-/mixin-object-2.0.1.tgz"
-  integrity sha512-ALGF1Jt9ouehcaXaHhn6t1yGWRqGaHkPFndtFVHfZXOvkIZ/yoGaSi0AHVTafb3ZBGg4dr/bDwnaEKqCXzchMA==
-  dependencies:
-    for-in "^0.1.3"
-    is-extendable "^0.1.1"
-
 mkdirp@^0.5.1:
   version "0.5.6"
   resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.6.tgz"
@@ -6075,11 +6047,6 @@ open@^6.2.0:
   integrity sha512-IFenVPgF70fSm1keSd2iDBIDIBZkroLeuffXq+wKTzTJlBpesFWojV9lb8mzOfaAzM1sr7HQHuO0vtV0zYekGg==
   dependencies:
     is-wsl "^1.1.0"
-
-opencollective-postinstall@^2.0.1:
-  version "2.0.3"
-  resolved "https://registry.npmjs.org/opencollective-postinstall/-/opencollective-postinstall-2.0.3.tgz"
-  integrity sha512-8AV/sCtuzUeTo8gQK5qDZzARrulB3egtLzFgteqB2tcT4Mw7B8Kt7JcDHmltjz6FOAHsvTevk70gZEbhM4ZS9Q==
 
 optionator@^0.8.1:
   version "0.8.3"
@@ -6486,6 +6453,11 @@ react-native-codegen@^0.0.17:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
+react-native-device-info@^10.11.0:
+  version "10.11.0"
+  resolved "https://registry.npmjs.org/react-native-device-info/-/react-native-device-info-10.11.0.tgz"
+  integrity sha512-qRzhuYOm5ZXQi5dhfJFjDq157oipxcEW/fo0QyMm5+TI6V6/+P/tju+Hif6z0rpLCf7MV7iDVRv2Kqha4D/yvQ==
+
 react-native-dotenv@^3.3.1:
   version "3.3.1"
   resolved "https://registry.npmjs.org/react-native-dotenv/-/react-native-dotenv-3.3.1.tgz"
@@ -6783,10 +6755,15 @@ regenerate@^1.4.2:
   resolved "https://registry.npmjs.org/regenerate/-/regenerate-1.4.2.tgz"
   integrity sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==
 
-regenerator-runtime@^0.13.2, regenerator-runtime@^0.13.4:
+regenerator-runtime@^0.13.2:
   version "0.13.9"
   resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz"
   integrity sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==
+
+regenerator-runtime@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.14.0.tgz"
+  integrity sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==
 
 regenerator-transform@^0.15.1:
   version "0.15.1"
@@ -7113,15 +7090,6 @@ setprototypeof@1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/setprototypeof/-/setprototypeof-1.2.0.tgz"
   integrity sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==
-
-shallow-clone@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/shallow-clone/-/shallow-clone-1.0.0.tgz"
-  integrity sha512-oeXreoKR/SyNJtRJMAKPDSvd28OqEwG4eR/xc856cRGBII7gX9lvAqDxusPm0846z/w/hWYjI1NpKwJ00NHzRA==
-  dependencies:
-    is-extendable "^0.1.1"
-    kind-of "^5.0.0"
-    mixin-object "^2.0.1"
 
 shallow-clone@^3.0.0:
   version "3.0.1"
@@ -7492,14 +7460,6 @@ sudo-prompt@^9.0.0:
   version "9.2.1"
   resolved "https://registry.npmjs.org/sudo-prompt/-/sudo-prompt-9.2.1.tgz"
   integrity sha512-Mu7R0g4ig9TUuGSxJavny5Rv0egCEtpZRNMrZaYS1vxkiIxGiGUwoezU3LazIQ+KE04hTrTfNPgxU5gzi7F5Pw==
-
-superstruct@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.npmjs.org/superstruct/-/superstruct-0.6.2.tgz"
-  integrity sha512-lvA97MFAJng3rfjcafT/zGTSWm6Tbpk++DP6It4Qg7oNaeM+2tdJMuVgGje21/bIpBEs6iQql1PJH6dKTjl4Ig==
-  dependencies:
-    clone-deep "^2.0.1"
-    kind-of "^6.0.1"
 
 supports-color@^5.3.0:
   version "5.5.0"
