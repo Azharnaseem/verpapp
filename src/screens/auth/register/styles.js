@@ -9,6 +9,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  backIconStyle:{
+    width: width(12),
+    height: width(12),
+  },
   imageStyle: {
 
     width: width(30),

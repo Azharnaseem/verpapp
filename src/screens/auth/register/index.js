@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { FlatList, Text, View } from "react-native";
+import { Alert, FlatList, Pressable, Text, View } from "react-native";
 import styles from "./styles";
 import { useDispatch } from "react-redux";
 import {
@@ -21,13 +21,15 @@ import AppColors from "~utills/AppColors";
 import ScreenNames from "~routes/routes";
 import { Image } from "react-native";
 import DeviceInfo from 'react-native-device-info';
-import { Logo } from "~assets/images";
+import { BackIcon, Logo } from "~assets/images";
 import { SmallText } from "~components/texts";
 import SvgIcon from "~assets/SVG";
 import { DatabaseCountries } from "~utills/DummyData";
 import CommonStyles from "~utills/CommonStyles";
 import TextInputSimple from "~components/textInputSimple";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { erroMessage } from "~utills/Methods";
 export default function ResgisterScreen({ navigation, route }) {
   const dispatch = useDispatch();
   const emailRef = useRef(null);
@@ -37,9 +39,12 @@ export default function ResgisterScreen({ navigation, route }) {
   const databasenameRef= useRef(null);
   const bottomSheetRef = useRef(null);
   const passwordRef = useRef(null);
+  const dataBaseRef = useRef(null);
   const confirmPassword=useRef(null);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [macAddress, setMacAddress] = useState(null);
   const [country, setCountry] = useState(false);
+  const [dbName, setDbName] = useState("");
   const [arr, setArr] = useState([]);
   const [seletedItem, setSelectedItem] = useState("");
   const schema = Yup.object().shape({
@@ -61,7 +66,7 @@ export default function ResgisterScreen({ navigation, route }) {
     formState: { errors, isValid },
   } = useForm({
     mode: "all",
-    defaultValues: { tittle: "", servername: "",databaseuser: "", password: "", confrmpassword: "",email:""  },
+    defaultValues: { tittle: "",email:"", password: "", confrmpassword: "",  },
     resolver: yupResolver(schema),
   });
   const _resgister = async (data) => {
@@ -82,8 +87,52 @@ export default function ResgisterScreen({ navigation, route }) {
   useEffect(() => {
     let deviceId = DeviceInfo.getDeviceId();
     console.log("deviceId=====ddddd",deviceId);
+    // dispatch(setMacAddress(deviceId));
+    setMacAddress(deviceId);
 
   }, []);
+  const _register= async (data) => {
+    console.log("data====",data);
+    console.log("====dbname[[[",dbName);
+   
+       dispatch(setAppLoader(true));
+    
+      await axios
+        .put(
+          `http://192.168.0.220:8080/api/User/UpdateUser?password=${data?.password}&usercode=${data?.tittle?.toUpperCase()}&PhoneAddress=${macAddress}&Databasename=${dbName}`
+        )
+        .then((res) => { 
+         console.log("res in register====",res);
+         if(res?.error){
+          dispatch(setAppLoader(false));
+          erroMessage("Please connect VPN ")
+          
+         }else{
+          dispatch(setAppLoader(false));
+          Alert.alert("Responce",res, [
+            // {
+            //   text: 'Ask me later',
+            //   onPress: () => console.log('Ask me later pressed'),
+            // },
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {text: 'OK', onPress: () => navigation.navigate(ScreenNames.LOGIN)},
+          ])
+         }
+        
+            }
+        ).catch((err) => {
+          console.log("erroooooooooooorrrrrrrrr",err);
+          erroMessage("Please connect VPN ")
+        }
+        )
+    
+  };
+
+
   const renderSelectedCountry = ({ item, index }) => {
     return (
       <View>
@@ -93,6 +142,7 @@ export default function ResgisterScreen({ navigation, route }) {
           onPress={() => {
             setSelectedItem(index);
             setCountry(item.name);
+            setDbName(item?.dbName);
             setTimeout(() => {
               bottomSheetRef.current.close();
             }, 1000);
@@ -103,9 +153,15 @@ export default function ResgisterScreen({ navigation, route }) {
     );
   };
   return (
-    <ScreenWrapper scrollEnabled >
+    <ScreenWrapper scrollEnabled headerUnScrollable={()=>{
+      return(
+        <Pressable style={{marginLeft:width(4),marginTop:height(1.5)}} onPress={()=>{navigation.goBack()}}>
+          <Image source={BackIcon} style={styles.backIconStyle} resizeMode="contain" />
+        </Pressable>
+      )
+    }} >
       <View style={styles.mainViewContainer}>
-        <View style={{ alignItems:"center",justifyContent:"center", marginBottom: height(5) }}>
+        <View style={{ alignItems:"center",justifyContent:"center", marginBottom: height(4) }}>
           <Image source={Logo} style={styles.imageStyle} resizeMode="contain" />
           <SmallText
             fontFamily={FontFamily.montserrat_BoldItalic}
@@ -121,7 +177,7 @@ export default function ResgisterScreen({ navigation, route }) {
           numberOfLines={1}
           ref={emailRef}
           label={"E-Mail"}
-          placeholder="Enter User e-mail"
+          placeholder="Enter user e-mail"
           control={control}
           errorMsg={errors?.email}
           name="email"
@@ -133,7 +189,7 @@ export default function ResgisterScreen({ navigation, route }) {
           numberOfLines={1}
           ref={titleRef}
           label={"User Name"}
-          placeholder="Enter User Name"
+          placeholder="Enter user name"
           control={control}
           errorMsg={errors?.tittle}
           name="tittle"
@@ -165,6 +221,7 @@ export default function ResgisterScreen({ navigation, route }) {
           onSubmitEditing={() => passwordRef.current.focus()}
         /> */}
          <TextField
+         autoCapitalize={"none"}
           // prefixIcon={<SvgIcon.Password />}
           ref={passwordRef}
           innerRow={{ width: width(85) }}
@@ -186,6 +243,7 @@ export default function ResgisterScreen({ navigation, route }) {
           returnKeyType={"next"}
         />
         <TextField
+          autoCapitalize={"none"}
           // prefixIcon={<SvgIcon.Password />}
           ref={confirmPassword}
           innerRow={{ width: width(85) }}
@@ -207,26 +265,27 @@ export default function ResgisterScreen({ navigation, route }) {
           // showForgotPassword
           // returnKeyType={"next"}
         />
-         {/* <TextField
+         <TextInputSimple
+          prefixIcon={<SvgIcon.Database />}
           innerRow={{ width: width(85) }}
-          numberOfLines={1}
-          ref={databasenameRef}
-          label={"Database Name"}
-          placeholder="Enter database name"
-          control={control}
-          errorMsg={errors?.databasename}
-          name="databasename"
-          returnKeyType={"done"}
-         
-        /> */}
+          label={"Database"}
+          placeholder={"Select database "}
+          editable={false}
+          textValue={country}
+          onPress={() => {
+            bottomSheetRef.current.open();
+          }}
+          Icon={<SvgIcon.DownArrow />}
+          ref={dataBaseRef}
+        />
         
         <Button
           fontFamily={FontFamily.montserrat_Bold}
           containerStyle={styles.btnStyle}
           // buttonIcon={<LoginSVG />}
           title={"Create account"}
-          // onPress={handleSubmit(_resgister)}
-          onPress={()=>navigation.navigate(ScreenNames.LOGIN)}
+          onPress={handleSubmit(_register)}
+          // onPress={()=>navigation.navigate(ScreenNames.LOGIN)}
         />
         {/* <View style={styles.row}>
             <HorizontalLine customWidth="30%" />

@@ -323,7 +323,7 @@ export default function Home({ navigation, route }) {
               fontFamily={FontFamily.montserrat_Bold}
 
             >
-              {`Welcome ${stringify?.fullname}    ${stringify?.DataBaseName} `}
+              {`Welcome ${stringify?.fullname} ${stringify?.DataBaseName} `}
             </SmallText>
             {/* <SmallText color={AppColors.darkGrey}>What do you want ?</SmallText> */}
             {/* <SearchField placeholderColor={AppColors.black} placeholder={"Search..."} containerStyle={{marginVertical:height(1)}} /> */}

@@ -4,6 +4,7 @@ const initialState = {
   token: null,
   isLoggedIn: false,
   userMeta: null,
+  macAddress: null,
 };
 
 const userSlice = createSlice({
@@ -18,6 +19,9 @@ const userSlice = createSlice({
     },
     setIsLoggedIn: (state, action) => {
       state.isLoggedIn = action.payload;
+    },
+    setMacAddress: (state, action) => {
+      state.macAddress = action.payload;
     },
   },
 });

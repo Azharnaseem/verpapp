@@ -37,13 +37,13 @@ export default function Routes() {
   
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
-      console.log("Connection typeeeeeeeeeeeeeeee======", state);
-      console.log("Is connected?", state.isConnected);
+      // console.log("Connection typeeeeeeeeeeeeeeee======", state);
+      // console.log("Is connected?", state.isConnected);
       if(state.isConnected==true) {
-        console.log("ccccccccccccccccc");
+        // console.log("ccccccccccccccccc");
         successMessage("Your are Online")
       }else{
-        console.log("eeeeeeeeeeeeeeeeeeeeeeeee");
+        // console.log("eeeeeeeeeeeeeeeeeeeeeeeee");
         erroMessage("Your are Offline")
       }
     });
@@ -132,21 +132,21 @@ export default function Routes() {
     try {
       let token = await AsyncStorage.getItem("userToken");
       let userData = await AsyncStorage.getItem("userData");
-      console.log("data =33333333333333333333===", userData, "=======token===:", token);
+      // console.log("data =33333333333333333333===", userData, "=======token===:", token);
       if (token) {
         console.log("yes we have token");
         dispatch(setToken(token));
         dispatch(setIsLoggedIn(true));
         dispatch(setUserMeta(userData));
       } else {
-        console.log("Something went wrong");
+        // console.log("Something went wrong");
         // erroMessage("Something went wrong");
         // SplashScreen.hide();
       }
     } catch (error) {
       // SplashScreen.hide();
       // erroMessage("Something went wrong unable to get the token");
-      console.log("Something went wrong unable to get the token", error);
+      // console.log("Something went wrong unable to get the token", error);
     }
   };
   const isLogin = useSelector(selectIsLoggedIn);
@@ -155,7 +155,7 @@ export default function Routes() {
     checkToken();
   }, []);
   const handleUserActivity = () => {
-    console.log("cllllllllllllllllllllllllllllllllllllllllll");
+    // console.log("cllllllllllllllllllllllllllllllllllllllllll");
     // Reset the timer on user activity
     if (timerReference) {
       BackgroundTimer.clearTimeout(timerReference);
@@ -163,7 +163,7 @@ export default function Routes() {
 
     // Start a new timer for 15 minutes
     timerReference = BackgroundTimer.setTimeout(handleLogout, 1 * 60 * 1000);
-    console.log("=====",timerReference);
+    // console.log("=====",timerReference);
   };
   const handleAppStateChange = (nextAppState) => {
     // Reset the timer when the app is resumed from the background

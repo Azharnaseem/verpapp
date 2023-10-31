@@ -81,7 +81,8 @@ export default function AttendenceScreen({ navigation, route }) {
   const [markAttendence, setAttendence] = useState("CheckIn");
   let checkIn="CheckIn";
   let checkOut="CheckOut";
-  console.log("============state===", markAttendence);
+
+  // console.log("============state===", markAttendence);
   const [selectedTimeZone, setSelectedTimeZone] = useState("Asia/Karachi");
   const [currentTime, setCurrentTime] = useState(new Date());
   const [date, SetDate] = useState("");
@@ -94,12 +95,16 @@ export default function AttendenceScreen({ navigation, route }) {
   const [loader, setLoader] = useState(false);
   // console.log("----", loader);
   const currentTimer = dayjs().format("h:mm A");
-
+  // let attdate=currentTime.getDate();
+// console.log("-------------------rrrrrrrr--------22222222222992222222229--",attdate);
   useEffect(() => {
     (async () => {
       let userData = await AsyncStorage.getItem("attendnceStatus");
-    console.log("-------------------rrrrrrrr--------999--",userData);
-    if(userData==='CheckOut'){
+      let date = await AsyncStorage.getItem("attendnceDate");
+    console.log("-------------------rrrrrrrr--------992222222229--",dayjs(date)?.format("ddd, MMMM YYYY"),"--",dayjs()?.format("ddd, MMMM YYYY"));
+    if(userData==='CheckOut' 
+     && dayjs(date)?.format("ddd, MMMM YYYY")===dayjs()?.format("ddd, MMMM YYYY")
+     ){
       setAttendence("CheckOut")
     }
     else{
@@ -245,8 +250,11 @@ export default function AttendenceScreen({ navigation, route }) {
           // }
           await AsyncStorage.setItem(
             "attendnceStatus",
-            checkOut
-          );
+            checkOut          );
+            await AsyncStorage.setItem(
+              "attendnceDate",
+          currentTime
+            );
         }
 
         // setSelectedCountryTime(res?.dateTime)
@@ -316,8 +324,9 @@ export default function AttendenceScreen({ navigation, route }) {
           }, 2000);
           await AsyncStorage.setItem(
             "attendnceStatus",
-           checkIn
+        checkIn
           );
+          
         }
 
         // setSelectedCountryTime(res?.dateTime)

@@ -26,4 +26,5 @@ export { default as CompanyIcon } from "./company.png";
 export { default as TapIcon } from "./tap.png";
 export { default as SuccessIcon } from "./checkSucess.png";
 export { default as BannerImage } from "./bannerImage.png";
+export { default as BackIcon } from "./backIcon.png";
 

@@ -2,9 +2,9 @@ import React, { useRef, useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { Alert, FlatList, Text, View } from "react-native";
+import { Alert, FlatList, Pressable, Text, View } from "react-native";
 import styles from "./styles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BottomSheet,
   Button,
@@ -12,8 +12,8 @@ import {
   ScreenWrapper,
   TextField,
 } from "~components";
-import { setIsLoggedIn, setUserMeta } from "~redux/slices/user";
-import { setAppLoader } from "~redux/slices/config";
+import { setIsLoggedIn, setMacAddress, setUserMeta } from "~redux/slices/user";
+import { selectLoader, setAppLoader } from "~redux/slices/config";
 import OpenEyeSVG from "~assets/SVG/openEyeSvg";
 import { FontFamily } from "~assets/fonts";
 import { height, width } from "~utills/Dimension";
@@ -30,6 +30,8 @@ import { erroMessage, successMessage } from "~utills/Methods";
 import { ApiManager } from "~backend/ApiManager";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { log } from "react-native-reanimated";
+import DeviceInfo from 'react-native-device-info';
+
 
 import Geolocation from "@react-native-community/geolocation";
 import axios from "axios";
@@ -38,13 +40,16 @@ export default function Login({ navigation, route }) {
   const passwordRef = useRef(null);
   const bottomSheetRef = useRef(null);
   const dataBaseRef = useRef(null);
+  const [macAddress, setMacAddress] = useState(null);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [country, setCountry] = useState(false);
   const [dbName, setDbName] = useState("");
   const [location, setLocation] = useState(null);
-
-  // console.log("item---------", dbName);
+  const Loader= useSelector(selectLoader)
+   console.log("item---------", Loader);
   const [seletedItem, setSelectedItem] = useState("");
+  // const macAddress = useSelector(setMacAddress);
+  // console.log("==============2222222===",macAddress);
   const schema = Yup.object().shape({
     username: Yup.string().required("User name is required"),
     password: Yup.string().required("Password is required"),
@@ -77,29 +82,45 @@ export default function Login({ navigation, route }) {
   //   getLocation();
   // }, []);
   // console.log("loggg location", location);
+  useEffect(() => {
+    let deviceId = DeviceInfo.getDeviceId();
+    console.log("deviceId=====ddddd3333333333333333",deviceId);
+    // dispatch(setMacAddress(deviceId));
+    setMacAddress(deviceId);
+
+  }, []);
   const _login = async (data) => {
     // console.log("======","calllllll");
-    try {
+    // try {
       // let userName=data?.username
       dispatch(setAppLoader(true));
+     
+    // if(!Loader){
+    //    setTimeout(() => {
+    //     erroMessage("Please conrnect VPN");
+    //     // Alert.alert("vpn issss");
+    //     dispatch(setAppLoader(false));
+    //   }, 4000);
+    //   //  erroMessage("Please connect VPN");
+    // }
 
-      const res = await ApiManager.get(
-        `${data?.username.toUpperCase()}/${data?.password}/${dbName}`
-      )
-      // await axios
-      //   .get(
-      //     `http://192.168.0.220:8080/api/User/GetUser/${data?.username.toUpperCase()}/${
-      //       data?.password
-      //     }/${dbName}`
-      //   )
-        // .then(async (res) => {
-          // console.log("===============222222222==", res?.error);
-          // if (res.error) {
-          //   console.log("2222222222211111111111111");
-          //   erroMessage("Please connect Vpn");
-          //   // Alert.alert("vpn issss");
-          //   dispatch(setAppLoader(false));
-          // } else {
+      // const res = await ApiManager.get(
+      //   `${data?.username.toUpperCase()}/${data?.password}/${dbName}`
+      // )
+      await axios
+        .get(
+          `http://192.168.0.220:8080/api/User/GetUser/${data?.username.toUpperCase()}/${
+            data?.password
+          }/${dbName}/${macAddress}`
+        )
+        .then(async (res) => {
+          console.log(res,"===============222222222==", res?.error);
+          if (res.error) {
+            console.log("2222222222211111111111111");
+            erroMessage("Please connect VPN");
+            Alert.alert("vpn issss");
+            dispatch(setAppLoader(false));
+          } else {
             console.log("resssssssssssssssssss11111111111111===>>>1", res);
             if (res?.data === null) {
               console.log("callllllllled ifff");
@@ -145,12 +166,14 @@ export default function Login({ navigation, route }) {
             }
           // }
         // });
-    } catch (error) {
-      dispatch(setAppLoader(false));
-      erroMessage("Please connect Vpn");
-      console.log("ssssssssssssssssssscallllllllllllllllllllllllllllllll3");
-    }
-  };
+    // } catch (error) {
+    //   dispatch(setAppLoader(false));
+    //   erroMessage("Please connect Vpn");
+    //   console.log("ssssssssssssssssssscallllllllllllllllllllllllllllllll3");
+    // }
+  }})
+
+};
   const renderSelectedCountry = ({ item, index }) => {
     return (
       <View>
@@ -189,7 +212,7 @@ export default function Login({ navigation, route }) {
           innerRow={{ width: width(85) }}
           numberOfLines={1}
           label={"User Name"}
-          placeholder="Enter your User Name"
+          placeholder="Enter your user name"
           control={control}
           errorMsg={errors?.username}
           name="username"
@@ -222,7 +245,7 @@ export default function Login({ navigation, route }) {
           prefixIcon={<SvgIcon.Database />}
           innerRow={{ width: width(85) }}
           label={"Database"}
-          placeholder={"Enter your Database "}
+          placeholder={"Select database "}
           editable={false}
           textValue={country}
           onPress={() => {
@@ -236,35 +259,42 @@ export default function Login({ navigation, route }) {
           containerStyle={styles.btnStyle}
           // buttonIcon={<LoginSVG />}
           title={"Login"}
-          onPress={()=>{
-            navigation.navigate(ScreenNames.REGISTERSCREEN)
-          }}
-          // onPress={handleSubmit(_login)}
+          // onPress={()=>{
+          //   navigation.navigate(ScreenNames.REGISTERSCREEN)
+          // }}
+          onPress={handleSubmit(_login)}
         />
+          <Pressable onPress={()=>navigation.navigate(ScreenNames.REGISTERSCREEN)}>
         <SmallText
-          size={4}
+          size={3.5}
           fontFamily={FontFamily.montserrat_Bold}
+          
           // onPress={() => navigation.navigate(ScreenNames.REGISTERSCREEN)}
         >
-          Login to use
-          <Text
+          Dont't Have Account!
+          {/* <Text
             style={{
               color: AppColors.scndry,
               fontFamily: FontFamily.montserrat_SemiBoldItalic,
             }}
           >
-            {" "}
-            Agrius IT
-          </Text>
+            Register
+          </Text> */}
+        
+
+          
           <Text
             style={{
+              fontSize:width(4),
               color: AppColors.primary,
               fontFamily: FontFamily.montserrat_SemiBoldItalic,
             }}
           >
-            {`  VERP`}
+            { ` Register`}
           </Text>
+        
         </SmallText>
+        </Pressable>
         {/* <View style={styles.row}>
             <HorizontalLine customWidth="30%" />
             <SmallText color={AppColors.darkGrey}>Or login use</SmallText>
@@ -338,4 +368,4 @@ export default function Login({ navigation, route }) {
       </BottomSheet>
     </ScreenWrapper>
   );
-}
+            }
