@@ -402,7 +402,7 @@ export default function AllOppartunaties({ navigation, route }) {
         return (
           <View>
             <PageHeader
-              pageTitle={"All Opportunaties"}
+              pageTitle={"All Opportunities"}
               onPressBack={() => navigation.goBack()}
             />
             <SearchField

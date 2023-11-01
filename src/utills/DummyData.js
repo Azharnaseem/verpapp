@@ -9,14 +9,7 @@ export const DatabaseCountries = [
     name: "AIT UAE",
     dbName: "SIRIUS_UAE_DB",
   },
-  {
-    name: "RIT PAK",
-    dbName: "RemmsPAK_DB",
-  },
-  {
-    name: "RIT UAE",
-    dbName: "RemmsTech_UAE_DB",
-  },
+ 
   // {
   //   name: "AIT KSA",
   //   dbName: "SIRIUS_KSA_DB",
@@ -28,6 +21,14 @@ export const DatabaseCountries = [
   {
     name: "AIT SL",
     dbName: "SIRIUS_SL_DB",
+  },
+  {
+    name: "RIT PAK",
+    dbName: "RemmsPAK_DB",
+  },
+  {
+    name: "RIT UAE",
+    dbName: "RemmsTech_UAE_DB",
   },
 ];
 export const OfficesLocationData = [

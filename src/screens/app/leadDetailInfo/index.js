@@ -30,7 +30,7 @@ export default function LeadDetailInfo({ navigation, route }) {
   const [leadInfoData, setLeadInfoData] = useState(null);
   const [showEmptyComponent, setShowEmptyComponent] = useState(false);
   const makePhoneCall = (mobile) => {
-    console.log("CALLLLLLLLLLLLLLLL",mobile);
+    // console.log("CALLLLLLLLLLLLLLLL",mobile);
     const phoneNumber = "+923407685573"; // Replace with the desired phone number
 
     Linking.openURL(`tel:${mobile}`).catch((error) =>
@@ -92,7 +92,7 @@ export default function LeadDetailInfo({ navigation, route }) {
    
     };
   const RenderLeadsInfo = ({ item, index }) => {
-    console.log("=============",item?.phone);
+    console.log("=====bbbbbbbbbbb========",item);
     return (
       <View style={{ marginVertical: width(1) }}>
         <LeadOpprtunityInfoDetail

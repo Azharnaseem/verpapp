@@ -317,14 +317,30 @@ export default function Home({ navigation, route }) {
           <View
             style={{ alignSelf: "flex-start", marginHorizontal: width(3.5) }}
           >
+            <View style={{ width:width(93),flexDirection:"row",justifyContent:"space-between",}}>
+
+           
             <SmallText
               size={4}
               color={AppColors.scndry}
               fontFamily={FontFamily.montserrat_Bold}
+              numberOfLines={1}
+              textStyles={{width:width(60)}}
+              
 
             >
-              {`Welcome ${stringify?.fullname} ${stringify?.DataBaseName} `}
+              {`Welcome ${stringify?.fullname}`}
             </SmallText>
+            <SmallText
+              size={4}
+              color={AppColors.primary}
+              fontFamily={FontFamily.montserrat_Bold}
+              numberOfLines={1}
+
+            >
+              {`(${stringify?.DataBaseName}) `}
+            </SmallText>
+            </View>
             {/* <SmallText color={AppColors.darkGrey}>What do you want ?</SmallText> */}
             {/* <SearchField placeholderColor={AppColors.black} placeholder={"Search..."} containerStyle={{marginVertical:height(1)}} /> */}
             <Image

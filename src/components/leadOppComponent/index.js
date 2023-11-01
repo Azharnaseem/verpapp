@@ -6,6 +6,7 @@ import { FontFamily } from "~assets/fonts";
 import { height, width } from "~utills/Dimension";
 import { LeadIcon, Oppartunity } from "~assets/images";
 import AppColors from "~utills/AppColors";
+import dayjs from "dayjs";
 
 // import LinearGradient from "react-native-linear-gradient";
 const LeadsOppComponent = ({
@@ -13,6 +14,7 @@ const LeadsOppComponent = ({
   companyName = "Agrius It",
   leadNo = "123",
   type = "It Support",
+  LeadDate=new Date(),
   leadOwner = "Azhar Naseem",
   opportunityOwner = "Azhar Naseem",
   showLead = true,
@@ -47,7 +49,7 @@ const LeadsOppComponent = ({
             <View style={{ paddingLeft: width(1.5) }}>
               <View style={{ alignItems:"center",flexDirection:"row",}}>
               <Text numberOfLines={1} style={styles.nameText}>
-                Leader Owner:
+                Lead Owner:
               </Text>
               <Text numberOfLines={1} style={styles.valueName}>{` ${leadOwner}`}</Text>
               </View>
@@ -62,6 +64,12 @@ const LeadsOppComponent = ({
                 Type:
               </Text>
               <Text numberOfLines={1} style={styles.valueName}>{` ${type}`}</Text>
+            </View>
+            <View style={{ alignItems:"center",flexDirection:"row",}}>
+              <Text numberOfLines={1} style={styles.nameText}>
+                Lead Date:
+              </Text>
+              <Text numberOfLines={1} style={styles.valueName}>{` ${dayjs(LeadDate).format('DD/MM/YYYY')}`}</Text>
             </View>
           </View>
           </View>
@@ -120,7 +128,7 @@ const LeadsOppComponent = ({
               <Text style={styles.valueName}>{` ${opportunityType}`}</Text>
             </Text>
             <Text numberOfLines={2} style={styles.stageName}>
-              Doc No:
+            Opportunity No:
               <Text style={styles.valueName}>{` ${docNo}`}</Text>
             </Text>
           </View>

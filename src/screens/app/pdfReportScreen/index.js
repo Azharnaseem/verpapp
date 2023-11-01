@@ -26,6 +26,10 @@ export default function PdfReportScreen({ navigation, route }) {
   const [pdfData, setPdfData] = useState(null);
   const [subTotal, setSubTotal] = useState(null);
   console.log("============dss===============", totalPage);
+
+
+  var stringify = JSON.parse(userInfo);
+  console.log("-----------------eee--->>",stringify?.DataBaseName);
   const a1 = "https://nodejs.org/static/images/logo.svg";
 
   // console.log("pdf file is :", pdfFile);
@@ -285,6 +289,14 @@ export default function PdfReportScreen({ navigation, route }) {
       color: white;
       padding: 0px;
     }
+    .headingg {
+      font-size:9.5px;
+      font-family: 'Bahnschrift', sans-serif;
+      font-weight: bold;
+      color: white;
+      padding: 0px;
+      padding-left:5px;
+    }
     .heading-wrapper {
       display: flex;
       justify-content: space-between;
@@ -389,7 +401,7 @@ export default function PdfReportScreen({ navigation, route }) {
 
 <div class="header-container">
   <div class="heading-wrapper">
-     <h1 class=" ">Customer</h1>
+     <h1 class="headingg">Customer</h1>
     <h1 class="heading">Delivery Address</h1>
   </div>
 </div>
@@ -491,7 +503,7 @@ ${pdfData
 <div class="document-container">
   <div class="document-info">
     <div class="company-info-outbox">Sub Total</div>
-    <div class="company-info-outbox">GST/SST</div>
+    <div class="company-info-outbox">${stringify?.DataBaseName==='AIT Pak'?"GST/SST":"VAT"}</div>
     <div class="company-info-outbox">Total</div>
   </div>
   <div class="box">

@@ -75,18 +75,18 @@ const SupprtOppartunityDetail = ({
           </View>
         </View>
         <View >
-        <Button
+        {/* <Button
           onPress={onPressViewDetail}
           textStyle={styles.btnText}
           title={"View Pdf"}
           containerStyle={styles.pdfbtnStyle}
-        />
-        <SmallText fontFamily={FontFamily.montserrat_SemiBold} size={3}color={AppColors.scndry}>Start Date<Text style={{color:AppColors.primary,fontSize:width(3)}}>{` ${dayjs(item?.startDate).format('DD/MM/YYYY')}`}</Text></SmallText>
+        /> */}
+        {/* <SmallText fontFamily={FontFamily.montserrat_SemiBold} size={3}color={AppColors.scndry}>Start Date<Text style={{color:AppColors.primary,fontSize:width(3)}}>{` ${dayjs(item?.startDate).format('DD/MM/YYYY')}`}</Text></SmallText> */}
         </View>
       </View>
       <View style={{marginTop:height(0.5), flexDirection:"row",justifyContent:"space-between"}}>
       <SmallText numberOfLines={2} textStyles={{width:width(40)}} fontFamily={FontFamily.montserrat_SemiBold} size={3}color={AppColors.scndry}>Unit Price<Text style={{color:AppColors.primary,fontSize:width(3)}}>{` ${item?.unitPrice}`}</Text></SmallText>
-      <SmallText fontFamily={FontFamily.montserrat_SemiBold} size={3}color={AppColors.scndry}>End Date<Text style={{color:AppColors.primary,fontSize:width(3)}}>{` ${dayjs(item?.endDate).format('DD/MM/YYYY')}`}</Text></SmallText>
+      {/* <SmallText fontFamily={FontFamily.montserrat_SemiBold} size={3}color={AppColors.scndry}>End Date<Text style={{color:AppColors.primary,fontSize:width(3)}}>{` ${dayjs(item?.endDate).format('DD/MM/YYYY')}`}</Text></SmallText> */}
 
       </View>
    
@@ -220,7 +220,7 @@ const SupprtOppartunityDetail = ({
           fontFamily={FontFamily.montserrat_SemiBold}
           color={AppColors.greyText2}
         >
-          SLA Invention Time
+          SLA Intervention Time
         </SmallText>
         <SmallText size={3} color={AppColors.greyText2}>{item?.slaInterventionTime?item?.slaInterventionTime:"Nill"}</SmallText>
       </View>

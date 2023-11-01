@@ -141,6 +141,7 @@ console.log("======222222222====>>>",leadData);
   };
 
   const RenderAllLeads = ({ item, index }) => {
+    console.log("leadessss=============",item);
     
     return (
       <View style={{ marginVertical: width(1) }}>
@@ -149,6 +150,7 @@ console.log("======222222222====>>>",leadData);
           type={item?.type}
           leadOwner={item?.employeeName}
           companyName={item?.companyName}
+          LeadDate={item?.docDate}
           onPress={() => {
             navigation.navigate(ScreenNames.LEADDETAILINFO, {
               id: item?.companyName,

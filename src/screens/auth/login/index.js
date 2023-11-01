@@ -118,7 +118,7 @@ export default function Login({ navigation, route }) {
           if (res.error) {
             console.log("2222222222211111111111111");
             erroMessage("Please connect VPN");
-            Alert.alert("vpn issss");
+            // Alert.alert("vpn issss");
             dispatch(setAppLoader(false));
           } else {
             console.log("resssssssssssssssssss11111111111111===>>>1", res);
@@ -160,7 +160,7 @@ export default function Login({ navigation, route }) {
               dispatch(setUserMeta(JSON.stringify(userDataa)));
               // dispatch(setToken(user_ID));
               dispatch(setIsLoggedIn(true));
-              dispatch(setAppLoader(false));
+              dispatch(setAppLoader(false));  
               successMessage("Login Successfully");
               dispatch(setAppLoader(false));
             }
@@ -271,7 +271,7 @@ export default function Login({ navigation, route }) {
           
           // onPress={() => navigation.navigate(ScreenNames.REGISTERSCREEN)}
         >
-          Dont't Have Account!
+          Dont't have an account!
           {/* <Text
             style={{
               color: AppColors.scndry,
