@@ -1,0 +1,18 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "MN2-I3-ftu.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Powered by AgriusIT\"; ObjectID = \"MN2-I3-ftu\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Powered by AgriusIT"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

@@ -161,7 +161,7 @@ export default function ResgisterScreen({ navigation, route }) {
       )
     }} >
       <View style={styles.mainViewContainer}>
-        <View style={{ alignItems:"center",justifyContent:"center", marginBottom: height(4) }}>
+        <View style={{ alignItems:"center",justifyContent:"center", marginBottom: height(2) }}>
           <Image source={Logo} style={styles.imageStyle} resizeMode="contain" />
           <SmallText
             fontFamily={FontFamily.montserrat_BoldItalic}

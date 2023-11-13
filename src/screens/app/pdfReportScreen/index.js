@@ -12,7 +12,7 @@ import { height, width } from "~utills/Dimension";
 import { Logo } from "~assets/images";
 import { ActivityIndicator } from "react-native";
 import Share from "react-native-share";
-import RNFetchBlob from "rn-fetch-blob";
+// import RNFetchBlob from "rn-fetch-blob";
 import { set } from "react-native-reanimated";
 import axios from "axios";
 import dayjs from "dayjs";
