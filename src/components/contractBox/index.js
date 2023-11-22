@@ -1,64 +1,46 @@
-import React, { useState } from "react";
-import { View, Text, Image, FlatList, Linking } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  Button,
-  ContractTicketBox,
-  HomeHeader,
-  LeadOpprtunityInfoDetail,
-  LeadsOppComponent,
-  PageHeader,
-  ScreenWrapper,
-} from "~components";
-
-import { selectUserMeta, setIsLoggedIn, setUserMeta } from "~redux/slices/user";
+import React from "react";
+import { Pressable, Text, View } from "react-native";
 import styles from "./styles";
-
-import CommonStyles from "~utills/CommonStyles";
-import { height, width } from "~utills/Dimension";
-import SearchField from "~components/searchField";
-import ScreenNames from "~routes/routes";
-import { ContractImage } from "~assets/images";
 import { SmallText } from "~components/texts";
-import MoneySvg from "~assets/SVG/moneySvg";
 import { FontFamily } from "~assets/fonts";
+import SvgIcon from "~assets/SVG";
 import AppColors from "~utills/AppColors";
+import { height, width } from "~utills/Dimension";
+import Button from "~components/button";
+import { Image } from "react-native";
+import { ContractImage, PersonImage } from "~assets/images";
+import MoneySvg from "~assets/SVG/moneySvg";
+import dayjs from "dayjs";
 
-// import { PDFGenerator } from "~utills/Methods";
-export default function ContractDetailScreen({ navigation, route }) {
-  const routsData = route.params;
-  // console.log("==2222222==", routsData);
-  const dispatch = useDispatch();
-  const userInfo = useSelector(selectUserMeta);
-  const makePhoneCall = () => {
-    const phoneNumber = "+923407685573"; // Replace with the desired phone number
-
-    Linking.openURL(`tel:${phoneNumber}`).catch((error) =>
-      console.log("Error making phone call:", error)
-    );
-  };
-
+// import LinearGradient from "react-native-linear-gradient";
+const ContractBox = ({
+  item,
+  containerViewStyle = {},
+  contractNo = "1122",
+  TicketNo="2312",
+  customeraName = "Azhar Naseem",
+  opportunityNo = "RE-122",
+  employeeName = "Farukkh Khan",
+  endDate = "6/july/2029",
+  startDate = "6/july/2024",
+  onPressPhoneNo,
+  image=ContractImage,
+  onPressEmail,
+  onPressViewDetail,
+  SerialNo="RE-3243",
+  companyName="Agrius It",
+  showTickets=false,
+  chatTextStyle,
+}) => {
   return (
-    <ScreenWrapper
-    scrollEnabled
-      headerUnScrollable={() => {
-        return (
-          <View>
-            <PageHeader
-              pageTitle={"Contract Detail"}
-              onPressBack={() => navigation.goBack()}
-            />
-            {/* <SearchField onPressBar={()=>navigation.navigate(ScreenNames.SEARCHSCREEN)} editable={false} placeholder={"Search Leads"} containerStyle={{marginVertical:height(1)}} /> */}
-          </View>
-        );
-      }}
-    >
-      <View style={styles.mainViewContainer}>
+    
+    <View style={styles.mainViewContainer}>
+      {console.log("---11111---",item)}
         <View style={styles.imageContainer}>
           <Image source={ContractImage} style={styles.imageStyle} />
         </View>
         <SmallText textStyles={styles.headingTextStyle}>
-          Contract No RU-1244
+         { `Contact No:${item?.contractNo}`}
         </SmallText>
         <View style={styles.mainInfoContainer}>
           <MoneySvg />
@@ -75,7 +57,7 @@ export default function ContractDetailScreen({ navigation, route }) {
             fontFamily={FontFamily.montserrat_Bold}
             textStyles={styles.priceTextStyle}
           >
-            50,000.00 PKR
+            {`${item?.amount} ${item?.currency}`}
           </SmallText>
 
           <View
@@ -97,7 +79,7 @@ export default function ContractDetailScreen({ navigation, route }) {
               Invoice Frequency
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              Monthly
+              {item?.invoicingFrequency}
             </SmallText>
           </View>
           <View
@@ -119,7 +101,7 @@ export default function ContractDetailScreen({ navigation, route }) {
               Invoice Pattren
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              sss
+              {item?.invoicePattern}
             </SmallText>
           </View>
           <View
@@ -141,7 +123,7 @@ export default function ContractDetailScreen({ navigation, route }) {
               Payment Term
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              sss
+              {item?.paymentTerms}
             </SmallText>
           </View>
         </View>
@@ -166,7 +148,7 @@ export default function ContractDetailScreen({ navigation, route }) {
             Start Date
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-             08/july/2022
+             {`${dayjs(item?.startDate).format('DD/MM/YYYY')}`}
             </SmallText>
           </View>
           <View
@@ -188,7 +170,7 @@ export default function ContractDetailScreen({ navigation, route }) {
              End Date
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-             09/july/2029
+            {`${dayjs(item?.endDate).format('DD/MM/YYYY')}`}
             </SmallText>
           </View>
           </View>
@@ -211,7 +193,7 @@ export default function ContractDetailScreen({ navigation, route }) {
              Customer
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-             Farukh Khan
+              {item?.customerId}
             </SmallText>
           </View>
           <View
@@ -233,7 +215,7 @@ export default function ContractDetailScreen({ navigation, route }) {
               Opportunity No
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              323
+              {item?.opportunityId}
             </SmallText>
           </View>
           <View
@@ -255,7 +237,7 @@ export default function ContractDetailScreen({ navigation, route }) {
               End Customer
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              Adnan
+              {item?.endCustomer}
             </SmallText>
           </View>
           <View
@@ -277,7 +259,7 @@ export default function ContractDetailScreen({ navigation, route }) {
               Status
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              Pending
+              {item?.status}
             </SmallText>
           </View>
           <View
@@ -299,7 +281,7 @@ export default function ContractDetailScreen({ navigation, route }) {
               PO Number 
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              Farukh K23
+              {item?.poNumber}
             </SmallText>
           </View>
           <View
@@ -321,7 +303,7 @@ export default function ContractDetailScreen({ navigation, route }) {
               Prevention Mentinance
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-             yes
+             {item?.preventionMaintenance}
             </SmallText>
           </View>
           <View
@@ -343,7 +325,7 @@ export default function ContractDetailScreen({ navigation, route }) {
              Employee
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              Wahid khan 
+              {item?.employee}
             </SmallText>
           </View>
           <View
@@ -364,9 +346,12 @@ export default function ContractDetailScreen({ navigation, route }) {
             >
               Contact of Notification
             </SmallText>
-            <SmallText size={3} color={AppColors.greyText2}>
-             found032939
+            <View style={{width:width(43),alignItems:"flex-end"}}>
+            <SmallText numberOfLines={2} size={3} color={AppColors.greyText2}>
+             {item?.contactofNotification}
             </SmallText>
+            </View>
+            
           </View>
           <View
             style={{
@@ -387,7 +372,7 @@ export default function ContractDetailScreen({ navigation, route }) {
               Duration of months
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              3
+              {item?.durationofMonth}
             </SmallText>
           </View>
           <View
@@ -409,7 +394,7 @@ export default function ContractDetailScreen({ navigation, route }) {
               SLA Type
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              Full Hardware Support
+              {item?.slaType}
             </SmallText>
           </View>
           <View
@@ -431,7 +416,7 @@ export default function ContractDetailScreen({ navigation, route }) {
              Site
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              Mono-Site
+              {item?.site}
             </SmallText>
           </View>
           <View
@@ -453,7 +438,7 @@ export default function ContractDetailScreen({ navigation, route }) {
              Tax Percentage
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-              1%
+             {` ${item?.tax} %`}
             </SmallText>
           </View>
           <View
@@ -472,14 +457,15 @@ export default function ContractDetailScreen({ navigation, route }) {
               fontFamily={FontFamily.montserrat_SemiBold}
               color={AppColors.greyText2}
             >
-             Item
+             Contract status
             </SmallText>
             <SmallText size={3} color={AppColors.greyText2}>
-             Any Value
+             {item?.contractStatus}
             </SmallText>
           </View>
         </View>
       </View>
-    </ScreenWrapper>
   );
-}
+};
+
+export default ContractBox;

@@ -19,4 +19,6 @@ export { default as SuccessModal } from "./sucessModal";
 export { default as OppartunityDetail } from "./oppartunityDetail";
 export { default as SupprtOppartunityDetail } from "./supportOppartunityDetail";
 export { default as DescriptionModal } from "./descriptionModal";
+export { default as ContractBox } from "./contractBox";
+
 
