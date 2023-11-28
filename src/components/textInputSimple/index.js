@@ -80,7 +80,7 @@ const TextInputSimple = (
         {prefixIcon && (
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={onPrefixPress}
+            onPress={onPress}
             style={styles.prefixIcon}
           >
             {prefixIcon}
@@ -90,7 +90,9 @@ const TextInputSimple = (
           control={control}
           name={name}
           render={({ field: { onChange, onBlur, value } }) => ( */}
+        
         <TextInput
+        onPressIn={onPress}
           textAlignVertical={textAlignVertical}
           editable={editable}
           ref={ref}
@@ -123,7 +125,7 @@ const TextInputSimple = (
         {Icon && (
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={onIconPress}
+            onPress={onPress}
             style={styles.iconStyle}
           >
             {Icon}

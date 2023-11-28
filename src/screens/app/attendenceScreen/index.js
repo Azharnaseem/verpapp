@@ -48,25 +48,30 @@ import SvgIcon from "~assets/SVG";
 import TickCheck from "~assets/SVG/tickCheck";
 import GetLocation from "react-native-get-location";
 import axios from "axios";
-import { useIsFocused } from "@react-navigation/native";
-import { setAppLoader } from "~redux/slices/config";
+import { useIsFocused,useFocusEffect } from "@react-navigation/native";
+import { selectLoader, setAppLoader } from "~redux/slices/config";
 import { erroMessage, successMessage } from "~utills/Methods";
 import { baseUrl } from "~utills/Constants";
+// import { useFocusEffect } from '@react-navigation/native';
 
 // import { PDFGenerator } from "~utills/Methods";
 export default function AttendenceScreen({ navigation, route }) {
   const dispatch = useDispatch();
+
   const successModalRef = useRef();
   const CheckModelRef = useRef();
   const confirmationModal = useRef();
   const bottomSheetRef = useRef(null);
   const userInfo = useSelector(selectUserMeta);
+  const load=useSelector(selectLoader)
+  // console.log("--load--",load);
   var stringify = JSON.parse(userInfo);
   const [office, setOffice] = useState("");
   const [seletedItem, setSelectedItem] = useState("");
   const [officeLocation, setOfficeLocation] = useState("");
   // let userData =  AsyncStorage.getItem("userData");
   const isFocused = useIsFocused();
+  
 
   const radiusInMeters = 50;
   const [location, setLocation] = useState(null);
@@ -78,10 +83,23 @@ export default function AttendenceScreen({ navigation, route }) {
   const [dt, setDt] = useState(new Date().toLocaleString());
   const [distancee, setDistance] = useState(null);
   // console.log(radiusInMeters, "==============================++++", distancee);
-  const [markAttendence, setAttendence] = useState("CheckIn");
+  const [markAttendence, setAttendence] = useState("");
   let checkIn="CheckIn";
   let checkOut="CheckOut";
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      // This block will be executed every time the screen comes into focus
+      console.log('Screen is sss2222/////////focused. Execute useEffect logic.');
+      getLocation();
+      setOffice("");
+      setOfficeLocation("");
+      setSelectedItem("");
+      // Your useEffect logsic here
+    });
 
+    // The cleanup function, will be called when the component unmounts
+    return unsubscribe;
+  }, [navigation]);
   // console.log("============state===", markAttendence);
   const [selectedTimeZone, setSelectedTimeZone] = useState("Asia/Karachi");
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -98,10 +116,11 @@ export default function AttendenceScreen({ navigation, route }) {
   // let attdate=currentTime.getDate();
 // console.log("-------------------rrrrrrrr--------22222222222992222222229--",attdate);
   useEffect(() => {
+    const unsubscribee = navigation.addListener('focus', () => {
     (async () => {
       let userData = await AsyncStorage.getItem("attendnceStatus");
       let date = await AsyncStorage.getItem("attendnceDate");
-    console.log("-------------------rrrrrrrr--------992222222229--",dayjs(date)?.format("ddd, MMMM YYYY"),"--",dayjs()?.format("ddd, MMMM YYYY"));
+    // console.log("-------------------rrrrrrrr--------992222222229--",dayjs(date)?.format("ddd, MMMM YYYY"),"--",dayjs()?.format("ddd, MMMM YYYY"));
     if(userData==='CheckOut' 
      && dayjs(date)?.format("ddd, MMMM YYYY")===dayjs()?.format("ddd, MMMM YYYY")
      ){
@@ -111,26 +130,32 @@ export default function AttendenceScreen({ navigation, route }) {
       setAttendence("CheckIn")
     }
     })();
+  });
+  return unsubscribee;
 
-  }, [isFocused]);
+  }, [navigation]);
   // useEffect(() => {
   //   getLocation();
   // }, [isFocused]);
   const getLocation = () => {
-    console.log("1111111111111111111111111111111111111 getlocation");
+    dispatch(setAppLoader(true));
+    // console.log("1111111111111111111111111111111111111 getlocation");
     GetLocation.getCurrentPosition({
       enableHighAccuracy: true,
-      timeout: 60000,
+      timeout:0,
     })
       .then((location) => {
         // console.log("---->>>", location?.latitude);
         const { latitude, longitude } = location;
-        // console.log("======================>>>", latitude, longitude);
+        console.log("===========location----===========>>>", latitude, longitude);
         setLocation({ latitude, longitude });
+        dispatch(setAppLoader(false));
       })
       .catch((error) => {
         const { code, message } = error;
+        dispatch(setAppLoader(false));
         console.warn("errorrrr+++", code, message);
+        Alert.alert("Turn on your device location");
       });
     // Geolocation.getCurrentPosition(
     //   (position) => {
@@ -181,7 +206,7 @@ export default function AttendenceScreen({ navigation, route }) {
     // setCurrentTime(currentLocalTime.toFormat('yyyy-MM-dd HH:mm:ss'));
   };
   const markAttdence = async (newCountry, offset) => {
-    dispatch(setAppLoader(true));
+    // dispatch(setAppLoader(true));
     console.log("FUNCTUION44444444444444444444444444444444444 CALLLED");
     let linkhttps =
       "https://timeapi.io/api/Time/current/zone?timeZone=Europe/Amsterdam";
@@ -198,6 +223,8 @@ export default function AttendenceScreen({ navigation, route }) {
       longitude: officeLocation?.longitude,
     };
     // console.log("333222222222222222",stringify?.dbName);
+    // console.log("------33332---",addAttendance);
+    
     await axios
       .post(
         `${baseUrl}/Attendance/AddAttendance/Attendance?Databasename=${stringify?.dbName}`,
@@ -212,11 +239,20 @@ export default function AttendenceScreen({ navigation, route }) {
       .then(async(res) => {
         console.log("resss=====>>Done this task check in", res);
         if(res?.error){
+          // console.log("----555---",res?.error);
           erroMessage("Please Connect your VPN to CheckIn")
           dispatch(setAppLoader(false));
-          console.log("errro",res);
-        }else{
-          dispatch(setAppLoader(false));
+          // console.log("errro",res);
+        }
+        else{
+          console.log("else is calllllllleeeed");
+          // dispatch(setAppLoader(false));
+
+
+          // if(load===false){
+
+          
+
           // successMessage("")
           // Alert.alert("success")
           // if (
@@ -225,11 +261,13 @@ export default function AttendenceScreen({ navigation, route }) {
           // ) {
             // markAttdence();
             successModalRef.current.show();
+            // Alert.alert("success");
             setAttendence("CheckOut");
             
             setTimeout(async() => {
               
               successModalRef.current.hide();
+              
               setOffice("");
               setOfficeLocation("");
               setSelectedItem("");
@@ -256,6 +294,7 @@ export default function AttendenceScreen({ navigation, route }) {
           currentTime
             );
         }
+      // }
 
         // setSelectedCountryTime(res?.dateTime)
       });
@@ -269,7 +308,7 @@ export default function AttendenceScreen({ navigation, route }) {
     // setCurrentTime(currentLocalTime.toFormat('yyyy-MM-dd HH:mm:ss'));
   };
   const markAttdenceCheckOut = async (newCountry, offset) => {
-    dispatch(setAppLoader(true));
+    // dispatch(setAppLoader(true));
     console.log("Function Check Outtt Called CALLLED");
     let linkhttps =
       "https://timeapi.io/api/Time/current/zone?timeZone=Europe/Amsterdam";
@@ -298,7 +337,7 @@ export default function AttendenceScreen({ navigation, route }) {
         // console.log("error in mark attendence", error);
       })
       .then(async(res) => {
-        console.log("resss=====>>Done this task check in", res);
+        console.log("resss=====>>Done this task checkout", res);
         if(res?.error){
           erroMessage("Please Connect your VPN to CheckIn")
           dispatch(setAppLoader(false));
@@ -310,7 +349,7 @@ export default function AttendenceScreen({ navigation, route }) {
           //   "attendnceStatus",
           //   JSON.stringify(markAttendence)
           // );
-          confirmationModal.current.hide();
+          // confirmationModal.current.hide();
           CheckModelRef.current.show();
           setTimeout(async() => {
             
@@ -321,7 +360,7 @@ export default function AttendenceScreen({ navigation, route }) {
            
             navigation.goBack();
             // navigation.navigate(ScreenNames.HOME);
-          }, 2000);
+          }, 4000);
           await AsyncStorage.setItem(
             "attendnceStatus",
         checkIn
@@ -411,7 +450,7 @@ export default function AttendenceScreen({ navigation, route }) {
     };
   };
   function calculateHaversineDistance(lat1, lon1, lat2, lon2) {
-    console.log("222222222222222222 call distance");
+    // console.log("222222222222222222 call distance");
     const earthRadius = 6371000; // Earth's radius in meters
 
     const latDiff = (lat2 - lat1) * (Math.PI / 180);
@@ -428,25 +467,25 @@ export default function AttendenceScreen({ navigation, route }) {
     const distance = earthRadius * c;
     return distance;
   }
-  useEffect(() => {
-    getLocation();
-    setOffice("");
-    setOfficeLocation("");
-    setSelectedItem("");
-    //  handleCountryChange();
-    // const myLat = location?.latitude; // Your latitude
-    // const myLon = location?.longitude; // Your longitude
-    // const otherUserLat = officeLocation?.latitude; // Other user's latitude
-    // const otherUserLon = officeLocation?.longitude; // Other user's longitude
+  // useEffect(() => {
+  //   getLocation();
+  //   setOffice("");
+  //   setOfficeLocation("");
+  //   setSelectedItem("");
+  //   //  handleCountryChange();
+  //   // const myLat = location?.latitude; // Your latitude
+  //   // const myLon = location?.longitude; // Your longitude
+  //   // const otherUserLat = officeLocation?.latitude; // Other user's latitude
+  //   // const otherUserLon = officeLocation?.longitude; // Other user's longitude
 
-    // const distance = calculateHaversineDistance(
-    //   myLat,
-    //   myLon,
-    //   otherUserLat,
-    //   otherUserLon
-    // );
-    // setDistance(distance);
-  }, [isFocused]);
+  //   // const distance = calculateHaversineDistance(
+  //   //   myLat,
+  //   //   myLon,
+  //   //   otherUserLat,
+  //   //   otherUserLon
+  //   // );
+  //   // setDistance(distance);
+  // }, [isFocused===true]);
   useEffect(() => {
     // getLocation();
     const myLat = location?.latitude; // Your latitude
@@ -460,6 +499,7 @@ export default function AttendenceScreen({ navigation, route }) {
       otherUserLat,
       otherUserLon
     );
+    console.log("===distanceccece====",distance);
     setDistance(distance);
   }, [officeLocation]);
   //   useEffect(() => {
@@ -487,6 +527,7 @@ export default function AttendenceScreen({ navigation, route }) {
         return (
           <View>
             <PageHeader
+            
               pageTitle={
                 role == "admin" ? "Check Attendence" : "Mark Attendence"
               }
@@ -513,7 +554,9 @@ export default function AttendenceScreen({ navigation, route }) {
           </View>
         ) : (
           <>
-            <ProfileDetail name={stringify?.fullname} />
+            <ProfileDetail name={stringify?.fullname} onPress={()=>{
+               successModalRef.current.show();
+            }}  />
             <TextInputSimple
               mainContainerStyle={{ marginTop: height(1) }}
               prefixIcon={<SvgIcon.Database />}
@@ -553,7 +596,7 @@ export default function AttendenceScreen({ navigation, route }) {
                   distancee <= radiusInMeters &&
                   markAttendence === "CheckIn"
                 ){
-                  markAttdence()
+                  markAttdence();
                 }
                 else if (distancee <= radiusInMeters &&
                   markAttendence === "CheckOut"){
@@ -693,7 +736,11 @@ export default function AttendenceScreen({ navigation, route }) {
         onYesPress={() => {
           if (distancee <= radiusInMeters &&
             markAttendence === "CheckOut"){
-              markAttdenceCheckOut();
+              confirmationModal.current.hide()
+              setTimeout(() => {
+                markAttdenceCheckOut();
+              }, 800);
+             
             }
           
           // markAttdence();

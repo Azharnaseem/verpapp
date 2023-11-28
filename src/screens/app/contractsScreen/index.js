@@ -103,6 +103,12 @@ export default function ContractScreen({ navigation, route }) {
       return(
         <View>
           <PageHeader pageTitle={"Contracts"} onPressBack={()=>navigation.goBack()}/>
+          <SearchField
+              // onChangeText={searchMethod}
+              //  onPressBar={()=>navigation.navigate(ScreenNames.SEARCHSCREEN)} editable={false}
+              placeholder={"Search Contract"}
+              containerStyle={{ marginVertical: height(1) }}
+            />
           {/* <SearchField onPressBar={()=>navigation.navigate(ScreenNames.SEARCHSCREEN)} editable={false} placeholder={"Search Leads"} containerStyle={{marginVertical:height(1)}} /> */}
         </View>
       )
