@@ -5,6 +5,7 @@ const initialState = {
   isLoggedIn: false,
   userMeta: null,
   macAddress: null,
+  rolesdata:null,
 };
 
 const userSlice = createSlice({
@@ -22,6 +23,10 @@ const userSlice = createSlice({
     },
     setMacAddress: (state, action) => {
       state.macAddress = action.payload;
+    },
+    setRolesData: (state, action) => {
+      console.log("=payload data=====>>>",action.payload);
+      state.rolesdata = action.payload;
     },
   },
 });

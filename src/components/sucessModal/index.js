@@ -23,6 +23,7 @@ const SuccessModal = (
     onYesPress,
     textViewStyles,
     description = "You are Successfully Checkin",
+    onBackdropPress
   },
   ref
 ) => {
@@ -37,6 +38,7 @@ const SuccessModal = (
   }));
   return (
     <ModalWrapper
+     onBackdropPress={onBackdropPress}
       // wraperContainer={{width:wid}}
       isVisible={isVisible}
       onClose={() => {

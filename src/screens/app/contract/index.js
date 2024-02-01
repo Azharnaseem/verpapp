@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
   View,
   Text,
@@ -11,7 +11,7 @@ import RNHTMLtoPDF from "react-native-html-to-pdf";
 import Pdf from "react-native-pdf";
 import { Button, PageHeader, ScreenWrapper } from "~components";
 import { setAppLoader } from "~redux/slices/config";
-import { selectUserMeta, setIsLoggedIn, setUserMeta } from "~redux/slices/user";
+import { selectUserMeta, setIsLoggedIn, setRolesData, setUserMeta } from "~redux/slices/user";
 import styles from "./styles";
 import AppColors from "~utills/AppColors";
 import { height, width } from "~utills/Dimension";
@@ -23,11 +23,32 @@ import ScreenNames from "~routes/routes";
 export default function Contract({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
+  const rolesScreen=useSelector(setRolesData)
+  // console.log("-----====",rolesScreen);
   const [pdfFile, setPdfFile] = useState(null);
   const a1 = "https://nodejs.org/static/images/logo.svg";
 
   // console.log("pdf file is :", pdfFile);
   let name = "Azhar";
+  // useEffect(() => {
+  //   // (async () => {
+  
+  //         getMoviesFromApi();
+  
+  //   // })();
+  // }, []);
+  const getMoviesFromApi = () => {
+    return fetch('https://reactnative.dev/movies.json')
+      .then(response => response.json())
+      .then(json => {
+        console.log("res=333===",json);
+        return json.movies;
+      }) 
+      .catch(error => {
+        console.error("=====6666",error);
+      });
+  };
+  
   //   const generatePDF = async () => {
   //     try {
   //       // Define the HTML content to convert to PDF

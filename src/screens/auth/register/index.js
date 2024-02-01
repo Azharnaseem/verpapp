@@ -85,10 +85,14 @@ export default function ResgisterScreen({ navigation, route }) {
    }
   };
   useEffect(() => {
-    let deviceId = DeviceInfo.getDeviceId();
-    console.log("deviceId=====ddddd",deviceId);
-    // dispatch(setMacAddress(deviceId));
-    setMacAddress(deviceId);
+    DeviceInfo.getUniqueId().then((uniqueId) => {
+      // console.log("2222=======>>>>>221",uniqueId);
+      setMacAddress(uniqueId);    
+      });
+    // let deviceId = DeviceInfo.getDeviceId();
+    // console.log("deviceId=====ddddd",deviceId);
+    // // dispatch(setMacAddress(deviceId));
+    // setMacAddress(deviceId);
 
   }, []);
   const _register= async (data) => {

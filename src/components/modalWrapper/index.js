@@ -12,6 +12,7 @@ const ModalWrapper = ({
   backdropColor = AppColors.black,
   backdropOpacity = 0,
   wraperContainer,
+  onBackdropPress
 }) => {
   return (
     <Modal
@@ -19,7 +20,7 @@ const ModalWrapper = ({
       style={[styles.modalContainer, wraperContainer]}
       backdropColor={backdropColor}
       backdropOpacity={backdropOpacity}
-      onBackdropPress={onClose}
+      onBackdropPress={onBackdropPress}
       avoidKeyboard={true}
       onBackButtonPress={onClose}
       swipeDirection={swipeDirection}

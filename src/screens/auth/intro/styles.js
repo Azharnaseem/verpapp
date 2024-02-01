@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     marginVertical: height(2),
   },
   imageStyle: {
-    width: width(60),
-    height: width(60),
+    width: width(70),
+    height: width(70),
     // backgroundColor: "red",
   },
   title: {

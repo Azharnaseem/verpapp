@@ -3,7 +3,7 @@ import { Flower, Flower2, Malta } from "~assets/images";
 export const DatabaseCountries = [
   {
     name: "AIT Pak",
-    dbName: "SIRIUS1_DB",
+    dbName: "SIRIUS_PAK_DB",
   },
   {
     name: "AIT UAE",

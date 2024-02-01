@@ -35,6 +35,7 @@ import DeviceInfo from 'react-native-device-info';
 
 import Geolocation from "@react-native-community/geolocation";
 import axios from "axios";
+import { baseUrltest } from "~utills/Constants";
 export default function Login({ navigation, route }) {
   const dispatch = useDispatch();
   const passwordRef = useRef(null);
@@ -46,7 +47,7 @@ export default function Login({ navigation, route }) {
   const [dbName, setDbName] = useState("");
   const [location, setLocation] = useState(null);
   const Loader= useSelector(selectLoader)
-   console.log("item---------", Loader);
+  //  console.log("item---------", Loader);
   const [seletedItem, setSelectedItem] = useState("");
   // const macAddress = useSelector(setMacAddress);
   // console.log("==============2222222===",macAddress);
@@ -83,14 +84,24 @@ export default function Login({ navigation, route }) {
   // }, []);
   // console.log("loggg location", location);
   useEffect(() => {
-    let deviceId = DeviceInfo.getDeviceId();
-    console.log("deviceId=====ddddd3333333333333333",deviceId);
-    // dispatch(setMacAddress(deviceId));
-    setMacAddress(deviceId);
+    DeviceInfo.getUniqueId().then((uniqueId) => {
+      console.log("2222== device id ucnique =====>>>>>221",uniqueId);
+      setMacAddress(uniqueId);    
+      });
+    // let model = DeviceInfo.getModel();
+    // let a =DeviceInfo.getIpAddress();
+    //  console.log("2222=======>>>>>1",model);
+    // let deviceId = DeviceInfo.getDeviceId();
+    // console.log("deviceId=====ddddd333333333333222223333",deviceId);
+    // // dispatch(setMacAddress(deviceId));
+    // setMacAddress(deviceId);    
 
   }, []);
   const _login = async (data) => {
-    // console.log("======","calllllll");
+
+
+
+    //  console.log("===  😆PASS TO LOGIN PAGE==========",macAddress,data?.username.toUpperCase(),data?.password,dbName);
     // try {
       // let userName=data?.username
       dispatch(setAppLoader(true));
@@ -107,16 +118,23 @@ export default function Login({ navigation, route }) {
       // const res = await ApiManager.get(
       //   `${data?.username.toUpperCase()}/${data?.password}/${dbName}`
       // )
+          // `http://192.168.0.220:8080/api/User/GetUser/${data?.username.toUpperCase()}/${data?.password}/${dbName}?${macAddress}`
+          // let ab=`http://192.168.0.220:8080/api/User/GetUser/${data?.username.toUpperCase()}/${data?.password}/${dbName}?${macAddress}`;
+
+        //  console.log("========ressss is =====",ab);
+
+          // `http://192.168.0.220:8080/api/User/GetUser/${data?.username.toUpperCase()}/${data?.password}/${dbName}/${macAddress}`
+       console.log( "----api calll---" , `http://192.168.0.220:8080/api/User/GetUser/${data?.username.toUpperCase()}/${data?.password}/${dbName}/${macAddress}`);
+          // console.log("");
       await axios
         .get(
-          `http://192.168.0.220:8080/api/User/GetUser/${data?.username.toUpperCase()}/${
-            data?.password
-          }/${dbName}/${macAddress}`
+          // 'http://192.168.0.220:8080/api/User/GetUser/GOOGLE/12345/SIRIUS_PAK_DB?PhoneAddress=goldfish_x86_64
+  `http://192.168.0.220:8080/api/User/GetUser/${data?.username.toUpperCase()}/${data?.password}/${dbName}/${macAddress}`
         )
         .then(async (res) => {
-          console.log(res,"===============222222222==", res?.error);
+          console.log(res,"=======res in login========222222222==", res?.error);
           if (res.error) {
-            console.log("2222222222211111111111111");
+            // console.log("2222222222211111111111111");
             erroMessage("Please connect VPN");
             // Alert.alert("vpn issss");
             dispatch(setAppLoader(false));
@@ -137,6 +155,7 @@ export default function Login({ navigation, route }) {
                 user_ID,
                 user_Name,
                 employeeId,
+                groupName,
               } = res?.data[0];
             
 
@@ -154,13 +173,15 @@ export default function Login({ navigation, route }) {
                 employeeId: employeeId,
                 dbName: dbName,
                 DataBaseName: country,
+                groupName:groupName,
+                
               };
               await AsyncStorage.setItem("userToken", JSON.stringify(user_ID));
               await AsyncStorage.setItem("userData", JSON.stringify(userDataa));
               dispatch(setUserMeta(JSON.stringify(userDataa)));
               // dispatch(setToken(user_ID));
               dispatch(setIsLoggedIn(true));
-              dispatch(setAppLoader(false));  
+              // dispatch(setAppLoader(false));  
               successMessage("Login Successfully");
               dispatch(setAppLoader(false));
             }

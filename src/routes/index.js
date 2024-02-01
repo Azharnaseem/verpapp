@@ -7,7 +7,7 @@ import { Loader } from "~components";
 import ScreenNames from "./routes";
 import SplashScreen from "react-native-splash-screen";
 import { Accounts, AdminDrawer, AllLeads, AllOppartunaties, AttendenceScreen, Contract, ContractDetailScreen, ContractScreen, HomeScreen, InvoiceScreen, InvoicesScreen, LeadDetailInfo, OppartunityDetailInfo, PdfReportScreen, SearchScreen, TicketDetailScreen, TicketsScreen } from "~screens/app";
-import { selectIsLoggedIn, setIsLoggedIn, setToken, setUserMeta } from "~redux/slices/user";
+import { selectIsLoggedIn, selectUserMeta, setIsLoggedIn, setRolesData, setRolesviewScreen, setToken, setUserMeta } from "~redux/slices/user";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import styles from "./styles";
 import Azhar from "~screens/app/azhar";
@@ -20,7 +20,10 @@ import NetInfo from "@react-native-community/netinfo";
 import { erroMessage, successMessage } from "~utills/Methods";
 import Modal from 'react-native-modal';
 import VersionCheck from 'react-native-version-check';
-import { View } from "react-native";
+import { View,Linking } from "react-native";
+import axios from "axios";
+import { setAppLoader } from "~redux/slices/config";
+import { Alert } from "react-native";
 // import styles from "./styles";
 // import styles from "./styles";
 let timerReference = null;
@@ -29,6 +32,14 @@ const Drawer = createDrawerNavigator();
 export default function Routes() {
   const [isConnected, setIsconected]=useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [rolesviewdata,setRolesviewdata ] = useState([]);
+  const [viewScreensList,setviewScreensList ] = useState();
+  const userInfo = useSelector(selectUserMeta);
+  // console.log("111111111=======>>>",viewScreensList);
+  
+
+  var stringify = JSON.parse(userInfo);
+  // console.log("azha========>>>>",stringify);
     useEffect(() => {
     setTimeout(() => {
       SplashScreen.hide();
@@ -59,54 +70,30 @@ export default function Routes() {
   }, []);
   async function checkUpdate() {
     VersionCheck.needUpdate().then(async res => {
-      if (!res.isNeeded) {
-        // Alert.alert("Update Available", "You must update the app before use")
+     
+      console.log("update is====22222222=========>",res);
+      if (res.isNeeded) {
+        // Alert.alert("Update Available", "You must update the app before use",[
+        //   // {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')},
+        //   {text: 'OK', onPress: () => {goToStore()}},
+    
+        // ],)
         setModalVisible(true);
       }
     });
   }
   async function goToStore() {
+    setModalVisible(false);
     if (Platform.OS === 'android') {
+      console.log("=====calllled link");
       Linking.openURL(
-        'https://play.google.com/apps/internaltest/4701734792978015845',
+        'https://play.google.com/store/apps/details?id=com.verpsolution&hl=en&gl=US',
       );
     } else {
       Linking.openURL('https://apps.apple.com/us/app/808080/id1481558476');
     }
   }
-  <Modal
-        isVisible={modalVisible}
-        animationIn={'zoomInUp'}
-        animationOut={'zoomOutDown'}
-        style={{flex: 1}}>
-        <View style={{backgroundColor: 'white', padding: 15, borderRadius: 5}}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 24,
-              textAlign: 'center',
-              marginBottom: 20,
-            }}>
-            Update Available
-          </Text>
-          <Text
-            style={{
-              fontWeight: '400',
-              fontSize: 18,
-              textAlign: 'center',
-              marginBottom: 40,
-            }}>
-            You must update the app before use.
-          </Text>
-          <TouchableOpacity
-            style={{alignSelf: 'flex-end', backgroundColor: ''}}
-            onPress={() => goToStore()}>
-            <Text style={{color: '#0B0080', fontSize: 18, padding: 5}}>
-              Update
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
+ 
   // const checkToken = async () => {
   //   try {
   //     let token = await AsyncStorage.getItem("userToken");
@@ -154,32 +141,128 @@ export default function Routes() {
   useEffect(() => {
     checkToken();
   }, []);
-  const handleUserActivity = () => {
-    // console.log("cllllllllllllllllllllllllllllllllllllllllll");
-    // Reset the timer on user activity
-    if (timerReference) {
-      BackgroundTimer.clearTimeout(timerReference);
-    }
-
-    // Start a new timer for 15 minutes
-    timerReference = BackgroundTimer.setTimeout(handleLogout, 1 * 60 * 1000);
-    // console.log("=====",timerReference);
-  };
-  const handleAppStateChange = (nextAppState) => {
-    // Reset the timer when the app is resumed from the background
-    if (nextAppState === 'active') {
-      handleUserActivity();
-    }
-  };
-  const handleLogout = () => {
-    // dispatch(setAppLoader(true));
-         
-            dispatch(setUserMeta(null));
-            AsyncStorage.clear();
-            dispatch(setIsLoggedIn(false));
-            // dispatch(setAppLoader(false));
+  useEffect(() => {
+    // (async () => {
+      if(stringify?.groupName !="Admin"){
+        getrollesdata();
+      }
         
+      
+  
+    
+  
+    // })();
+  }, [userInfo]);
+  useEffect(() => {
+    if(stringify?.groupName !="Admin"){
+    getviewScreenList(rolesviewdata);}
+}, [rolesviewdata]);
+  const getrollesdata = async (text) => {
+    // console.log("text-----", text);  
+    
+    dispatch(setAppLoader(true));
+        // console.log("callled 11111111",userInfo);
+        if(userInfo){
+        await axios
+        .get(
+          `http://192.168.0.220:8080/api/RolesAndRights/roleRights?groupname=${stringify?.groupName}&databasename=${stringify?.dbName}`
+        )
+      .then(response => {
+      // console.log("222221212111===ttttt====",response); 
+        //  setLoader(false);
+         if (response !=[]){
+          const filteredData = response?.filter(item => item.formControlName === "View");
+          // console.log("data on filter=====", filteredData);  
+          setRolesviewdata(filteredData);
+          dispatch(setAppLoader(false));
+         
+      //  let temps=   [{"formControlId": 2928, "formControlName": "View", "formId": 564, "formModule": "CRM", "formName": "frmTicketOpening", "groupId": 1, "groupName": "System Engineer"},{"formControlId": 2928, "formControlName": "View", "formId": 564, "formModule": "CRM", "formName": "frmContractOpening", "groupId": 1, "groupName": "System Engineer"}]
+      // if(filteredData !=[]) {
+      //   temps?.map(item => {
+      //     if(item.formName==="frmTicketOpening" ||item.formName==="frmContractOpening"||item.formName==="frmLeadProfileList2"||item.formName==="frmOpportunityList"||item.formName==="frmInvoiceDueReport"){
+      //      // console.log("item is ===============",item?.formName);
+      //      temp?.push(item?.formName)
+      //     }
+          
+      //  console.log("temp===========",temp);
+      //  setRolesviewdata(temp);
+      //  if(temp =![]){
+      //   setRolesviewdata(temp);
+      //     // dispatch(setRolesData(temp));
+  
+      //  }
+      //  });
+      // }
+      
+      //     // onsole.log("122233445444444444=====", data);
+         
+      //     setLoader(false);
+  
+         }
+          
+        })
+        .catch((error) => {
+         
+          console.log("error11111 in  DATA GETTING", error);
+          dispatch(setAppLoader(false));
+        });
+      }
+        // setLoader(false);
+        // setSearchQuery(resp?.data?.result);
+        // setLoader(false);
+      
+   
+  
+    // console.log('----------------------------', text);
   };
+  const getviewScreenList = async (data) => {
+    dispatch(setAppLoader(true));
+      
+    let temp =[];
+    let temps=   [{"formControlId": 2928, "formControlName": "View", "formId": 564, "formModule": "CRM", "formName": "frmTicketOpening", "groupId": 1, "groupName": "System Engineer"},{"formControlId": 2928, "formControlName": "View", "formId": 564, "formModule": "CRM", "formName": "frmContractOpening", "groupId": 1, "groupName": "System Engineer"}]
+  
+  data?.map(item => {
+      if(item.formName==="frmTicketOpening" ||item.formName==="frmContractOpening"||item.formName==="frmLeadProfileList2"||item.formName==="frmOpportunityList"||item.formName==="frmInvoiceDueReport"){
+       temp?.push(item?.formName)
+      }
+      
+      // console.log("====2222====",temp);
+  
+   
+   });
+  //  console.log("====temppppppp====",temp);
+   setviewScreensList(temp);
+   dispatch(setRolesData(temp));
+   dispatch(setAppLoader(false));
+  //  dispatch(setRolesData(temp));
+  
+  }
+  // const handleUserActivity = () => {
+  //   // console.log("cllllllllllllllllllllllllllllllllllllllllll");
+  //   // Reset the timer on user activity
+  //   if (timerReference) {
+  //     BackgroundTimer.clearTimeout(timerReference);
+  //   }
+
+  //   // Start a new timer for 15 minutes
+  //   timerReference = BackgroundTimer.setTimeout(handleLogout, 1 * 60 * 1000);
+  //   // console.log("=====",timerReference);
+  // };
+  // const handleAppStateChange = (nextAppState) => {
+  //   // Reset the timer when the app is resumed from the background
+  //   if (nextAppState === 'active') {
+  //     handleUserActivity();
+  //   }
+  // };
+  // const handleLogout = () => {
+  //   // dispatch(setAppLoader(true));
+         
+  //           dispatch(setUserMeta(null));
+  //           AsyncStorage.clear();
+  //           dispatch(setIsLoggedIn(false));
+  //           // dispatch(setAppLoader(false));
+        
+  // };
   // useEffect(() => {
   //   console.log("cllllllllllllllllllllllllllllllllllllllllll22222222");
   //   // Start the initial timer on app load
@@ -197,7 +280,41 @@ export default function Routes() {
   // }, []);
 
   return (
+    
     <NavigationContainer>
+       <Modal
+        isVisible={modalVisible}
+        animationIn={'zoomInUp'}
+        animationOut={'zoomOutDown'}
+        style={{flex: 1}}>
+        <View style={{backgroundColor: 'white', padding: 15, borderRadius: 5}}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 24,
+              textAlign: 'center',
+              marginBottom: 20,
+            }}>
+            Update Available
+          </Text>
+          <Text
+            style={{
+              fontWeight: '400',
+              fontSize: 18,
+              textAlign: 'center',
+              marginBottom: 40,
+            }}>
+            You must update the app before use.
+          </Text>
+          <TouchableOpacity
+            style={{alignSelf: 'flex-end', backgroundColor: ''}}
+            onPress={() => goToStore()}>
+            <Text style={{color: '#0B0080', fontSize: 18, padding: 5}}>
+              Update
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
       <Loader />
       {!isLogin ? (
         <Stack.Navigator
@@ -256,5 +373,6 @@ export default function Routes() {
         </Stack.Navigator>
       )}
     </NavigationContainer>
+    
   );
 }

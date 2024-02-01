@@ -525,6 +525,7 @@
 			baseConfigurationReference = 4D06308793FA11CB7119540C /* Pods-BoilerPlate-BoilerPlateTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				DEVELOPMENT_TEAM = RQ4R8BA32P;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",

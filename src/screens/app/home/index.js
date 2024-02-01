@@ -18,7 +18,7 @@ import {
   ScreenWrapper,
 } from "~components";
 import { setAppLoader } from "~redux/slices/config";
-import { selectUserMeta, setIsLoggedIn, setUserMeta } from "~redux/slices/user";
+import { selectUserMeta, selectviewScreenData, setIsLoggedIn, setUserMeta } from "~redux/slices/user";
 import styles from "./styles";
 // import PDFGenerator from "~utills/pdfGenerator";
 import RNHTMLtoPDF from "react-native-html-to-pdf";
@@ -43,10 +43,12 @@ import BackSvg from "~assets/SVG/backSvg";
 export default function Home({ navigation, route }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserMeta);
+  const viewScreenList = useSelector(selectviewScreenData);
+  console.log("aaaa ========>>>>>>>",viewScreenList);
   
-  console.log("1111111111111111111111111111111", userInfo);
+  // console.log("1111111111111111111111111111111", userInfo);
   var stringify = JSON.parse(userInfo);
-  console.log("2222222222222222222222222222222", stringify);
+  // console.log("2222222222222222222222222222222", stringify);
   const [pdfFile, setPdfFile] = useState(null);
   const [page, setPage] = useState(0);
   const leadRef = useRef(null);
@@ -263,7 +265,7 @@ export default function Home({ navigation, route }) {
   //   }
   // };
   const RenderOppartunities = ({ item, index }) => {
-    console.log("iteem====SSSSSSS======", item?.opportunityId);
+    // console.log("iteem====SSSSSSS======", item?.opportunityId);
     return (
       <View style={{ marginVertical: width(1) }}>
         <LeadsOppComponent
@@ -356,7 +358,9 @@ export default function Home({ navigation, route }) {
             </View>
             </>
             {/* newwww */}
-            <TouchableOpacity
+            {/* {console.log("3333",viewScreenList)} */}
+           {(viewScreenList?.includes("frmLeadProfileList2")
+         ||stringify?.groupName ==="Admin") && <TouchableOpacity
           style={styles.contractBoxStyle}
           onPress={() => navigation.navigate(ScreenNames.AllLEADS)}
         >
@@ -372,8 +376,10 @@ export default function Home({ navigation, route }) {
           >
             Leads
           </SmallText>
-        </TouchableOpacity>
-        <TouchableOpacity
+        </TouchableOpacity>}
+        {(viewScreenList?.includes("frmOpportunityList") 
+          ||stringify?.groupName ==="Admin" )&&
+          <TouchableOpacity
           style={styles.contractBoxStyle}
           onPress={() => navigation.navigate(ScreenNames.ALLOPPARTUNATIES)}
         >
@@ -389,7 +395,7 @@ export default function Home({ navigation, route }) {
           >
             Opportunities
           </SmallText>
-        </TouchableOpacity>
+        </TouchableOpacity>}
             {/* newwww */}
             {/* <View
               style={{

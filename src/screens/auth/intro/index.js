@@ -26,12 +26,14 @@ import SvgIcon from "~assets/SVG";
 import { DatabaseCountries } from "~utills/DummyData";
 import CommonStyles from "~utills/CommonStyles";
 import TextInputSimple from "~components/textInputSimple";
+import * as Animatable from 'react-native-animatable';
 export default function IntroScreen({ navigation, route }) {
   return (
     <ScreenWrapper>
       <View style={styles.mainViewContainer}>
         <View style={{ alignItems: "center", marginBottom: height(5) }}>
-          <Image source={Logo} style={styles.imageStyle} resizeMode="contain" />
+
+          <Animatable.Image source={Logo} style={styles.imageStyle} resizeMode="contain" animation={'zoomIn'} duration={1000} />
           <SmallText
             size={5}
             fontFamily={FontFamily.montserrat_BoldItalic}

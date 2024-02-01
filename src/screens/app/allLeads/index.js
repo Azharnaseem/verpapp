@@ -141,7 +141,7 @@ console.log("======222222222====>>>",leadData);
   };
 
   const RenderAllLeads = ({ item, index }) => {
-    console.log("leadessss=============",item);
+    // console.log("leadessss=============",item);
     
     return (
       <View style={{ marginVertical: width(1) }}>

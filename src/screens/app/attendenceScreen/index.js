@@ -52,6 +52,7 @@ import { useIsFocused,useFocusEffect } from "@react-navigation/native";
 import { selectLoader, setAppLoader } from "~redux/slices/config";
 import { erroMessage, successMessage } from "~utills/Methods";
 import { baseUrl } from "~utills/Constants";
+import { TouchableOpacity } from "react-native";
 // import { useFocusEffect } from '@react-navigation/native';
 
 // import { PDFGenerator } from "~utills/Methods";
@@ -66,6 +67,7 @@ export default function AttendenceScreen({ navigation, route }) {
   const load=useSelector(selectLoader)
   // console.log("--load--",load);
   var stringify = JSON.parse(userInfo);
+  // console.log("--3333------->>>>>>",stringify?.employeeId);
   const [office, setOffice] = useState("");
   const [seletedItem, setSelectedItem] = useState("");
   const [officeLocation, setOfficeLocation] = useState("");
@@ -79,6 +81,7 @@ export default function AttendenceScreen({ navigation, route }) {
   // console.log("location is ====", officeLocation);
 
   // console.log("issssssssss focused====",isFocused);
+  
 
   const [dt, setDt] = useState(new Date().toLocaleString());
   const [distancee, setDistance] = useState(null);
@@ -101,11 +104,15 @@ export default function AttendenceScreen({ navigation, route }) {
     return unsubscribe;
   }, [navigation]);
   // console.log("============state===", markAttendence);
+
   const [selectedTimeZone, setSelectedTimeZone] = useState("Asia/Karachi");
   const [currentTime, setCurrentTime] = useState(new Date());
   const [date, SetDate] = useState("");
-  // console.log(currentTime,"===222222222222====>>>>",currentTime.substring(0,10));
-  // console.log("--------dateee---------->ssss>>>",date);
+  var timeDate=dayjs(currentTime).format('YYYY-MM-DD');;
+  console.log("======date==========",timeDate,typeof(timeDate));
+  
+  //console.log(dayjs(currentTime)?.format("h:mm A"),"===222222222222====>>>>");
+  // console.log(dayjs(currentTime).format("h:mm A"),"-------------======----",selectedTimeZone);
   // console.log("timeeeeeeee", dayjs(currentTime).format("h:mm A"));
 
   const [searchQuery, setSearchQuery] = useState(null);
@@ -116,24 +123,56 @@ export default function AttendenceScreen({ navigation, route }) {
   // let attdate=currentTime.getDate();
 // console.log("-------------------rrrrrrrr--------22222222222992222222229--",attdate);
   useEffect(() => {
+   
     const unsubscribee = navigation.addListener('focus', () => {
     (async () => {
-      let userData = await AsyncStorage.getItem("attendnceStatus");
-      let date = await AsyncStorage.getItem("attendnceDate");
+      dispatch(setAppLoader(true));
+        // `http://192.168.0.220:8080/api/Attendance/GetAttendanceStauts/AttendanceStatus?id=${stringify?.employeeId}&Databasename=${stringify?.dbName}&date=${timeDate}`
+        // console.log("=====dateee api==",);
+      console.log("====44444====>>>>>",stringify?.employeeId,stringify?.dbName,currentTime);
+      await axios
+      .get(
+        `http://192.168.0.220:8080/api/Attendance/GetAttendanceStauts/AttendanceStatus?id=${stringify?.employeeId}&Databasename=${stringify?.dbName}&date=${timeDate}`
+        // `http://192.168.0.220:8080/api/Attendance/GetAttendanceStauts/AttendanceStatus?id=${stringify?.employeeId}&Databasename=${stringify?.dbName}date=${currentTime}`
+      )
+      .catch((error) => {
+        console.log("error in attendance  status api", error);
+        dispatch(setAppLoader(false));
+      })
+      .then((res) => {
+        console.log("=======ressss=333===>>>",res);
+        if (res=="CheckIn"){
+          setAttendence("CheckOut")
+          dispatch(setAppLoader(false));
+        }else{
+          setAttendence("CheckIn")
+          dispatch(setAppLoader(false));
+        }
+       
+       
+       
+      });
+      // let userData = await AsyncStorage.getItem("attendnceStatus");
+      // let date = await AsyncStorage.getItem("attendnceDate");
     // console.log("-------------------rrrrrrrr--------992222222229--",dayjs(date)?.format("ddd, MMMM YYYY"),"--",dayjs()?.format("ddd, MMMM YYYY"));
-    if(userData==='CheckOut' 
-     && dayjs(date)?.format("ddd, MMMM YYYY")===dayjs()?.format("ddd, MMMM YYYY")
-     ){
-      setAttendence("CheckOut")
-    }
-    else{
-      setAttendence("CheckIn")
-    }
+    // if(userData==='CheckOut' 
+    //  && dayjs(date)?.format("ddd, MMMM YYYY")===dayjs()?.format("ddd, MMMM YYYY")
+    //  ){
+    //   setAttendence("CheckOut")
+    // }
+    // else{
+    //   setAttendence("CheckIn")
+    // }
     })();
   });
   return unsubscribee;
 
   }, [navigation]);
+  const handleBackdropPress = () => {
+    // You can put custom logic here
+    // For example, you can leave it empty to keep the modal open
+    console.log('Backdrop pressed!');
+  };
   // useEffect(() => {
   //   getLocation();
   // }, [isFocused]);
@@ -147,7 +186,7 @@ export default function AttendenceScreen({ navigation, route }) {
       .then((location) => {
         // console.log("---->>>", location?.latitude);
         const { latitude, longitude } = location;
-        console.log("===========location----===========>>>", latitude, longitude);
+        // console.log("===========location----===========>>>", latitude, longitude);
         setLocation({ latitude, longitude });
         dispatch(setAppLoader(false));
       })
@@ -179,22 +218,27 @@ export default function AttendenceScreen({ navigation, route }) {
   //     return () => clearInterval(secTimerr);
   // }, []);
   const handleCountryChange = async (newCountry, offset) => {
-    let linkhttps =
-      "https://timeapi.io/api/Time/current/zone?timeZone=Europe/Amsterdam";
+    // let linkhttps =
+    //   "https://timeapi.io/api/Time/current/zone?timeZone=Europe/Amsterdam";
     // setSelectedCountry(newCountry);
+    dispatch(setAppLoader(false));
     await axios
       .get(
+        // `https://timeapi.io/api/TimeZone/zone?timeZone=Europe/Amsterdam`
+        
         `https://timeapi.io/api/Time/current/zone?timeZone=${selectedTimeZone}`
       )
-      .catch((error) => {
-        console.log("error11111 in list by main catagory", error);
-      })
+      // console.log("--------->>>>>>",a);
       .then((res) => {
-        // console.log("resss=====>>", dayjs(res?.dateTime).format("h:mm A"));
+        console.log("resss of time zone api====",res);
+        // console.log(res," ---== api call ==222222331111111111===========",selectedTimeZone);
+        // console.log("resss==22111111===>>", dayjs(res?.dateTime)?.format("h:mm A"));
         setCurrentTime(res?.dateTime);
         // dayjs(currentTime)?.format("ddd, MMMM YYYY")
         SetDate(dayjs(res?.dateTime)?.format("DD/MM/YYYY"));
         // setSelectedCountryTime(res?.dateTime)
+      }).catch((error) => {
+        console.log("error11111 in list by main catagory", error);
       });
     // var b =new Date();
     // var utc=b.getTime()+(b.getTimezoneOffset()*60000);
@@ -213,7 +257,7 @@ export default function AttendenceScreen({ navigation, route }) {
     // setSelectedCountry(newCountry);
     let addAttendance = {
       empID: stringify?.employeeId,
-      attendanceDate: currentTime?.substring(0, 10),
+      attendanceDate: currentTime,
       attendanceType: markAttendence,
       attendanceTime: currentTime,
       attendanceStatus: "Present",
@@ -222,20 +266,14 @@ export default function AttendenceScreen({ navigation, route }) {
       latitude: officeLocation?.latitude,
       longitude: officeLocation?.longitude,
     };
-    // console.log("333222222222222222",stringify?.dbName);
-    // console.log("------33332---",addAttendance);
-    
+    console.log("333222222222222222",stringify?.dbName);
+    console.log("------33332---",addAttendance);
+    // 
     await axios
       .post(
         `${baseUrl}/Attendance/AddAttendance/Attendance?Databasename=${stringify?.dbName}`,
         addAttendance
       )
-
-      .catch((error) => {
-        dispatch(setAppLoader(false));
-        Alert.alert("${error} in mark attendence");
-        // console.log("error in mark attendence", error);
-      })
       .then(async(res) => {
         console.log("resss=====>>Done this task check in", res);
         if(res?.error){
@@ -262,7 +300,7 @@ export default function AttendenceScreen({ navigation, route }) {
             // markAttdence();
             successModalRef.current.show();
             // Alert.alert("success");
-            setAttendence("CheckOut");
+            // setAttendence("CheckOut");
             
             setTimeout(async() => {
               
@@ -271,7 +309,6 @@ export default function AttendenceScreen({ navigation, route }) {
               setOffice("");
               setOfficeLocation("");
               setSelectedItem("");
-             
               navigation.goBack();
             }, 2000);
           // } else if (
@@ -286,17 +323,21 @@ export default function AttendenceScreen({ navigation, route }) {
           //   //   // navigation.navigate(ScreenNames.HOME);
           //   // }, 2000);
           // }
-          await AsyncStorage.setItem(
-            "attendnceStatus",
-            checkOut          );
-            await AsyncStorage.setItem(
-              "attendnceDate",
-          currentTime
-            );
+          // await AsyncStorage.setItem(
+          //   "attendnceStatus",
+          //   checkOut          );
+          //   await AsyncStorage.setItem(
+          //     "attendnceDate",
+          // currentTime
+          //   );
         }
       // }
 
         // setSelectedCountryTime(res?.dateTime)
+      }).catch((error) => {
+        dispatch(setAppLoader(false));
+        Alert.alert(`${error} in mark attendenc`);
+        // console.log("error in mark attendence", error);
       });
     // var b =new Date();
     // var utc=b.getTime()+(b.getTimezoneOffset()*60000);
@@ -315,7 +356,9 @@ export default function AttendenceScreen({ navigation, route }) {
     // setSelectedCountry(newCountry);
     let addAttendance = {
       empID: stringify?.employeeId,
-      attendanceDate: currentTime?.substring(0, 10),
+      // attendanceDate: currentTime?.substring(0, 10),
+      attendanceDate: currentTime,
+
       attendanceType: markAttendence,
       attendanceTime: currentTime,
       attendanceStatus: "Present",
@@ -324,7 +367,7 @@ export default function AttendenceScreen({ navigation, route }) {
       latitude: officeLocation?.latitude,
       longitude: officeLocation?.longitude,
     };
-    // console.log("333222222222222222",stringify?.dbName);
+    console.log(addAttendance,"333222222222222222",stringify?.dbName);
     await axios
       .post(
         `${baseUrl}/Attendance/AddAttendance/Attendance?Databasename=${stringify?.dbName}`,
@@ -339,7 +382,7 @@ export default function AttendenceScreen({ navigation, route }) {
       .then(async(res) => {
         console.log("resss=====>>Done this task checkout", res);
         if(res?.error){
-          erroMessage("Please Connect your VPN to CheckIn")
+          erroMessage("Please Connect your VPN to CheckOut")
           dispatch(setAppLoader(false));
           console.log("errro",res);
         }else{
@@ -590,7 +633,7 @@ export default function AttendenceScreen({ navigation, route }) {
             {distancee <= radiusInMeters ? "azharr sai" : "waqaq galat"}
           </Text> */}
             </View>
-            <Pressable
+            <TouchableOpacity
               onPress={() =>{
                 if (
                   distancee <= radiusInMeters &&
@@ -654,7 +697,7 @@ export default function AttendenceScreen({ navigation, route }) {
               >
                 {markAttendence === "CheckIn" ? "Check-in" : "Check Out"}
               </SmallText>
-            </Pressable>
+            </TouchableOpacity>
             <View
               style={{
                 flexDirection: "row",
@@ -713,6 +756,7 @@ export default function AttendenceScreen({ navigation, route }) {
         </View>
       </BottomSheet>
       <SuccessModal
+      onBackdropPress={handleBackdropPress}
         // yesBtnName="Logout"
         ref={successModalRef}
 
@@ -763,9 +807,11 @@ export default function AttendenceScreen({ navigation, route }) {
         }}
       />
       <SuccessModal
+      onBackdropPress={handleBackdropPress}
         text="Good Bye!"
         description="You are Successfully Checked out"
         ref={CheckModelRef}
+        
       />
     </ScreenWrapper>
   );
